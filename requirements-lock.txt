@@ -15,7 +15,7 @@ onnxruntime==1.31.0
 packaging==26.3
 propcache==0.5.4
 protobuf==7.36.2
-psutil==7.0.0
+psutil==7.2.2
 scikit-learn==1.6.1
 scipy==1.13.1
 threadpoolctl==3.6.0
