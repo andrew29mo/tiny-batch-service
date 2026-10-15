@@ -96,7 +96,7 @@ class HTTPTests(unittest.IsolatedAsyncioTestCase):
     async def test_deep_json_is_invalid_without_admission_and_service_recovers(self):
         async with ManagedServer(self.fixture / "model.onnx", batch_size=1, wait_ms=0, capacity=8) as server:
             async with aiohttp.ClientSession() as client:
-                # Valid JSON syntax, below the body limit, beyond the decoder's nesting limit.
+                # Deeply nested JSON below the body limit is still not an inference object.
                 payload = "[" * 2000 + "0" + "]" * 2000
                 self.assertLess(len(payload), 8192)
                 async with client.post(server.url + "/v1/infer", data=payload,
