@@ -58,7 +58,9 @@ python tools/benchmark.py --output results/local/experiment
 python tools/check_project.py --directory results/local/experiment
 ```
 
-The report presents success throughput, successful-request p50/p95/p99, all terminal outcomes and latencies, queue times, batch distributions and near-contemporaneous HTTP-plus-worker RSS. Rejections/timeouts remain visible: dropping work is not presented as a speedup. Reference validation is outside the latency timer but affects generator scheduling. Measurements are descriptive, warm, single-machine observations; startup, caches and thermal state are not controlled.
+The report presents success throughput, successful-request dispatch p50/p95/p99, scheduled-arrival p95, all terminal outcomes and latencies, queue times, batch distributions and near-contemporaneous HTTP-plus-worker RSS. Scheduled latency includes generator delay; dispatch latency does not. Header-send/admission lag is shown alongside latency. Passing the fixed 25 ms p99 arrival check is a coarse sanity check, not proof of identical delivered traffic at sub-millisecond spacing. Rejections/timeouts remain visible: dropping work is not presented as a speedup. Reference validation is outside the latency timer but affects generator scheduling. Measurements are descriptive, warm, single-machine observations; startup, caches and thermal state are not controlled.
+
+Memory reports include the actual maximum sampling gap and paired-read duration. HTTP-plus-worker RSS includes audit/statistics serialization overhead but excludes the load generator and multiprocessing resource-tracker helper; it is not total deployment memory. Shared pages can be counted twice and short peaks can be missed. Small RSS differences do not justify an efficiency ranking.
 
 The HTML is a compact summary with per-trial details and links to the complete raw JSON and retained fixture in the same folder. Keep these files together for offline inspection. Raw JSON is compact to avoid duplicating tens of megabytes of whitespace; use a JSON viewer or `python -m json.tool` to inspect it. GitHub does not host the HTML as a running service.
 
@@ -71,7 +73,7 @@ python tools/run_mutations.py
 python tools/check_project.py
 ```
 
-Deterministic scheduler tests use a controllable clock. HTTP tests run the actual service and ORT worker; controlled in-flight tests gate the real backend, then execute actual inference after cancellation/timeout. Such gates are test controls and are never used in performance measurements. Four deliberate source faults must fail behavioral assertions, not merely import or source-hash checks. CI runs Linux/macOS correctness and real HTTP timing smoke; smoke timings are not performance gates.
+Deterministic scheduler tests use a controllable clock, including delayed deadline callbacks and a tail waiting behind a busy worker. HTTP tests run the actual service and ORT worker; controlled in-flight tests gate the real backend, then execute actual inference after cancellation/timeout. A mixed three-row batch checks one success, one timeout and one cancellation, followed by a one-row tail, with exact outcome/computed/discarded counts. Such gates are test controls and are never used in performance measurements. Seven deliberate source faults must fail behavioral assertions, not merely import or source-hash checks. The evidence checker also rejects contradictory request/batch times, forged occupancy, and RSS samples outside their recorded observation window. CI runs Linux/macOS correctness and real HTTP timing smoke; smoke timings are not performance gates.
 
 [Architecture and methodology](docs/METHODOLOGY.md) · [Third-party attribution](THIRD_PARTY_NOTICES.md)
 

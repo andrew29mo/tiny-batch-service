@@ -23,7 +23,7 @@ async def run(args):
         retained = {name: {"dtype": str(archive[name].dtype), "shape": list(archive[name].shape),
                            "data": archive[name].tolist()} for name in archive.files}
     (args.output / "fixture.json").write_text(json.dumps(retained, separators=(",", ":"), allow_nan=False) + "\n")
-    report = {"schema_version": 1, "generated_utc": datetime.now(timezone.utc).isoformat(),
+    report = {"schema_version": 2, "generated_utc": datetime.now(timezone.utc).isoformat(),
               "source_sha256": source_hash(), "host": host_metadata(), "model": manifest,
               "policy": {"capacity": 64, "batch_size": 16, "wait_ms": 2., "request_timeout_ms": 250,
                          "generator_max_inflight": 512, "arrival_p99_budget_ms": 25, "rss_interval_ms": 5},

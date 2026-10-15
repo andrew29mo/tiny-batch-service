@@ -149,13 +149,16 @@ async def trial(model, fixture, trace, settings):
                         raise ValueError("Warmup failed")
                     validate_response(body, reference[i])
             t0 = loop.time() + .1
+            memory_window_start = loop.time() - t0
             monitoring = True
             async def monitor():
                 http = psutil.Process(server.process.pid)
                 while monitoring:
                     stamp = loop.time()
-                    memory_samples.append({"at_s": stamp - t0, "http_rss_bytes": http.memory_info().rss,
-                                           "worker_rss_bytes": server.worker.memory_info().rss})
+                    sample = {"at_s": stamp - t0, "http_rss_bytes": http.memory_info().rss,
+                              "worker_rss_bytes": server.worker.memory_info().rss}
+                    sample["finished_s"] = loop.time() - t0
+                    memory_samples.append(sample)
                     await asyncio.sleep(.005)
             monitoring_task = asyncio.create_task(monitor())
             tasks = set()
@@ -184,29 +187,32 @@ async def trial(model, fixture, trace, settings):
                     record["finished_s"] = (received_at if received_at is not None else loop.time()) - t0
                     record["headers_sent_s"] = context.get("headers_sent_s", t0) - t0 if context else None
                     client_records.append(record)
-            for item in trace:
-                await asyncio.sleep(max(0., t0 + item["at_s"] - loop.time()))
-                if len(tasks) >= 512:
-                    client_records.append({**item, "dispatch_s": None, "headers_sent_s": None,
-                                           "finished_s": loop.time() - t0, "status": "generator_unsent",
-                                           "http_status": None, "output_checked": False})
-                    continue
-                task = asyncio.create_task(request(item))
-                tasks.add(task)
-                all_tasks.append(task)
-                task.add_done_callback(tasks.discard)
-            # Retain completed tasks too: task exceptions must never disappear after removal from the active set.
-            outcomes = await asyncio.gather(*all_tasks, return_exceptions=True)
-            for _ in range(500):
-                async with client.get(server.url + "/v1/stats", trace_request_ctx={}) as response:
-                    audit = await response.json()
-                if audit["occupancy"] == 0:
-                    break
-                await asyncio.sleep(.01)
-            else:
-                raise ValueError("Server failed to drain")
-            monitoring = False
-            await monitoring_task
+            try:
+                for item in trace:
+                    await asyncio.sleep(max(0., t0 + item["at_s"] - loop.time()))
+                    if len(tasks) >= 512:
+                        client_records.append({**item, "dispatch_s": None, "headers_sent_s": None,
+                                               "finished_s": loop.time() - t0, "status": "generator_unsent",
+                                               "http_status": None, "output_checked": False})
+                        continue
+                    task = asyncio.create_task(request(item))
+                    tasks.add(task)
+                    all_tasks.append(task)
+                    task.add_done_callback(tasks.discard)
+                # Retain completed tasks too: task exceptions must never disappear after removal from the active set.
+                outcomes = await asyncio.gather(*all_tasks, return_exceptions=True)
+                for _ in range(500):
+                    async with client.get(server.url + "/v1/stats", trace_request_ctx={}) as response:
+                        audit = await response.json()
+                    if audit["occupancy"] == 0:
+                        break
+                    await asyncio.sleep(.01)
+                else:
+                    raise ValueError("Server failed to drain")
+            finally:
+                monitoring = False
+                await monitoring_task
+            memory_window_end = loop.time() - t0
             if any(isinstance(value, BaseException) for value in outcomes):
                 raise ValueError("A request failed output or protocol validation")
             trace_ids = {r["id"] for r in trace}
@@ -218,12 +224,16 @@ async def trial(model, fixture, trace, settings):
             result = {"settings": settings, "environment": server.metadata, "trace_sha256": fingerprint(trace),
                       "client": sorted(client_records, key=lambda r: r["id"]), "server_records": records,
                       "batches": batches, "audit": {k: v for k, v in audit.items() if k not in ("records", "batches")},
-                      "rss_samples": memory_samples}
+                      "rss_samples": memory_samples,
+                      "memory_window": {"start_s": memory_window_start, "end_s": memory_window_end}}
     result["lifecycle"] = server.lifecycle
     return result
 
 
 def summarize(run, trace):
+    def finite(*values):
+        return all(type(v) in (int, float) and np.isfinite(v) for v in values)
+
     records = run["client"]
     if len(records) != len(trace) or {r["id"] for r in records} != {r["id"] for r in trace}:
         raise ValueError("Incomplete or duplicate client coverage")
@@ -235,15 +245,18 @@ def summarize(run, trace):
         raise ValueError("Generator could not deliver the offered workload")
     if set(ledger) != {r["id"] for r in records}:
         raise ValueError("Missing server terminal evidence")
-    successful, terminal_latency, lag, receive_lag, queues = [], [], [], [], []
+    successful, scheduled_success, terminal_latency, scheduled_terminal = [], [], [], []
+    lag, receive_lag, queues, admission_events = [], [], [], []
     for item, actual in zip(sorted(trace, key=lambda x: x["id"]), records):
         if any(actual[k] != item[k] for k in ("id", "at_s", "index")):
             raise ValueError("Trace identity changed")
         server = ledger[item["id"]]
         if server["status"] != actual["status"] or server["terminal_s"] is None:
             raise ValueError("Client/server terminal state differs")
-        if (not all(np.isfinite(server[k]) for k in ("received_s", "deadline_s", "terminal_s"))
-                or server["terminal_s"] < server["received_s"]
+        if (not finite(*(server[k] for k in ("received_s", "deadline_s", "terminal_s")),
+                       *(actual[k] for k in ("dispatch_s", "headers_sent_s", "finished_s")))
+                or not item["at_s"] <= actual["dispatch_s"] <= actual["headers_sent_s"] <= server["received_s"]
+                or not server["received_s"] <= server["terminal_s"] <= actual["finished_s"]
                 or not np.isclose(server["deadline_s"] - server["received_s"], .25, rtol=0, atol=1e-8)):
             raise ValueError("Contradictory server timing")
         if actual["status"] not in ("success", "timeout", "overloaded"):
@@ -255,48 +268,101 @@ def summarize(run, trace):
         if elapsed <= 0 or actual["headers_sent_s"] is None:
             raise ValueError("Invalid client timing")
         terminal_latency.append(elapsed)
+        scheduled_elapsed = (actual["finished_s"] - item["at_s"]) * 1000
+        scheduled_terminal.append(scheduled_elapsed)
         lag.append((actual["headers_sent_s"] - item["at_s"]) * 1000)
         receive_lag.append((server["received_s"] - item["at_s"]) * 1000)
         if actual["status"] == "success":
             if not actual["output_checked"] or server["compute_finished_s"] is None:
                 raise ValueError("Unchecked success")
             successful.append(elapsed)
-            if server["terminal_s"] >= server["deadline_s"] or server["phase_at_terminal"] != "running":
+            scheduled_success.append(scheduled_elapsed)
+            if (server["terminal_s"] >= server["deadline_s"] or server["phase_at_terminal"] != "running"
+                    or server["reason"] is not None):
                 raise ValueError("Late or uncomputed success")
-        elif actual["status"] == "timeout" and server["terminal_s"] < server["deadline_s"]:
-            raise ValueError("Premature timeout")
+        elif actual["status"] == "timeout":
+            if server["terminal_s"] < server["deadline_s"] or server["reason"] != "request_deadline":
+                raise ValueError("Premature or unexplained timeout")
         if server["started_s"] is not None:
+            if (not finite(server["started_s"], server["compute_finished_s"])
+                    or not server["received_s"] <= server["started_s"] <= server["compute_finished_s"]
+                    or server["phase_at_terminal"] != "running" or actual["status"] == "overloaded"
+                    or (actual["status"] == "success" and server["compute_finished_s"] > server["terminal_s"])):
+                raise ValueError("Contradictory computation timing")
             queues.append((server["started_s"] - server["received_s"]) * 1000)
+        elif (server["compute_finished_s"] is not None or actual["status"] == "success"
+              or server["phase_at_terminal"] != "queued"):
+            raise ValueError("Unstarted computation has output or wrong phase")
+        if actual["status"] != "overloaded":
+            released = server["compute_finished_s"] if server["started_s"] is not None else server["terminal_s"]
+            admission_events += [(server["received_s"], 1), (released, -1)]
     computed = [i for b in run["batches"] for i in b["ids"]]
     expected_computed = [i for i, r in ledger.items() if r["started_s"] is not None]
     if sorted(computed) != sorted(expected_computed) or len(set(computed)) != len(computed):
         raise ValueError("Missing, repeated or unexpected computed requests")
+    prior_finish = 0.
     for b in run["batches"]:
-        if (b["rows"] != len(b["ids"]) or not 1 <= b["rows"] <= run["settings"]["batch_size"]
+        if (not finite(b["started_s"], b["finished_s"], b["inference_ms"])
+                or not prior_finish <= b["started_s"] < b["finished_s"]
+                or b["rows"] != len(b["ids"]) or not 1 <= b["rows"] <= run["settings"]["batch_size"]
                 or not 0 < b["inference_ms"] <= (b["finished_s"] - b["started_s"]) * 1000):
             raise ValueError("Invalid batch cardinality")
+        for identifier in b["ids"]:
+            row = ledger[identifier]
+            if row["started_s"] > b["started_s"] or row["compute_finished_s"] != b["finished_s"]:
+                raise ValueError("Batch and per-request computation timing differ")
+        prior_finish = b["finished_s"]
+    occupancy, reconstructed_peak = 0, 1  # Eight sequential warmups each occupy one slot.
+    for _, delta in sorted(admission_events):
+        occupancy += delta
+        reconstructed_peak = max(reconstructed_peak, occupancy)
+        if not 0 <= occupancy <= run["settings"]["capacity"]:
+            raise ValueError("Per-request evidence violates physical capacity")
     if (run["audit"]["occupancy"] != 0 or run["audit"]["audit_evicted"] or run["audit"]["batch_evicted"]
-            or run["audit"]["peak_occupancy"] > run["settings"]["capacity"]
+            or run["audit"]["running"] != 0 or run["audit"]["queued"] != 0
+            or run["audit"]["peak_occupancy"] != reconstructed_peak
+            or run["audit"]["capacity"] != run["settings"]["capacity"]
+            or run["audit"]["batch_size"] != run["settings"]["batch_size"]
+            or run["audit"]["wait_ms"] != run["settings"]["wait_ms"]
+            or not run["audit"]["healthy"] or run["audit"]["closing"]
             or run["lifecycle"] != {"forced_http_kill": False, "worker_alive_after_http_exit": False, "http_exit_code": 0}):
         raise ValueError("Incomplete audit, capacity violation, or unclean process exit")
     expected_counts = {"offered": len(trace) + 8, "admitted": len(trace) - counts["overloaded"] + 8,
                        "success": counts["success"] + 8, "overloaded": counts["overloaded"],
                        "timeout": counts["timeout"], "computed_rows": len(computed) + 8,
                        "discarded_computed_rows": sum(r["status"] != "success" for r in ledger.values() if r["started_s"] is not None)}
-    if any(run["audit"]["counts"].get(key, 0) != value for key, value in expected_counts.items()):
+    if ({k: v for k, v in run["audit"]["counts"].items() if v}
+            != {k: v for k, v in expected_counts.items() if v}):
         raise ValueError("Server counters differ from per-request evidence")
     duration = max(max(r["finished_s"] for r in records), trace[-1]["at_s"],
                    max((b["finished_s"] for b in run["batches"]), default=0))
     samples = run["rss_samples"]
     if not samples or any(type(s[k]) is not int or s[k] <= 0 for s in samples for k in ("http_rss_bytes", "worker_rss_bytes")):
         raise ValueError("Invalid memory samples")
+    window = run["memory_window"]
+    if not finite(window["start_s"], window["end_s"]) or not window["start_s"] <= 0 <= duration <= window["end_s"]:
+        raise ValueError("Memory observation window does not cover the trial")
+    previous = window["start_s"]
+    for sample in samples:
+        if (not finite(sample["at_s"], sample["finished_s"])
+                or not previous <= sample["at_s"] <= sample["finished_s"] <= window["end_s"]):
+            raise ValueError("Memory samples outside observation window or out of order")
+        previous = sample["finished_s"]
+    gaps = ([samples[0]["at_s"] - window["start_s"]]
+            + [b["at_s"] - a["at_s"] for a, b in zip(samples, samples[1:])]
+            + [window["end_s"] - samples[-1]["at_s"]])
     return {"counts": dict(counts), "observation_s": duration, "success_per_second": len(successful) / duration,
             "success_latency_ms": distribution(successful), "all_terminal_latency_ms": distribution(terminal_latency),
+            "scheduled_success_latency_ms": distribution(scheduled_success),
+            "scheduled_all_terminal_latency_ms": distribution(scheduled_terminal),
             "header_send_lag_ms": distribution(lag), "server_arrival_lag_ms": distribution(receive_lag),
             "queue_ms": distribution(queues), "batch_sizes": {str(k): v for k, v in Counter(b["rows"] for b in run["batches"]).items()},
             "peak_http_rss_bytes": max(s["http_rss_bytes"] for s in samples),
             "peak_worker_rss_bytes": max(s["worker_rss_bytes"] for s in samples),
             "peak_paired_rss_bytes": max(s["http_rss_bytes"] + s["worker_rss_bytes"] for s in samples),
+            "memory_observation_s": window["end_s"] - window["start_s"],
+            "rss_sample_count": len(samples), "max_rss_gap_ms": max(gaps) * 1000,
+            "max_paired_read_ms": max(s["finished_s"] - s["at_s"] for s in samples) * 1000,
             "arrival_fidelity_passed": distribution(lag)["p99"] <= 25 and distribution(receive_lag)["p99"] <= 25}
 
 

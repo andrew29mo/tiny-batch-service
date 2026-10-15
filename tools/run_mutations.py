@@ -14,6 +14,9 @@ MUTATIONS = [
     ("ignore_deadline", '        self._terminal(entry, "timeout", 504, reason="request_deadline")', '        return False', "test_queued_timeout_and_cancel_never_reach_backend"),
     ("free_running_capacity_early", '        if entry.phase == "queued":', '        if True:', "test_running_cancel_retains_capacity_until_compute_finishes"),
     ("ignore_running_admission", 'elif len(self.entries) >= self.capacity:', 'elif len(self.pending) >= self.capacity:', "test_capacity_includes_computing_and_queued_work"),
+    ("skip_dispatch_deadline_recheck", 'if now >= entry.record["deadline_s"]:', 'if False:', "test_deadline_rechecked_when_timer_callbacks_are_delayed"),
+    ("skip_completion_deadline_recheck", 'if finished >= entry.record["deadline_s"]:', 'if False:', "test_deadline_rechecked_when_timer_callbacks_are_delayed"),
+    ("restart_oldest_batch_wait", 'flush_at = first.record["received_s"] + self.wait_s', 'flush_at = self.clock.now() + self.wait_s', "test_tail_deadline_and_exact_response_mapping"),
 ]
 
 
@@ -47,4 +50,4 @@ if __name__ == "__main__":
         if code != 1 or "FAIL:" not in output or "ERROR:" in output:
             raise SystemExit("Fault not rejected by behavioral assertions: " + mutation[0] + "\n" + output)
         print("Detected:", mutation[0])
-    print("All four source faults detected by behavioral assertions.")
+    print(f"All {len(MUTATIONS)} source faults detected by behavioral assertions.")

@@ -207,6 +207,41 @@ class SchedulerTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.scheduler.counts["success"], 1)
         self.assertEqual(self.scheduler.snapshot()["occupancy"], 0)
 
+    async def test_busy_worker_does_not_restart_tail_wait(self):
+        first = [self.submit(f"first{i}", i) for i in range(4)]
+        await turns()
+        tail = [self.submit(f"tail{i}", 10 + i) for i in range(3)]
+        self.clock.advance(.020)
+        await turns()
+        self.assertEqual(len(self.backend.calls), 1)
+        self.backend.finish(0)
+        await turns()
+        self.assertEqual(len(self.backend.calls), 2)
+        self.assertEqual(len(self.backend.calls[1][0]), 3)
+        self.backend.finish(1)
+        await turns()
+        self.assertTrue(all(f.result()["status"] == "success" for f in first + tail))
+        self.assertEqual(self.scheduler.counts["computed_rows"], 7)
+
+    async def test_deadline_rechecked_when_timer_callbacks_are_delayed(self):
+        queued = self.submit("expired_before_dispatch", 1, timeout=5)
+        self.clock.time += .020  # Deliberately leave scheduled timer callbacks unexecuted.
+        await turns()
+        self.assertTrue(queued.done())
+        self.assertEqual(queued.result()["status"], "timeout")
+        self.assertEqual(self.backend.calls, [])
+        self.scheduler.batch_size = 1
+        running = self.submit("expired_before_completion", 2, timeout=5)
+        await turns()
+        self.clock.time += .020
+        self.backend.finish()
+        await turns()
+        self.assertTrue(running.done())
+        self.assertEqual(running.result()["status"], "timeout")
+        self.assertEqual(self.scheduler.counts["computed_rows"], 1)
+        self.assertEqual(self.scheduler.counts["discarded_computed_rows"], 1)
+        self.assertEqual(self.scheduler.snapshot()["occupancy"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

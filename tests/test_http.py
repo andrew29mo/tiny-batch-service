@@ -167,6 +167,59 @@ class HTTPTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(stats["occupancy"], 0)
                 self.assertEqual(stats["records"][0]["reason"], "client_disconnect")
 
+    async def test_real_mixed_batch_keeps_rows_and_drains_following_tail(self):
+        outer = self
+        class GateBackend(ProcessBackend):
+            def __init__(self, path):
+                super().__init__(path)
+                self.gate, self.entered = asyncio.Event(), asyncio.Event()
+                outer.backend = self
+
+            async def infer(self, values):
+                self.entered.set()
+                await self.gate.wait()
+                return await super().infer(values)
+
+        client = TestClient(TestServer(create_app(self.fixture / "model.onnx", batch_size=3,
+                            wait_ms=20, capacity=6, backend_factory=GateBackend)))
+        await client.start_server()
+        pending = []
+        try:
+            async def call(identifier, index, timeout=5000):
+                async with client.post("/v1/infer", json=self.body(identifier, index, timeout)) as response:
+                    return response.status, await response.json()
+            pending = [asyncio.create_task(call("success", 0)),
+                       asyncio.create_task(call("timeout", 1, 100)),
+                       asyncio.create_task(call("cancel", 2))]
+            await asyncio.wait_for(self.backend.entered.wait(), 2)
+            pending.append(asyncio.create_task(call("tail", 449)))
+            async with client.delete("/v1/requests/cancel") as response:
+                self.assertEqual(response.status, 200)
+            self.assertEqual((await asyncio.wait_for(asyncio.shield(pending[1]), 2))[0], 504)
+            self.assertEqual((await pending[2])[0], 409)
+            async with client.get("/v1/stats") as response:
+                stats = await response.json()
+            self.assertEqual((stats["running"], stats["queued"], stats["occupancy"]), (3, 1, 4))
+            self.backend.gate.set()
+            results = await asyncio.wait_for(asyncio.gather(*pending), 3)
+            for position, index in ((0, 0), (3, 449)):
+                self.assertEqual(results[position][0], 200)
+                validate_response(results[position][1], self.reference[index])
+            for position in (1, 2):
+                self.assertNotIn("probabilities", results[position][1])
+            async with client.get("/v1/stats") as response:
+                stats = await response.json()
+            self.assertEqual(stats["occupancy"], 0)
+            self.assertEqual(stats["counts"], {"offered": 4, "admitted": 4, "cancelled": 1,
+                              "timeout": 1, "computed_rows": 4, "success": 2, "discarded_computed_rows": 2})
+            self.assertEqual([b["rows"] for b in stats["batches"]], [3, 1])
+            self.assertCountEqual([i for b in stats["batches"] for i in b["ids"]], ["success", "timeout", "cancel", "tail"])
+            self.assertEqual(len(stats["records"]), 4)
+        finally:
+            self.backend.gate.set()
+            await asyncio.gather(*pending, return_exceptions=True)
+            await client.close()
+
     async def test_actual_trace_runner_and_summary_use_production_service(self):
         trace = make_trace(25, 200)
         run = await trial(self.fixture / "model.onnx", self.fixture / "fixture.npz", trace,
@@ -175,6 +228,8 @@ class HTTPTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(summary["counts"]["success"], 25)
         self.assertEqual(summary["success_latency_ms"]["count"], 25)
         self.assertGreater(summary["peak_paired_rss_bytes"], 0)
+        self.assertGreaterEqual(summary["scheduled_success_latency_ms"]["p95"], summary["success_latency_ms"]["p95"])
+        self.assertGreater(summary["rss_sample_count"], 1)
         self.assertTrue(all(r["output_checked"] for r in run["client"]))
 
     def test_reference_validator_rejects_wrong_final_probability(self):
