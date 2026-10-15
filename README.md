@@ -105,6 +105,6 @@ The heavier tests check training-only inputs, exact exported frozen arrays, all 
 
 Optional retraining writes a new local artifact, leaving frozen evidence intact: `python tools/train_heavy_model.py --output examples/generated/retrained-heavy`. Reproducing training on another numerical stack need not produce byte-identical weights; ordinary verification uses the committed frozen arrays.
 
-[Architecture and methodology](docs/METHODOLOGY.md) · [Third-party attribution](THIRD_PARTY_NOTICES.md)
+[Architecture and methodology](docs/METHODOLOGY.md) · [Related work and practical lessons](docs/RELATED_WORK.md) · [Third-party attribution](THIRD_PARTY_NOTICES.md)
 
 No project license has been selected for the newly written service code. The reused frozen model retains its original MIT notice; dataset-derived values retain applicable CC BY 4.0 terms. No license from a sibling project is implicitly assigned to the new code.

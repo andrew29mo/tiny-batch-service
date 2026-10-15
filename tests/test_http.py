@@ -93,6 +93,24 @@ class HTTPTests(unittest.IsolatedAsyncioTestCase):
                     stats = await response.json()
                 self.assertEqual(stats["counts"].get("computed_rows", 0), 0)
 
+    async def test_deep_json_is_invalid_without_admission_and_service_recovers(self):
+        async with ManagedServer(self.fixture / "model.onnx", batch_size=1, wait_ms=0, capacity=8) as server:
+            async with aiohttp.ClientSession() as client:
+                # Valid JSON syntax, below the body limit, beyond the decoder's nesting limit.
+                payload = "[" * 2000 + "0" + "]" * 2000
+                self.assertLess(len(payload), 8192)
+                async with client.post(server.url + "/v1/infer", data=payload,
+                                       headers={"Content-Type": "application/json"}) as response:
+                    self.assertEqual(response.status, 400)
+                    self.assertEqual(await response.json(), {"status": "invalid_request"})
+                async with client.get(server.url + "/v1/stats") as response:
+                    audit = await response.json()
+                self.assertEqual(audit["counts"].get("offered", 0), 0)
+                self.assertEqual(audit["occupancy"], 0)
+                async with client.post(server.url + "/v1/infer", json=self.body("after_deep_json")) as response:
+                    self.assertEqual(response.status, 200)
+                    validate_response(await response.json(), self.reference[0])
+
     async def test_real_http_running_cancel_timeout_overload_and_compute_drain(self):
         # Hold the real backend before executing ORT, so state transitions are deterministic.
         # On release, the actual model still computes cancelled/expired running requests.
