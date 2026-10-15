@@ -45,6 +45,10 @@ class HeavyModelTests(unittest.IsolatedAsyncioTestCase):
         test_ids = state["provenance"]["test_ids"]
         self.assertEqual(len(ids), 1347)
         self.assertEqual(len(set(ids) & set(test_ids)), 0)
+        train_pixels = {x[i].astype(np.uint8).tobytes() for i in ids}
+        test_pixels = {x[i].astype(np.uint8).tobytes() for i in test_ids}
+        self.assertEqual((len(train_pixels), len(test_pixels)), (1347, 450))
+        self.assertEqual(train_pixels & test_pixels, set())
         with patch.object(train_heavy_model, "MLPClassifier") as estimator:
             train_heavy_model.fit_model()
         args, kwargs = estimator.return_value.fit.call_args
