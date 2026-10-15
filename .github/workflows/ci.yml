@@ -32,8 +32,12 @@ jobs:
       - name: Behavioral source mutations
         run: python tools/run_mutations.py
       - name: Recorded evidence and publication hygiene
-        run: python tools/check_project.py
+        run: |
+          python tools/check_project.py
+          python tools/check_project.py --directory results/heavy-macos-arm64
       - name: Actual HTTP/ORT timing smoke, not a performance gate
         run: |
           python tools/benchmark.py --output results/local/ci --count 40 --rates 200 --repeats 2
           python tools/check_project.py --directory results/local/ci --smoke
+          python tools/benchmark.py --profile heavy --output results/local/ci-heavy --count 40 --rates 200 --repeats 2
+          python tools/check_project.py --directory results/local/ci-heavy --smoke

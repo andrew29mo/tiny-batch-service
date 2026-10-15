@@ -11,4 +11,5 @@ AGENTS.md
 examples/generated/
 results/local/
 *.npz
+!examples/heavy-digits/weights.npz
 *.onnx

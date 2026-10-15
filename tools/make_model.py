@@ -18,7 +18,12 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def prepare(directory):
+def prepare(directory, profile="tiny"):
+    if profile == "heavy":
+        from make_heavy_model import prepare as prepare_heavy
+        return prepare_heavy(directory)
+    if profile != "tiny":
+        raise ValueError("Unknown model profile")
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
     state_path = ROOT / "examples/digits/model.json"
@@ -57,7 +62,9 @@ def prepare(directory):
     if not np.allclose(numpy_probabilities, reference, rtol=1e-4, atol=1e-5):
         raise ValueError("Independent float32 and sklearn references differ")
     np.savez(directory / "fixture.npz", inputs=values, reference=reference, labels=y[selected], sample_ids=selected)
-    manifest = {"model_sha256": digest(directory / "model.onnx"), "fixture_sha256": digest(directory / "fixture.npz"),
+    manifest = {"profile": "tiny", "name": "digits-tiny-mlp", "dimensions": [64, 32, 10], "parameters": 2410,
+                "model_bytes": (directory / "model.onnx").stat().st_size,
+                "model_sha256": digest(directory / "model.onnx"), "fixture_sha256": digest(directory / "fixture.npz"),
                 "state_sha256": digest(state_path), "rows": len(selected), "features": 64, "classes": 10,
                 "correct": int(np.sum(reference.argmax(1) == y[selected])),
                 "reference": "frozen sklearn float64 predict_proba cast to float32; independent NumPy float32 export check"}

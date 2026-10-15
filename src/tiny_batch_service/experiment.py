@@ -296,6 +296,8 @@ def summarize(run, trace):
         if actual["status"] != "overloaded":
             released = server["compute_finished_s"] if server["started_s"] is not None else server["terminal_s"]
             admission_events += [(server["received_s"], 1), (released, -1)]
+        else:
+            admission_events.append((server["received_s"], 0))
     computed = [i for b in run["batches"] for i in b["ids"]]
     expected_computed = [i for i, r in ledger.items() if r["started_s"] is not None]
     if sorted(computed) != sorted(expected_computed) or len(set(computed)) != len(computed):
@@ -314,6 +316,8 @@ def summarize(run, trace):
         prior_finish = b["finished_s"]
     occupancy, reconstructed_peak = 0, 1  # Eight sequential warmups each occupy one slot.
     for _, delta in sorted(admission_events):
+        if delta == 0 and occupancy != run["settings"]["capacity"]:
+            raise ValueError("Rejection occurred without physical capacity being full")
         occupancy += delta
         reconstructed_peak = max(reconstructed_peak, occupancy)
         if not 0 <= occupancy <= run["settings"]["capacity"]:
@@ -352,6 +356,10 @@ def summarize(run, trace):
             + [b["at_s"] - a["at_s"] for a, b in zip(samples, samples[1:])]
             + [window["end_s"] - samples[-1]["at_s"]])
     return {"counts": dict(counts), "observation_s": duration, "success_per_second": len(successful) / duration,
+            "rejection_rate": counts["overloaded"] / len(trace), "timeout_rate": counts["timeout"] / len(trace),
+            "success_rate": counts["success"] / len(trace),
+            "backend_busy_fraction": sum(b["finished_s"] - b["started_s"] for b in run["batches"]) / duration,
+            "mean_batch_rows": len(computed) / len(run["batches"]) if run["batches"] else 0.,
             "success_latency_ms": distribution(successful), "all_terminal_latency_ms": distribution(terminal_latency),
             "scheduled_success_latency_ms": distribution(scheduled_success),
             "scheduled_all_terminal_latency_ms": distribution(scheduled_terminal),

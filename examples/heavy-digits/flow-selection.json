@@ -1,0 +1,12 @@
+{
+  "rates": [
+    500.0,
+    3500.0,
+    6000.0,
+    10000.0
+  ],
+  "count": 6000,
+  "repeats": 4,
+  "calibration_sha256": "aa3f4ca3d57a55149295129f387300a75c044b644cf28a0d1375eaca2debd37d",
+  "rationale": "Prespecified after exploratory sweep, before repeated trials: low load, candidate near single-request saturation, single-request overload, high load. 15k/20k probes had >25 ms p99 arrival lag and cannot establish dynamic saturation. All probes, including warnings, retained. Final 10k trial warnings must remain visible; no rerun selection or dropped outliers."
+}

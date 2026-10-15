@@ -4,6 +4,7 @@ import copy
 import unittest
 
 from tiny_batch_service.experiment import make_trace, summarize
+from tiny_batch_service.report import table_rows
 
 
 class MetricTests(unittest.TestCase):
@@ -47,6 +48,10 @@ class MetricTests(unittest.TestCase):
         self.assertEqual(result["counts"], {"success": 1, "timeout": 2, "overloaded": 1})
         self.assertAlmostEqual(result["observation_s"], .300)  # Last response .272; native compute drains to .300.
         self.assertAlmostEqual(result["success_per_second"], 1 / .300)
+        self.assertAlmostEqual(result["rejection_rate"], .25)
+        self.assertAlmostEqual(result["timeout_rate"], .5)
+        self.assertAlmostEqual(result["backend_busy_fraction"], (.020 - .0021 + .300 - .0301) / .300)
+        self.assertAlmostEqual(result["mean_batch_rows"], 1.)
         self.assertAlmostEqual(result["success_latency_ms"]["p95"], 23.5)
         self.assertAlmostEqual(result["scheduled_success_latency_ms"]["p95"], 24.)
         self.assertAlmostEqual(result["all_terminal_latency_ms"]["p50"], 137.5)
@@ -65,12 +70,29 @@ class MetricTests(unittest.TestCase):
                   lambda r: r["rss_samples"][0].update(at_s=10000),
                   lambda r: r["client"][0].update(finished_s=float("nan")),
                   lambda r: r["audit"].update(peak_occupancy=1)]
+        faults.append(lambda r: (r["settings"].update(capacity=3), r["audit"].update(capacity=3)))
         for i, fault in enumerate(faults):
             with self.subTest(fault=i):
                 changed = copy.deepcopy(baseline)
                 fault(changed)
                 with self.assertRaises(ValueError):
                     summarize(changed, trace)
+
+    def test_displayed_rejection_percentage_uses_pooled_offered_denominator(self):
+        trace, run = self.fixture()
+        summary = summarize(run, trace)
+        runs = []
+        for mode in ("single", "dynamic"):
+            for rejects in (0, 1, 3):
+                row = copy.deepcopy(summary)
+                row.update(counts={"success": 4 - rejects, "overloaded": rejects, "timeout": 0},
+                           rejection_rate=rejects / 4)
+                runs.append({"mode": mode, "summary": row})
+        rows = table_rows({"cases": [{"trace": trace, "rate": 100., "runs": runs}]})
+        for row in rows:
+            self.assertEqual(row[2], "8/12")
+            self.assertEqual(row[3], 4)
+            self.assertEqual(row[4], "33.33%")  # A median of per-trial rates would misleadingly display 25%.
 
 
 if __name__ == "__main__":
