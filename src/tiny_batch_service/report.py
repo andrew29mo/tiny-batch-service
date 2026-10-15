@@ -9,7 +9,7 @@ import re
 from statistics import median
 import numpy as np
 
-from .experiment import distribution, fingerprint, summarize, source_hash, validate_response
+from .experiment import distribution, fingerprint, make_trace, summarize, source_hash, validate_response
 
 LIMITS = [
     "Local CPU-only experiment with one HTTP process and one ORT worker. No authentication or multi-tenant isolation; loopback/trusted inputs only.",
@@ -39,14 +39,14 @@ def resolve_run(stub, directory=None):
         run = json.loads(gzip.decompress(data))
     except (OSError, EOFError, json.JSONDecodeError) as error:
         raise ValueError("Invalid raw evidence") from error
-    expected_keys = {"mode", "trial", "settings", "environment", "trace_sha256", "summary"}
+    expected_keys = {"mode", "trial", "settings", "environment", "trace_sha256", "summary", "workload"}
     if set(stub) != expected_keys | {"evidence_file", "evidence_sha256"} or any(stub[k] != run[k] for k in expected_keys):
         raise ValueError("Raw evidence differs from report index")
     return run
 
 
 def verify(report, reference, directory=None):
-    if report["schema_version"] != 3 or report["source_sha256"] != source_hash() or report["measurement_scope"] != LIMITS:
+    if report["schema_version"] != 4 or report["source_sha256"] != source_hash() or report["measurement_scope"] != LIMITS:
         raise ValueError("Stale report provenance or scope")
     profile = report["model"]["profile"]
     if profile not in ("tiny", "heavy"):
@@ -60,6 +60,7 @@ def verify(report, reference, directory=None):
     for case in report["cases"]:
         trace = case["trace"]
         if (not trace or case["trace_sha256"] != fingerprint(trace)
+                or trace != make_trace(len(trace), case["rate"])
                 or any(t["id"] != f"r{i:06d}" or t["at_s"] != i / case["rate"] or not 0 <= t["index"] < 450
                        for i, t in enumerate(trace))):
             raise ValueError("Trace changed")
@@ -74,6 +75,10 @@ def verify(report, reference, directory=None):
                                  "wait_ms": 0. if run["mode"] == "single" else 2., "capacity": 64, "audit_limit": audit_limit}
             if run["settings"] != expected_settings or run["trace_sha256"] != case["trace_sha256"]:
                 raise ValueError("Unequal work or settings")
+            if (run["workload"] != {"loaded_model_sha256": report["model"]["model_sha256"],
+                                    "fixture_sha256": report["model"]["fixture_sha256"]}
+                    or run["environment"]["worker"]["loaded_model_sha256"] != report["model"]["model_sha256"]):
+                raise ValueError("Loaded model or actual input fixture differs")
             environment = run["environment"] if environment is None else environment
             if (environment != run["environment"] or run["environment"]["worker"]["provider"] != "CPUExecutionProvider"
                     or run["environment"]["worker"]["intra_threads"] != 1 or run["environment"]["worker"]["inter_threads"] != 1):
@@ -84,6 +89,8 @@ def verify(report, reference, directory=None):
                 if row["status"] == "success":
                     validate_response(row, reference[row["index"]])
             expected_order.append({"rate": case["rate"], "trial": run["trial"], "mode": run["mode"]})
+        if case["comparison"] != comparison(case, report["repeats"]):
+            raise ValueError("Comparison verdict differs from all prespecified pairs")
     if report["execution_order"] != expected_order:
         raise ValueError("Execution order differs")
 
@@ -112,6 +119,25 @@ def table_rows(report):
     return rows
 
 
+def comparison(case, repeats):
+    pairs = []
+    for trial in range(repeats):
+        group = {r["mode"]: r["summary"] for r in case["runs"] if r["trial"] == trial}
+        if set(group) != {"single", "dynamic"}:
+            raise ValueError("Missing comparison pair")
+        single, dynamic = group["single"], group["dynamic"]
+        a, b = single["scheduled_success_latency_ms"]["p95"], dynamic["scheduled_success_latency_ms"]["p95"]
+        pairs.append({"trial": trial, "arrival_check_passed": bool(single["arrival_fidelity_passed"] and dynamic["arrival_fidelity_passed"]),
+                      "descriptive_throughput_ratio": dynamic["success_per_second"] / single["success_per_second"] if single["success_per_second"] else None,
+                      "rejection_delta_pp": 100 * (dynamic["rejection_rate"] - single["rejection_rate"]),
+                      "scheduled_success_p95_delta_ms": b - a if a is not None and b is not None else None})
+    passed = sum(p["arrival_check_passed"] for p in pairs)
+    return {"basis": "all_prespecified_pairs", "passing_arrival_pairs": passed, "total_pairs": repeats,
+            "verdict": "inconclusive_arrival_fidelity" if passed != repeats else "descriptive_only_all_pairs_pass_coarse_check",
+            "warning": "Arrival-check outcome is measured after execution and can depend on mode/performance. Conditioning on passing pairs can introduce selection bias. No pass-only effect estimate is endorsed. A coarse-check pass is not a causal or statistical-significance claim.",
+            "pairs": pairs}
+
+
 def paired_rows(report):
     rows = []
     for case in report["cases"]:
@@ -127,7 +153,7 @@ def paired_rows(report):
                 tails.append(dynamic["scheduled_success_latency_ms"]["p95"] - single["scheduled_success_latency_ms"]["p95"])
         rows.append([case["rate"], f"{median(ratios):.3f} [{min(ratios):.3f}, {max(ratios):.3f}]" if ratios else "—",
                      f"{median(rejects):+.2f}", f"{median(tails):+.3f}" if tails else "—",
-                     f'{passing_pairs}/{report["repeats"]}'])
+                     f'{passing_pairs}/{report["repeats"]}', comparison(case, report["repeats"])["verdict"]])
     return rows
 
 
@@ -148,7 +174,9 @@ def write_report(report, directory):
     rows = "".join("<tr>" + "".join(f"<td>{esc(v)}</td>" for v in row) + "</tr>" for row in table_rows(report))
     scope = "".join(f"<li>{esc(line)}</li>" for line in LIMITS)
     details = {"source_sha256": report["source_sha256"], "model": report["model"], "policy": report["policy"],
+               "all_pair_comparisons": [{"rate": c["rate"], **c["comparison"]} for c in report["cases"]],
                "trials": [{"rate": c["rate"], "mode": r["mode"], "trial": r["trial"], "summary": r["summary"],
+                            "workload": r["workload"],
                             "http_lifetime_high_water_rss_bytes": r["audit"]["http_high_water_rss_bytes"],
                             "worker_lifetime_high_water_rss_bytes": r["audit"]["worker_high_water_rss_bytes"]}
                            for c in report["cases"] for stub in c["runs"] for r in [resolve_run(stub, directory)]]}
@@ -167,7 +195,7 @@ def write_report(report, directory):
 <section><h2>Matched scheduled arrivals</h2><p>Median per-trial throughput and successful-request percentiles; maximum paired sampled RSS, sample gap and per-trial p99 arrival lag. Counts sum every trial; rejection percentage uses total rejected / total offered. Each mode receives the same trace and total admitted capacity. The fixed arrival check requires per-trial p99 header-send and admission lag ≤25 ms. Passing this coarse check does not prove identical actual arrivals or burstiness, especially at sub-millisecond spacing. Inspect lag and scheduled latency; warnings preclude a clean traffic-matched performance conclusion.</p>
 <div class="scroll"><table><thead><tr>{''.join(f'<th>{esc(h)}</th>' for h in headers)}</tr></thead><tbody>{rows}</tbody></table></div>
 <p>Successful-only percentiles can improve when more requests are rejected. Inspect outcome counts, all-terminal percentiles and raw trials before making a performance claim. No speedup headline is generated.</p></section>
-<section><h2>Paired comparison</h2><p>Dynamic / single successful-throughput ratio: median [min, max] across every paired trial. Deltas are medians of paired differences, not differences of pooled rates. Positive rejection or p95 deltas mean dynamic is worse. This is descriptive, not a confidence interval. No warning trial is filtered out; the last column counts pairs where both modes passed the coarse arrival check. Reject/timeout rates and arrival checks must accompany every ratio; saturated successful-only latency has survivor bias.</p><table><tr><th>Offered req/s</th><th>Throughput ratio</th><th>Rejection delta pp</th><th>Scheduled success p95 delta ms</th><th>Passing arrival pairs</th></tr>{comparisons}</table></section>
+<section><h2>Paired comparison — all prespecified pairs</h2><p>Dynamic / single successful-throughput ratio: median [min, max] across every paired trial. Deltas are medians of paired differences, not differences of pooled rates. Positive rejection or p95 deltas mean dynamic is worse. This is descriptive, not a confidence interval. Any arrival-warning pair makes the case inconclusive for a matched-arrival benefit claim. Passing is a post-run outcome: restricting analysis to passing pairs can introduce selection bias. No pass-only effect estimate is endorsed. Even all pairs passing the coarse check does not establish causality or statistical significance. Reject/timeout rates must accompany every ratio; saturated successful-only latency has survivor bias.</p><table><tr><th>Offered req/s</th><th>All-pair descriptive ratio</th><th>Rejection delta pp</th><th>Scheduled success p95 delta ms</th><th>Passing arrival pairs</th><th>Assessment</th></tr>{comparisons}</table></section>
 {selection}
 <section><h2>Measurement scope</h2><ul>{scope}</ul></section>
 <section><h2>Evidence</h2><p><a href="report.json">JSON report (embedded raw trials or hash-linked compressed JSON trial files below)</a> · <a href="fixture.json">Retained input/reference fixture</a></p><ul>{evidence_links}</ul>
@@ -181,8 +209,8 @@ def overview(report, methodology="../../docs/METHODOLOGY.md"):
              "| Offered req/s | Mode | Success/offered | Rejected | Rejected % | Timeout | Success/s | Dispatch p50 ms | p95 ms | p99 ms | Scheduled p95 ms | Worst header lag p99 ms | Worst admission lag p99 ms | HTTP+worker RSS MiB | Max RSS gap ms | Backend+IPC busy | Mean batch rows | Arrival check |",
              "|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|"]
     lines += ["| " + " | ".join(map(str, row)) + " |" for row in table_rows(report)]
-    lines += ["", "Paired throughput ratio is dynamic / single: median [min, max]. Deltas are medians of paired differences, not differences of pooled rates. Positive deltas mean dynamic has more rejections or worse successful-request p95. Every trial, including arrival warnings, is included; passing pairs count both modes passing the coarse arrival check. Survivor bias applies under overload; do not compare latency without outcome rates.", "",
-              "| Offered req/s | Throughput ratio | Rejection delta pp | Scheduled success p95 delta ms | Passing arrival pairs |", "|---:|---:|---:|---:|---:|"]
+    lines += ["", "All-pair descriptive throughput ratio is dynamic / single: median [min, max]. Deltas are medians of paired differences, not differences of pooled rates. Every prespecified pair is included. Any arrival-warning pair makes the case inconclusive for a matched-arrival benefit claim. Passing is a post-run outcome that may depend on mode/performance: selecting only passing pairs can introduce selection bias; no pass-only effect estimate is endorsed. All pairs passing the coarse check still does not establish causality or statistical significance. Successful-only latency has survivor bias; consider all rejection/timeout counts.", "",
+              "| Offered req/s | All-pair descriptive ratio | Rejection delta pp | Scheduled success p95 delta ms | Passing arrival pairs | Assessment |", "|---:|---:|---:|---:|---:|---|"]
     lines += ["| " + " | ".join(map(str, row)) + " |" for row in paired_rows(report)]
     lines += ["", "Fixed policy: batch 1 / 0 ms versus batch 16 / 2 ms; equal capacity 64 counts waiting and physically running requests. Request deadline 250 ms. Four alternating fresh-process trial pairs are recommended; inspect the recorded repeat count.", "",
               "The same seeded arrival/input trace is replayed for both modes. Actual header-send and admission lag is shown. Passing the fixed 25 ms p99 arrival check does not prove identical actual arrivals or burstiness at sub-millisecond spacing. Scheduled latency includes generator delay; dispatch latency does not. Arrival warnings preclude a clean comparison.", "",

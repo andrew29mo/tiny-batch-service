@@ -65,7 +65,7 @@ def check(directory, *, smoke=False):
             need([c["rate"] for c in pilot["cases"]] == [500., 1500., 3000., 6000., 10000., 15000., 20000.], "Missing calibration probes")
             for case in pilot["cases"]:
                 for run in case["runs"]:
-                    need(run["summary"] == summarize(run, case["trace"]), "Calibration summary differs")
+                    need(run["summary"] == summarize(run, case["trace"], require_memory_bracketing=False), "Legacy calibration summary differs")
                     for row in run["client"]:
                         if row["status"] == "success":
                             validate_response(row, arrays["reference"][row["index"]])

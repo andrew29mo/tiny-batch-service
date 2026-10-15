@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+import shutil
 import unittest
 from unittest.mock import patch
 
@@ -67,6 +68,7 @@ class HeavyModelTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_actual_http_heavy_all_heldout_predictions_and_tail(self):
         async with ManagedServer(self.directory / "model.onnx", batch_size=16, wait_ms=5, capacity=512) as server:
+            self.assertEqual(server.metadata["worker"]["loaded_model_sha256"], self.manifest["model_sha256"])
             async with aiohttp.ClientSession() as client:
                 async def call(i):
                     async with client.post(server.url + "/v1/infer", json={"id": str(i), "input": self.inputs[i].tolist(), "timeout_ms": 5000}) as response:
@@ -84,6 +86,27 @@ class HeavyModelTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual(audit["occupancy"], 0)
                 self.assertEqual(len({i for b in audit["batches"] for i in b["ids"]}), 450)
                 self.assertTrue(any(b["rows"] < 16 for b in audit["batches"]))
+
+    async def test_digest_attests_loaded_session_not_later_file_contents(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "model.onnx"
+            shutil.copyfile(self.directory / "model.onnx", path)
+            async with ManagedServer(path, batch_size=1, wait_ms=0, capacity=64) as server:
+                path.write_bytes(b"changed after session initialization")
+                self.assertNotEqual(hashlib.sha256(path.read_bytes()).hexdigest(), self.manifest["model_sha256"])
+                self.assertEqual(server.metadata["worker"]["loaded_model_sha256"], self.manifest["model_sha256"])
+                async with aiohttp.ClientSession() as client:
+                    async with client.post(server.url + "/v1/infer", json={"id": "frozen", "input": self.inputs[0].tolist(), "timeout_ms": 5000}) as response:
+                        self.assertEqual(response.status, 200)
+                        validate_response(await response.json(), self.reference[0])
+
+    def test_split_rejects_duplicated_training_id_even_when_sets_match(self):
+        path = ROOT / "examples/digits/model.json"
+        state = json.loads(path.read_text())
+        state["provenance"]["train_ids"].append(state["provenance"]["train_ids"][0])
+        with patch.object(Path, "read_text", return_value=json.dumps(state)):
+            with self.assertRaises(ValueError):
+                train_heavy_model.training_data()
 
     def test_compressed_raw_trial_hash_and_index_must_both_match(self):
         directory = ROOT / "results/heavy-macos-arm64"

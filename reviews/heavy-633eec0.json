@@ -1,0 +1,252 @@
+{
+  "original_commit": "633eec023aaf1600807433df7d5a20e3eaac439e",
+  "original_report_sha256": "3ef7c281f45bd2a88c1cbe04ba7310dfd589a12e9fcda467f8a7ca7991935be3",
+  "original_source_sha256": "31cc6d9cfb7d4f270097cf07f1d56d05b79ea07d2271421755fd77f3294cae35",
+  "raw_evidence_sha256": {
+    "raw/case-0-trial-0-single.json.gz": "35e90db3f6d802173bd87e51d5171b6c48bef6000acc757a6c84ca1c18dea67a",
+    "raw/case-0-trial-0-dynamic.json.gz": "2d09c6a3834fb2848025d317a22625781b8afc2aa6101aacbf9ceba99cc63c5f",
+    "raw/case-0-trial-1-dynamic.json.gz": "9f5a4a8f1bf9f4f55860c3ac3934ea5849da514be9f6fcf81f7044a7374ad4b0",
+    "raw/case-0-trial-1-single.json.gz": "f71bb869205d1824bd96290e29a1ad212e2d1ef20d3956a30aabbcb2ec925d77",
+    "raw/case-0-trial-2-single.json.gz": "1953c04a4a110fe82dd724e8839c2e3c5667550aeaf1f40473300d2585200b89",
+    "raw/case-0-trial-2-dynamic.json.gz": "c47002ed6dd3e828e7566678915cbdc24c4cf43761f7ddf4097616d803eac3ee",
+    "raw/case-0-trial-3-dynamic.json.gz": "48bc65b0a84b37d9fa70803fe39b96339126617ae95a6611d808ffcce84e5660",
+    "raw/case-0-trial-3-single.json.gz": "d6624219e151dca41820aa39072998ef8afa74b2dc9444c4e4048b3c498a55cd",
+    "raw/case-1-trial-0-single.json.gz": "850f640de1758f622596457acd42b4e6f36c776ffb48ea498e26eb74aec45ba4",
+    "raw/case-1-trial-0-dynamic.json.gz": "fbdaa484beea6f42bb6c473a2d93ac02f6231d3d816c5f06145163082245abc3",
+    "raw/case-1-trial-1-dynamic.json.gz": "70bc78e6fe5e7f127e071eb92dfeb494f84cf33a248bd4bf481293aa90b6e783",
+    "raw/case-1-trial-1-single.json.gz": "dcc39caaefccb33c4d2a59ac01d7ee11abe2e7add267a41c126a81eeb6781636",
+    "raw/case-1-trial-2-single.json.gz": "63083ef4ff3b6d2017bb7e0ad9f06555f17376bca309d982140e053b7f2a10e9",
+    "raw/case-1-trial-2-dynamic.json.gz": "31836938651ab492c5191d9a01b15b65e37b13f7bb33e3a2ae232d3aeac24a7e",
+    "raw/case-1-trial-3-dynamic.json.gz": "5337d89364ba25e717dc5918630b706504be5c05ef3891135329a0e9c129026b",
+    "raw/case-1-trial-3-single.json.gz": "9ca433b191602fc75988b0e25794d00bb8d505a22a544012583d1e6369e5b716",
+    "raw/case-2-trial-0-single.json.gz": "8adba263ce9288cd441f366afaae7cdbd705e9c6dd3c7b9056cca5823551e4a9",
+    "raw/case-2-trial-0-dynamic.json.gz": "b253d052556770b9733ada09dd89c5f099d0130ea61430e872fac5c072ecbd2a",
+    "raw/case-2-trial-1-dynamic.json.gz": "d398ef01cff4e42c5442e5ddeab0b24cbbb7f9bb74b85fa278f389ac2dc93a12",
+    "raw/case-2-trial-1-single.json.gz": "77cc5b95bccfe5b0462f2bd2ff0f2b83c11878be5ec0c90cd7d81fc36b994922",
+    "raw/case-2-trial-2-single.json.gz": "675470de600826819c8c2ee0522c3361a1e7dbcbd8836e044bcb645fa58885b0",
+    "raw/case-2-trial-2-dynamic.json.gz": "3377430785875e9a78f732901fc0c7499b2f4b75ea5aabe9e974a76ad44fa9bb",
+    "raw/case-2-trial-3-dynamic.json.gz": "f95e607c443c4960817b76dd6552e5c2df97ee632ac08beec676d3568d6b7ffd",
+    "raw/case-2-trial-3-single.json.gz": "968fdd5e8391bd17a33a1f8497fd001adda27174781cc87b67d250052a6c5813",
+    "raw/case-3-trial-0-single.json.gz": "4ad8e9cd30e6509d556ccfc9ddec8a1b3d3c177d261132ea0c3b2f3fe246e9c9",
+    "raw/case-3-trial-0-dynamic.json.gz": "cc97a0769caeb1db202022e24d27cc4c184494aaac669ab79b520ca3d249e299",
+    "raw/case-3-trial-1-dynamic.json.gz": "95e2e425d0ff863c300a608e55bb6d0d07cead722bd50ac421b5618087489cda",
+    "raw/case-3-trial-1-single.json.gz": "7a8ab82a1e96c349fcc1adf574f693f5cc43b3a54a9398cea3ae77e2efbb84d7",
+    "raw/case-3-trial-2-single.json.gz": "0e2d0785ca5bf6e1bb49c5a81aa8d56f6d7724f666aecb3cf0fbdb79ca26b54f",
+    "raw/case-3-trial-2-dynamic.json.gz": "ec2382088a61a90a6554b97b6bc5dae0ffad83873cf3e8068319b243cff86335",
+    "raw/case-3-trial-3-dynamic.json.gz": "e43b460252bbaebdea23fd35f64b020c15ab70cb7faff26251a55ecff4fb14f9",
+    "raw/case-3-trial-3-single.json.gz": "9a27ff4bbd497330a18696c99165e6557d61ef5da8c07919e3d8bb2e26b2aa27"
+  },
+  "cases": [
+    {
+      "rate": 500.0,
+      "pairs": [
+        {
+          "trial": 0,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 0.9997596071496275,
+          "single_rejection_rate": 0.0,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 1.2799934443668561,
+          "dynamic_scheduled_success_p95_ms": 3.7097288429620123
+        },
+        {
+          "trial": 1,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 0.999886788803275,
+          "single_rejection_rate": 0.0,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 1.4294420114137507,
+          "dynamic_scheduled_success_p95_ms": 3.692552394710913
+        },
+        {
+          "trial": 2,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 0.9998035744297273,
+          "single_rejection_rate": 0.0,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 1.2918107659213085,
+          "dynamic_scheduled_success_p95_ms": 3.5486722352676026
+        },
+        {
+          "trial": 3,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 0.9997043483677505,
+          "single_rejection_rate": 0.0,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 1.353339248488461,
+          "dynamic_scheduled_success_p95_ms": 4.65031425533814
+        }
+      ],
+      "passing_pairs": 4,
+      "total_pairs": 4,
+      "all_pair_ratio_median": 0.9997815907896774,
+      "verdict": "descriptive_only",
+      "selection_warning": "Do not estimate a batching benefit by conditioning on the post-run arrival-check outcome."
+    },
+    {
+      "rate": 3500.0,
+      "pairs": [
+        {
+          "trial": 0,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 0.9984892113240466,
+          "single_rejection_rate": 0.0,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 1.4195326880085957,
+          "dynamic_scheduled_success_p95_ms": 10.937683630513511
+        },
+        {
+          "trial": 1,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 0.9995868330799588,
+          "single_rejection_rate": 0.0,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 2.1447696297129832,
+          "dynamic_scheduled_success_p95_ms": 2.7819955465234583
+        },
+        {
+          "trial": 2,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 0.9996826655438017,
+          "single_rejection_rate": 0.0,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 0.7897961313520362,
+          "dynamic_scheduled_success_p95_ms": 2.751963391334633
+        },
+        {
+          "trial": 3,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 0.9986232605541795,
+          "single_rejection_rate": 0.0,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 2.7453869262527264,
+          "dynamic_scheduled_success_p95_ms": 2.855617596085982
+        }
+      ],
+      "passing_pairs": 4,
+      "total_pairs": 4,
+      "all_pair_ratio_median": 0.9991050468170691,
+      "verdict": "descriptive_only",
+      "selection_warning": "Do not estimate a batching benefit by conditioning on the post-run arrival-check outcome."
+    },
+    {
+      "rate": 6000.0,
+      "pairs": [
+        {
+          "trial": 0,
+          "arrival_check_passed": false,
+          "descriptive_throughput_ratio": 1.7069387418811959,
+          "single_rejection_rate": 0.4083333333333333,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 52.92420033795828,
+          "dynamic_scheduled_success_p95_ms": 3.6892558709368957
+        },
+        {
+          "trial": 1,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 1.3999318148879216,
+          "single_rejection_rate": 0.2788333333333333,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 16.05200032241023,
+          "dynamic_scheduled_success_p95_ms": 3.029355917785628
+        },
+        {
+          "trial": 2,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 1.4063961384712709,
+          "single_rejection_rate": 0.2828333333333333,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 16.365387759210186,
+          "dynamic_scheduled_success_p95_ms": 2.940131896524665
+        },
+        {
+          "trial": 3,
+          "arrival_check_passed": false,
+          "descriptive_throughput_ratio": 2.4071603073760204,
+          "single_rejection_rate": 0.5498333333333333,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 98.854416979244,
+          "dynamic_scheduled_success_p95_ms": 3.874514249374628
+        }
+      ],
+      "passing_pairs": 2,
+      "total_pairs": 4,
+      "all_pair_ratio_median": 1.5566674401762333,
+      "verdict": "inconclusive_arrival_fidelity",
+      "selection_warning": "Do not estimate a batching benefit by conditioning on the post-run arrival-check outcome."
+    },
+    {
+      "rate": 10000.0,
+      "pairs": [
+        {
+          "trial": 0,
+          "arrival_check_passed": false,
+          "descriptive_throughput_ratio": 2.6543422089762703,
+          "single_rejection_rate": 0.6611666666666667,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 571.9388001871574,
+          "dynamic_scheduled_success_p95_ms": 719.6880965074338
+        },
+        {
+          "trial": 1,
+          "arrival_check_passed": true,
+          "descriptive_throughput_ratio": 2.6683634215340573,
+          "single_rejection_rate": 0.6185,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 32.23906700316816,
+          "dynamic_scheduled_success_p95_ms": 15.920454516494663
+        },
+        {
+          "trial": 2,
+          "arrival_check_passed": false,
+          "descriptive_throughput_ratio": 3.0470765008084157,
+          "single_rejection_rate": 0.6275,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 102.65869191904083,
+          "dynamic_scheduled_success_p95_ms": 17.029227725539812
+        },
+        {
+          "trial": 3,
+          "arrival_check_passed": false,
+          "descriptive_throughput_ratio": 3.4281028105986255,
+          "single_rejection_rate": 0.6846666666666666,
+          "dynamic_rejection_rate": 0.0,
+          "single_scheduled_success_p95_ms": 89.8883688910771,
+          "dynamic_scheduled_success_p95_ms": 20.38665385521948
+        }
+      ],
+      "passing_pairs": 1,
+      "total_pairs": 4,
+      "all_pair_ratio_median": 2.8577199611712363,
+      "verdict": "inconclusive_arrival_fidelity",
+      "selection_warning": "Do not estimate a batching benefit by conditioning on the post-run arrival-check outcome."
+    }
+  ],
+  "review_conclusion": "The former ~1.40x statement summarizes two passing pairs, not an unbiased effect estimate. Withdraw it as a confirmed batching benefit. All four pairs and warnings remain visible.",
+  "historical_limit": "Original runs lack a loaded-worker model digest and a per-run fixture digest. Common path/export hashes and numerical agreement are evidence, but not byte-level attestation of each loaded session.",
+  "training_reproduction": {
+    "n_iter": 60,
+    "seconds": 24.466329499991843,
+    "exact_arrays": {
+      "W0": true,
+      "W1": true,
+      "W2": true,
+      "W3": true,
+      "b0": true,
+      "b1": true,
+      "b2": true,
+      "b3": true
+    },
+    "max_abs_difference": {
+      "W0": 0.0,
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 0.0,
+      "b0": 0.0,
+      "b1": 0.0,
+      "b2": 0.0,
+      "b3": 0.0
+    },
+    "scope": "A real same-environment refit of the formal training-only path; not a cross-platform bitwise guarantee."
+  }
+}

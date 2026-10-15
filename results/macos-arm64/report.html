@@ -1,16 +1,16 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tiny Batch Service measurements</title><style>body{font:16px/1.6 system-ui;max-width:1400px;margin:40px auto;padding:0 24px;background:#f5f8fa;color:#172b3a}section{background:white;border:1px solid #dce4e8;padding:24px;margin:20px 0;border-radius:12px}table{border-collapse:collapse;white-space:nowrap}td,th{padding:10px;border-bottom:1px solid #ddd;text-align:left}.scroll{overflow:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}</style>
-<h1>Tiny Batch Service</h1><p>2026-10-15T05:34:37.810666+00:00 · actual HTTP + CPU ONNX Runtime · {&#x27;os&#x27;: &#x27;Darwin&#x27;, &#x27;os_release&#x27;: &#x27;27.0.0&#x27;, &#x27;machine&#x27;: &#x27;arm64&#x27;, &#x27;cpu_model&#x27;: &#x27;Apple M5 Pro&#x27;, &#x27;logical_cpus&#x27;: 15, &#x27;python&#x27;: &#x27;3.12.14&#x27;}</p>
+<h1>Tiny Batch Service</h1><p>2026-10-15T09:06:49.970864+00:00 · actual HTTP + CPU ONNX Runtime · {&#x27;os&#x27;: &#x27;Darwin&#x27;, &#x27;os_release&#x27;: &#x27;27.0.0&#x27;, &#x27;machine&#x27;: &#x27;arm64&#x27;, &#x27;cpu_model&#x27;: &#x27;Apple M5 Pro&#x27;, &#x27;logical_cpus&#x27;: 15, &#x27;python&#x27;: &#x27;3.12.14&#x27;}</p>
 <p>Model: digits-tiny-mlp · 2410 parameters · held-out reference accuracy 436/450. Agreement with this reference is checked for every successful request. This architecture is a systems workload, not an efficiency recommendation.</p>
 <section><h2>Matched scheduled arrivals</h2><p>Median per-trial throughput and successful-request percentiles; maximum paired sampled RSS, sample gap and per-trial p99 arrival lag. Counts sum every trial; rejection percentage uses total rejected / total offered. Each mode receives the same trace and total admitted capacity. The fixed arrival check requires per-trial p99 header-send and admission lag ≤25 ms. Passing this coarse check does not prove identical actual arrivals or burstiness, especially at sub-millisecond spacing. Inspect lag and scheduled latency; warnings preclude a clean traffic-matched performance conclusion.</p>
-<div class="scroll"><table><thead><tr><th>Offered req/s</th><th>Mode</th><th>Success / offered</th><th>Rejected</th><th>Rejected %</th><th>Timeout</th><th>Success/s</th><th>Dispatch success p50 ms</th><th>p95 ms</th><th>p99 ms</th><th>Scheduled success p95 ms</th><th>Worst header lag p99 ms</th><th>Worst admission lag p99 ms</th><th>Peak HTTP+worker RSS MiB</th><th>Max RSS gap ms</th><th>Backend+IPC busy</th><th>Mean batch rows</th><th>Arrival check</th></tr></thead><tbody><tr><td>100.0</td><td>single</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>100.2</td><td>1.211</td><td>1.888</td><td>2.195</td><td>2.430</td><td>1.023</td><td>1.529</td><td>104.20</td><td>21.636</td><td>3.8%</td><td>1.00</td><td>4/4 pass</td></tr><tr><td>100.0</td><td>dynamic</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>100.1</td><td>3.388</td><td>4.148</td><td>4.585</td><td>4.707</td><td>1.646</td><td>2.504</td><td>103.94</td><td>33.212</td><td>3.9%</td><td>1.00</td><td>4/4 pass</td></tr><tr><td>1000.0</td><td>single</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>1000.4</td><td>0.477</td><td>0.558</td><td>0.650</td><td>0.663</td><td>0.262</td><td>0.398</td><td>103.70</td><td>5.734</td><td>13.4%</td><td>1.00</td><td>4/4 pass</td></tr><tr><td>1000.0</td><td>dynamic</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>995.2</td><td>1.588</td><td>2.683</td><td>2.828</td><td>2.759</td><td>0.477</td><td>0.754</td><td>103.56</td><td>5.897</td><td>5.8%</td><td>2.97</td><td>4/4 pass</td></tr><tr><td>3000.0</td><td>single</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>2996.9</td><td>0.351</td><td>0.486</td><td>1.351</td><td>0.579</td><td>0.670</td><td>0.906</td><td>104.22</td><td>5.737</td><td>27.7%</td><td>1.00</td><td>4/4 pass</td></tr><tr><td>3000.0</td><td>dynamic</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>2971.0</td><td>1.691</td><td>2.609</td><td>2.900</td><td>2.693</td><td>0.663</td><td>0.880</td><td>103.83</td><td>5.843</td><td>6.3%</td><td>7.01</td><td>4/4 pass</td></tr></tbody></table></div>
+<div class="scroll"><table><thead><tr><th>Offered req/s</th><th>Mode</th><th>Success / offered</th><th>Rejected</th><th>Rejected %</th><th>Timeout</th><th>Success/s</th><th>Dispatch success p50 ms</th><th>p95 ms</th><th>p99 ms</th><th>Scheduled success p95 ms</th><th>Worst header lag p99 ms</th><th>Worst admission lag p99 ms</th><th>Peak HTTP+worker RSS MiB</th><th>Max RSS gap ms</th><th>Backend+IPC busy</th><th>Mean batch rows</th><th>Arrival check</th></tr></thead><tbody><tr><td>100.0</td><td>single</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>100.2</td><td>1.286</td><td>2.047</td><td>2.372</td><td>2.605</td><td>2.358</td><td>2.763</td><td>104.09</td><td>15.892</td><td>4.0%</td><td>1.00</td><td>4/4 pass</td></tr><tr><td>100.0</td><td>dynamic</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>100.1</td><td>3.555</td><td>4.281</td><td>4.680</td><td>4.836</td><td>1.193</td><td>1.728</td><td>104.08</td><td>33.455</td><td>4.0%</td><td>1.00</td><td>4/4 pass</td></tr><tr><td>1000.0</td><td>single</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>1000.4</td><td>0.489</td><td>0.578</td><td>0.686</td><td>0.678</td><td>1.709</td><td>3.192</td><td>104.06</td><td>7.422</td><td>13.9%</td><td>1.00</td><td>4/4 pass</td></tr><tr><td>1000.0</td><td>dynamic</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>997.2</td><td>1.644</td><td>2.728</td><td>3.290</td><td>2.808</td><td>0.593</td><td>0.861</td><td>103.86</td><td>5.727</td><td>6.4%</td><td>2.96</td><td>4/4 pass</td></tr><tr><td>3000.0</td><td>single</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>2996.6</td><td>0.344</td><td>0.470</td><td>1.319</td><td>0.545</td><td>1.654</td><td>1.855</td><td>103.92</td><td>5.733</td><td>27.2%</td><td>1.00</td><td>4/4 pass</td></tr><tr><td>3000.0</td><td>dynamic</td><td>1920/1920</td><td>0</td><td>0.00%</td><td>0</td><td>2985.7</td><td>1.670</td><td>2.590</td><td>2.935</td><td>2.659</td><td>0.670</td><td>0.858</td><td>103.88</td><td>5.717</td><td>5.7%</td><td>7.06</td><td>4/4 pass</td></tr></tbody></table></div>
 <p>Successful-only percentiles can improve when more requests are rejected. Inspect outcome counts, all-terminal percentiles and raw trials before making a performance claim. No speedup headline is generated.</p></section>
-<section><h2>Paired comparison</h2><p>Dynamic / single successful-throughput ratio: median [min, max] across every paired trial. Deltas are medians of paired differences, not differences of pooled rates. Positive rejection or p95 deltas mean dynamic is worse. This is descriptive, not a confidence interval. No warning trial is filtered out; the last column counts pairs where both modes passed the coarse arrival check. Reject/timeout rates and arrival checks must accompany every ratio; saturated successful-only latency has survivor bias.</p><table><tr><th>Offered req/s</th><th>Throughput ratio</th><th>Rejection delta pp</th><th>Scheduled success p95 delta ms</th><th>Passing arrival pairs</th></tr><tr><td>100.0</td><td>0.999 [0.999, 1.000]</td><td>+0.00</td><td>+2.333</td><td>4/4</td></tr><tr><td>1000.0</td><td>0.995 [0.991, 0.998]</td><td>+0.00</td><td>+2.087</td><td>4/4</td></tr><tr><td>3000.0</td><td>0.992 [0.984, 0.997]</td><td>+0.00</td><td>+2.108</td><td>4/4</td></tr></table></section>
+<section><h2>Paired comparison — all prespecified pairs</h2><p>Dynamic / single successful-throughput ratio: median [min, max] across every paired trial. Deltas are medians of paired differences, not differences of pooled rates. Positive rejection or p95 deltas mean dynamic is worse. This is descriptive, not a confidence interval. Any arrival-warning pair makes the case inconclusive for a matched-arrival benefit claim. Passing is a post-run outcome: restricting analysis to passing pairs can introduce selection bias. No pass-only effect estimate is endorsed. Even all pairs passing the coarse check does not establish causality or statistical significance. Reject/timeout rates must accompany every ratio; saturated successful-only latency has survivor bias.</p><table><tr><th>Offered req/s</th><th>All-pair descriptive ratio</th><th>Rejection delta pp</th><th>Scheduled success p95 delta ms</th><th>Passing arrival pairs</th><th>Assessment</th></tr><tr><td>100.0</td><td>1.000 [0.999, 1.000]</td><td>+0.00</td><td>+2.231</td><td>4/4</td><td>descriptive_only_all_pairs_pass_coarse_check</td></tr><tr><td>1000.0</td><td>0.997 [0.994, 0.998]</td><td>+0.00</td><td>+2.147</td><td>4/4</td><td>descriptive_only_all_pairs_pass_coarse_check</td></tr><tr><td>3000.0</td><td>0.996 [0.995, 0.997]</td><td>+0.00</td><td>+2.114</td><td>4/4</td><td>descriptive_only_all_pairs_pass_coarse_check</td></tr></table></section>
 
 <section><h2>Measurement scope</h2><ul><li>Local CPU-only experiment with one HTTP process and one ORT worker. No authentication or multi-tenant isolation; loopback/trusted inputs only.</li><li>Both modes replay identical scheduled arrivals and inputs. Actual dispatch/header/server arrival lag is retained; timing is not perfectly deterministic.</li><li>Successful-request latency excludes rejected/timed-out work. All outcome counts and all-terminal latency are shown alongside it; throughput counts successes only.</li><li>Scheduled latency runs from planned arrival through complete response decoding, including generator delay. Dispatch latency starts at actual client task dispatch. Reference checks are outside both timers but affect later scheduling; neither is raw model/kernel latency.</li><li>Paired RSS adds near-contemporaneous HTTP and worker process observations. Shared pages may be counted twice; this is not unique physical RAM or model-only memory.</li><li>RSS sampling requests 5 ms intervals and can miss short spikes. Actual sample gaps and paired-read duration are reported. Per-process OS lifetime high-water observations are retained separately, never added as a simultaneous peak.</li><li>The generator/controller, fixtures and multiprocessing resource-tracker helper are excluded from HTTP-plus-worker RSS. Audit buffers, diagnostic stats serialization and HTTP/IPC overhead are included. This is not total deployment memory. Finite audit retention is checked for eviction.</li><li>Warmups, imports and startup are excluded from traffic measurements. Processes are fresh per trial; caches, thermals and same-host load-generator contention are uncontrolled.</li><li>No universal batching speedup is assumed. Tiny models may gain little or lose latency through batching. Results are descriptive on one host.</li></ul></section>
 <section><h2>Evidence</h2><p><a href="report.json">JSON report (embedded raw trials or hash-linked compressed JSON trial files below)</a> · <a href="fixture.json">Retained input/reference fixture</a></p><ul></ul>
 <details><summary>Per-trial statistics, lifetime high-water observations and provenance</summary><pre>{
-  &quot;source_sha256&quot;: &quot;31cc6d9cfb7d4f270097cf07f1d56d05b79ea07d2271421755fd77f3294cae35&quot;,
+  &quot;source_sha256&quot;: &quot;4bb58ba308ab1e5835e708cdc675d1ef114c5bf24589aba4dfdaf679eb7698ca&quot;,
   &quot;model&quot;: {
     &quot;profile&quot;: &quot;tiny&quot;,
     &quot;name&quot;: &quot;digits-tiny-mlp&quot;,
@@ -40,6 +40,122 @@
     &quot;rss_interval_ms&quot;: 5,
     &quot;audit_limit&quot;: 4096
   },
+  &quot;all_pair_comparisons&quot;: [
+    {
+      &quot;rate&quot;: 100.0,
+      &quot;basis&quot;: &quot;all_prespecified_pairs&quot;,
+      &quot;passing_arrival_pairs&quot;: 4,
+      &quot;total_pairs&quot;: 4,
+      &quot;verdict&quot;: &quot;descriptive_only_all_pairs_pass_coarse_check&quot;,
+      &quot;warning&quot;: &quot;Arrival-check outcome is measured after execution and can depend on mode/performance. Conditioning on passing pairs can introduce selection bias. No pass-only effect estimate is endorsed. A coarse-check pass is not a causal or statistical-significance claim.&quot;,
+      &quot;pairs&quot;: [
+        {
+          &quot;trial&quot;: 0,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9995221565355885,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.229319814534281
+        },
+        {
+          &quot;trial&quot;: 1,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9992310980775848,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.2213006129020423
+        },
+        {
+          &quot;trial&quot;: 2,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9995229025020477,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.5149694230058524
+        },
+        {
+          &quot;trial&quot;: 3,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9996610001468103,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.232431535841701
+        }
+      ]
+    },
+    {
+      &quot;rate&quot;: 1000.0,
+      &quot;basis&quot;: &quot;all_prespecified_pairs&quot;,
+      &quot;passing_arrival_pairs&quot;: 4,
+      &quot;total_pairs&quot;: 4,
+      &quot;verdict&quot;: &quot;descriptive_only_all_pairs_pass_coarse_check&quot;,
+      &quot;warning&quot;: &quot;Arrival-check outcome is measured after execution and can depend on mode/performance. Conditioning on passing pairs can introduce selection bias. No pass-only effect estimate is endorsed. A coarse-check pass is not a causal or statistical-significance claim.&quot;,
+      &quot;pairs&quot;: [
+        {
+          &quot;trial&quot;: 0,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9961009409226562,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.1653811895637527
+        },
+        {
+          &quot;trial&quot;: 1,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9943566883689083,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.128008324350265
+        },
+        {
+          &quot;trial&quot;: 2,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9983602799394625,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.4507218391983416
+        },
+        {
+          &quot;trial&quot;: 3,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9975108900780852,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 1.8729447636869905
+        }
+      ]
+    },
+    {
+      &quot;rate&quot;: 3000.0,
+      &quot;basis&quot;: &quot;all_prespecified_pairs&quot;,
+      &quot;passing_arrival_pairs&quot;: 4,
+      &quot;total_pairs&quot;: 4,
+      &quot;verdict&quot;: &quot;descriptive_only_all_pairs_pass_coarse_check&quot;,
+      &quot;warning&quot;: &quot;Arrival-check outcome is measured after execution and can depend on mode/performance. Conditioning on passing pairs can introduce selection bias. No pass-only effect estimate is endorsed. A coarse-check pass is not a causal or statistical-significance claim.&quot;,
+      &quot;pairs&quot;: [
+        {
+          &quot;trial&quot;: 0,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9965659081656879,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.0767482626174343
+        },
+        {
+          &quot;trial&quot;: 1,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9946796365151058,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.1117062812360605
+        },
+        {
+          &quot;trial&quot;: 2,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9962411324059309,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.1172017494798676
+        },
+        {
+          &quot;trial&quot;: 3,
+          &quot;arrival_check_passed&quot;: true,
+          &quot;descriptive_throughput_ratio&quot;: 0.9964114108451169,
+          &quot;rejection_delta_pp&quot;: 0.0,
+          &quot;scheduled_success_p95_delta_ms&quot;: 2.129758379123329
+        }
+      ]
+    }
+  ],
   &quot;trials&quot;: [
     {
       &quot;rate&quot;: 100.0,
@@ -49,686 +165,717 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 4.791902457975084,
-        &quot;success_per_second&quot;: 100.16898386592656,
+        &quot;observation_s&quot;: 4.792166083003394,
+        &quot;success_per_second&quot;: 100.16347340348638,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.033926426763016625,
+        &quot;backend_busy_fraction&quot;: 0.040098212220684756,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5562079895753413,
-          &quot;p50&quot;: 1.1113749933429062,
-          &quot;p95&quot;: 1.5908443980151787,
-          &quot;p99&quot;: 1.9589250089484267,
-          &quot;max&quot;: 2.346333989407867
+          &quot;min&quot;: 0.4661249986384064,
+          &quot;p50&quot;: 1.2582499912241474,
+          &quot;p95&quot;: 2.068261898239142,
+          &quot;p99&quot;: 3.605226941581346,
+          &quot;max&quot;: 11.006749991793185
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5562079895753413,
-          &quot;p50&quot;: 1.1113749933429062,
-          &quot;p95&quot;: 1.5908443980151787,
-          &quot;p99&quot;: 1.9589250089484267,
-          &quot;max&quot;: 2.346333989407867
+          &quot;min&quot;: 0.4661249986384064,
+          &quot;p50&quot;: 1.2582499912241474,
+          &quot;p95&quot;: 2.068261898239142,
+          &quot;p99&quot;: 3.605226941581346,
+          &quot;max&quot;: 11.006749991793185
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.7112079951916428,
-          &quot;p50&quot;: 1.481228984775873,
-          &quot;p95&quot;: 2.083401725511036,
-          &quot;p99&quot;: 2.3862649797811395,
-          &quot;max&quot;: 2.687415977707275
+          &quot;min&quot;: 0.6759169953873823,
+          &quot;p50&quot;: 1.6488335118629571,
+          &quot;p95&quot;: 2.6304857625510545,
+          &quot;p99&quot;: 4.684520502039127,
+          &quot;max&quot;: 21.811457995790985
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.7112079951916428,
-          &quot;p50&quot;: 1.481228984775873,
-          &quot;p95&quot;: 2.083401725511036,
-          &quot;p99&quot;: 2.3862649797811395,
-          &quot;max&quot;: 2.687415977707275
+          &quot;min&quot;: 0.6759169953873823,
+          &quot;p50&quot;: 1.6488335118629571,
+          &quot;p95&quot;: 2.6304857625510545,
+          &quot;p99&quot;: 4.684520502039127,
+          &quot;max&quot;: 21.811457995790985
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.15695799258530485,
-          &quot;p50&quot;: 0.5052079795860032,
-          &quot;p95&quot;: 0.839902042527485,
-          &quot;p99&quot;: 0.9495472199865373,
-          &quot;max&quot;: 1.0915829730220317
+          &quot;min&quot;: 0.11887499596929807,
+          &quot;p50&quot;: 0.5777914950155782,
+          &quot;p95&quot;: 0.9784958587262914,
+          &quot;p99&quot;: 2.3583618593053046,
+          &quot;max&quot;: 19.64612500625662
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.2840829733763428,
-          &quot;p50&quot;: 0.7955829863203201,
-          &quot;p95&quot;: 1.1706666229871485,
-          &quot;p99&quot;: 1.3015184773016037,
-          &quot;max&quot;: 1.5484579838811463
+          &quot;min&quot;: 0.2847080107313271,
+          &quot;p50&quot;: 0.8943960053148237,
+          &quot;p95&quot;: 1.4676708599435422,
+          &quot;p99&quot;: 2.763424940488934,
+          &quot;max&quot;: 20.46341699780896
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.026583002181723714,
-          &quot;p50&quot;: 0.049063004553318024,
-          &quot;p95&quot;: 0.06821634888183324,
-          &quot;p99&quot;: 0.09473167796386404,
-          &quot;max&quot;: 0.2238340093754232
-        },
-        &quot;batch_sizes&quot;: {
-          &quot;1&quot;: 480
-        },
-        &quot;peak_http_rss_bytes&quot;: 42680320,
-        &quot;peak_worker_rss_bytes&quot;: 66076672,
-        &quot;peak_paired_rss_bytes&quot;: 108756992,
-        &quot;memory_observation_s&quot;: 4.896657500008587,
-        &quot;rss_sample_count&quot;: 900,
-        &quot;max_rss_gap_ms&quot;: 5.816082993987948,
-        &quot;max_paired_read_ms&quot;: 0.11399999493733048,
-        &quot;arrival_fidelity_passed&quot;: true
-      },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42680320,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66076672
-    },
-    {
-      &quot;rate&quot;: 100.0,
-      &quot;mode&quot;: &quot;dynamic&quot;,
-      &quot;trial&quot;: 0,
-      &quot;summary&quot;: {
-        &quot;counts&quot;: {
-          &quot;success&quot;: 480
-        },
-        &quot;observation_s&quot;: 4.794672999996692,
-        &quot;success_per_second&quot;: 100.11110246732805,
-        &quot;rejection_rate&quot;: 0.0,
-        &quot;timeout_rate&quot;: 0.0,
-        &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.034468399166893496,
-        &quot;mean_batch_rows&quot;: 1.0,
-        &quot;success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.7141660102643073,
-          &quot;p50&quot;: 3.3502084988867864,
-          &quot;p95&quot;: 3.9560419958434068,
-          &quot;p99&quot;: 4.202836755721363,
-          &quot;max&quot;: 5.01558298128657
-        },
-        &quot;all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.7141660102643073,
-          &quot;p50&quot;: 3.3502084988867864,
-          &quot;p95&quot;: 3.9560419958434068,
-          &quot;p99&quot;: 4.202836755721363,
-          &quot;max&quot;: 5.01558298128657
-        },
-        &quot;scheduled_success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.8166249825152256,
-          &quot;p50&quot;: 3.74674947874154,
-          &quot;p95&quot;: 4.439760086010241,
-          &quot;p99&quot;: 4.819132238998785,
-          &quot;max&quot;: 9.734165990957777
-        },
-        &quot;scheduled_all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.8166249825152256,
-          &quot;p50&quot;: 3.74674947874154,
-          &quot;p95&quot;: 4.439760086010241,
-          &quot;p99&quot;: 4.819132238998785,
-          &quot;max&quot;: 9.734165990957777
-        },
-        &quot;header_send_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.11608297703791237,
-          &quot;p50&quot;: 0.5692079872824385,
-          &quot;p95&quot;: 0.8859680906751044,
-          &quot;p99&quot;: 1.022138621075763,
-          &quot;max&quot;: 5.795499999075915
-        },
-        &quot;server_arrival_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.21874999860305167,
-          &quot;p50&quot;: 0.827666490804374,
-          &quot;p95&quot;: 1.2505951849739902,
-          &quot;p99&quot;: 1.435543665057057,
-          &quot;max&quot;: 6.350540983257602
-        },
-        &quot;queue_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.057625009911135,
-          &quot;p50&quot;: 2.284500005771406,
-          &quot;p95&quot;: 2.3242327093612403,
-          &quot;p99&quot;: 2.3782023586682035,
-          &quot;max&quot;: 3.169333009282127
-        },
-        &quot;batch_sizes&quot;: {
-          &quot;1&quot;: 480
-        },
-        &quot;peak_http_rss_bytes&quot;: 42778624,
-        &quot;peak_worker_rss_bytes&quot;: 66076672,
-        &quot;peak_paired_rss_bytes&quot;: 108855296,
-        &quot;memory_observation_s&quot;: 4.901400292001199,
-        &quot;rss_sample_count&quot;: 916,
-        &quot;max_rss_gap_ms&quot;: 9.976500004995614,
-        &quot;max_paired_read_ms&quot;: 0.21858300897292793,
-        &quot;arrival_fidelity_passed&quot;: true
-      },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42745856,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66076672
-    },
-    {
-      &quot;rate&quot;: 100.0,
-      &quot;mode&quot;: &quot;dynamic&quot;,
-      &quot;trial&quot;: 1,
-      &quot;summary&quot;: {
-        &quot;counts&quot;: {
-          &quot;success&quot;: 480
-        },
-        &quot;observation_s&quot;: 4.794692833995214,
-        &quot;success_per_second&quot;: 100.11068834205932,
-        &quot;rejection_rate&quot;: 0.0,
-        &quot;timeout_rate&quot;: 0.0,
-        &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.03769470736957018,
-        &quot;mean_batch_rows&quot;: 1.0,
-        &quot;success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.745000005234033,
-          &quot;p50&quot;: 3.381062502739951,
-          &quot;p95&quot;: 4.130662487295921,
-          &quot;p99&quot;: 4.520711236691568,
-          &quot;max&quot;: 9.870624984614551
-        },
-        &quot;all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.745000005234033,
-          &quot;p50&quot;: 3.381062502739951,
-          &quot;p95&quot;: 4.130662487295921,
-          &quot;p99&quot;: 4.520711236691568,
-          &quot;max&quot;: 9.870624984614551
-        },
-        &quot;scheduled_success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.9525000078138017,
-          &quot;p50&quot;: 3.8090210099469557,
-          &quot;p95&quot;: 4.609312488697481,
-          &quot;p99&quot;: 5.1299763611518765,
-          &quot;max&quot;: 10.241583995520998
-        },
-        &quot;scheduled_all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.9525000078138017,
-          &quot;p50&quot;: 3.8090210099469557,
-          &quot;p95&quot;: 4.609312488697481,
-          &quot;p99&quot;: 5.1299763611518765,
-          &quot;max&quot;: 10.241583995520998
-        },
-        &quot;header_send_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.15233401325520646,
-          &quot;p50&quot;: 0.5780419969232398,
-          &quot;p95&quot;: 0.8635395956807068,
-          &quot;p99&quot;: 1.027778886479811,
-          &quot;max&quot;: 5.843874993734066
-        },
-        &quot;server_arrival_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.3165000060108003,
-          &quot;p50&quot;: 0.8323960012056597,
-          &quot;p95&quot;: 1.2726840033427498,
-          &quot;p99&quot;: 1.5144458335359665,
-          &quot;max&quot;: 6.268749998416756
-        },
-        &quot;queue_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.034208009717986,
-          &quot;p50&quot;: 2.2947705001570284,
-          &quot;p95&quot;: 2.334391642943956,
-          &quot;p99&quot;: 2.3839030240196735,
-          &quot;max&quot;: 6.407541979569942
-        },
-        &quot;batch_sizes&quot;: {
-          &quot;1&quot;: 480
-        },
-        &quot;peak_http_rss_bytes&quot;: 42811392,
-        &quot;peak_worker_rss_bytes&quot;: 66191360,
-        &quot;peak_paired_rss_bytes&quot;: 108986368,
-        &quot;memory_observation_s&quot;: 4.901872500020545,
-        &quot;rss_sample_count&quot;: 915,
-        &quot;max_rss_gap_ms&quot;: 10.432999988552183,
-        &quot;max_paired_read_ms&quot;: 0.10325000039301813,
-        &quot;arrival_fidelity_passed&quot;: true
-      },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42647552,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66191360
-    },
-    {
-      &quot;rate&quot;: 100.0,
-      &quot;mode&quot;: &quot;single&quot;,
-      &quot;trial&quot;: 1,
-      &quot;summary&quot;: {
-        &quot;counts&quot;: {
-          &quot;success&quot;: 480
-        },
-        &quot;observation_s&quot;: 4.792022624984384,
-        &quot;success_per_second&quot;: 100.16647198145569,
-        &quot;rejection_rate&quot;: 0.0,
-        &quot;timeout_rate&quot;: 0.0,
-        &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.03749867434986063,
-        &quot;mean_batch_rows&quot;: 1.0,
-        &quot;success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5697919987142086,
-          &quot;p50&quot;: 1.2108749942854047,
-          &quot;p95&quot;: 1.8650332989636809,
-          &quot;p99&quot;: 2.106577508966438,
-          &quot;max&quot;: 2.4342910037375987
-        },
-        &quot;all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5697919987142086,
-          &quot;p50&quot;: 1.2108749942854047,
-          &quot;p95&quot;: 1.8650332989636809,
-          &quot;p99&quot;: 2.106577508966438,
-          &quot;max&quot;: 2.4342910037375987
-        },
-        &quot;scheduled_success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6973749992903316,
-          &quot;p50&quot;: 1.611728991265382,
-          &quot;p95&quot;: 2.398474661167793,
-          &quot;p99&quot;: 2.648249856336148,
-          &quot;max&quot;: 6.582540998933961
-        },
-        &quot;scheduled_all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6973749992903316,
-          &quot;p50&quot;: 1.611728991265382,
-          &quot;p95&quot;: 2.398474661167793,
-          &quot;p99&quot;: 2.648249856336148,
-          &quot;max&quot;: 6.582540998933961
-        },
-        &quot;header_send_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.13633300899527911,
-          &quot;p50&quot;: 0.5519369890680803,
-          &quot;p95&quot;: 0.9018538389933939,
-          &quot;p99&quot;: 0.9983686860768558,
-          &quot;max&quot;: 5.296083007706454
-        },
-        &quot;server_arrival_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.27887498494237606,
-          &quot;p50&quot;: 0.8739369979592904,
-          &quot;p95&quot;: 1.3085624958040443,
-          &quot;p99&quot;: 1.4778036131873802,
-          &quot;max&quot;: 5.719291003188243
-        },
-        &quot;queue_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.02750000567175448,
-          &quot;p50&quot;: 0.05208300717640668,
-          &quot;p95&quot;: 0.07500416686525568,
-          &quot;p99&quot;: 0.09283510677050795,
-          &quot;max&quot;: 0.15916602569632232
-        },
-        &quot;batch_sizes&quot;: {
-          &quot;1&quot;: 480
-        },
-        &quot;peak_http_rss_bytes&quot;: 42860544,
-        &quot;peak_worker_rss_bytes&quot;: 66404352,
-        &quot;peak_paired_rss_bytes&quot;: 109264896,
-        &quot;memory_observation_s&quot;: 4.899324792000698,
-        &quot;rss_sample_count&quot;: 899,
-        &quot;max_rss_gap_ms&quot;: 5.898874980630353,
-        &quot;max_paired_read_ms&quot;: 0.09016698459163308,
-        &quot;arrival_fidelity_passed&quot;: true
-      },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42696704,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66404352
-    },
-    {
-      &quot;rate&quot;: 100.0,
-      &quot;mode&quot;: &quot;single&quot;,
-      &quot;trial&quot;: 2,
-      &quot;summary&quot;: {
-        &quot;counts&quot;: {
-          &quot;success&quot;: 480
-        },
-        &quot;observation_s&quot;: 4.791541083017364,
-        &quot;success_per_second&quot;: 100.1765385464943,
-        &quot;rejection_rate&quot;: 0.0,
-        &quot;timeout_rate&quot;: 0.0,
-        &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.038793265941654824,
-        &quot;mean_batch_rows&quot;: 1.0,
-        &quot;success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5554589733947068,
-          &quot;p50&quot;: 1.2102500040782616,
-          &quot;p95&quot;: 1.9115204981062552,
-          &quot;p99&quot;: 2.283123729866926,
-          &quot;max&quot;: 7.495958998333663
-        },
-        &quot;all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5554589733947068,
-          &quot;p50&quot;: 1.2102500040782616,
-          &quot;p95&quot;: 1.9115204981062552,
-          &quot;p99&quot;: 2.283123729866926,
-          &quot;max&quot;: 7.495958998333663
-        },
-        &quot;scheduled_success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.697583019500847,
-          &quot;p50&quot;: 1.629854001803377,
-          &quot;p95&quot;: 2.4624440634506737,
-          &quot;p99&quot;: 2.7614694413029937,
-          &quot;max&quot;: 15.420792006188844
-        },
-        &quot;scheduled_all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.697583019500847,
-          &quot;p50&quot;: 1.629854001803377,
-          &quot;p95&quot;: 2.4624440634506737,
-          &quot;p99&quot;: 2.7614694413029937,
-          &quot;max&quot;: 15.420792006188844
-        },
-        &quot;header_send_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.13762500137115552,
-          &quot;p50&quot;: 0.5652500077848455,
-          &quot;p95&quot;: 0.931000006210536,
-          &quot;p99&quot;: 1.0214886896894781,
-          &quot;max&quot;: 13.180958012817268
-        },
-        &quot;server_arrival_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.28787501039939656,
-          &quot;p50&quot;: 0.8745205187006277,
-          &quot;p95&quot;: 1.3463913649323975,
-          &quot;p99&quot;: 1.5023642620070932,
-          &quot;max&quot;: 14.06783301383241
-        },
-        &quot;queue_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.02487501478753984,
-          &quot;p50&quot;: 0.051833500037901103,
-          &quot;p95&quot;: 0.08376044715987517,
-          &quot;p99&quot;: 0.15318237943574756,
-          &quot;max&quot;: 0.18762500258162618
-        },
-        &quot;batch_sizes&quot;: {
-          &quot;1&quot;: 480
-        },
-        &quot;peak_http_rss_bytes&quot;: 42745856,
-        &quot;peak_worker_rss_bytes&quot;: 66224128,
-        &quot;peak_paired_rss_bytes&quot;: 108969984,
-        &quot;memory_observation_s&quot;: 4.896140541997738,
-        &quot;rss_sample_count&quot;: 896,
-        &quot;max_rss_gap_ms&quot;: 21.635749988490716,
-        &quot;max_paired_read_ms&quot;: 0.3737920196726918,
-        &quot;arrival_fidelity_passed&quot;: true
-      },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42745856,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66224128
-    },
-    {
-      &quot;rate&quot;: 100.0,
-      &quot;mode&quot;: &quot;dynamic&quot;,
-      &quot;trial&quot;: 2,
-      &quot;summary&quot;: {
-        &quot;counts&quot;: {
-          &quot;success&quot;: 480
-        },
-        &quot;observation_s&quot;: 4.794003499991959,
-        &quot;success_per_second&quot;: 100.12508334647755,
-        &quot;rejection_rate&quot;: 0.0,
-        &quot;timeout_rate&quot;: 0.0,
-        &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.039596531575077046,
-        &quot;mean_batch_rows&quot;: 1.0020876826722338,
-        &quot;success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.761999989161268,
-          &quot;p50&quot;: 3.3953749807551503,
-          &quot;p95&quot;: 4.166091697697993,
-          &quot;p99&quot;: 6.569286104931924,
-          &quot;max&quot;: 20.009957981528714
-        },
-        &quot;all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.761999989161268,
-          &quot;p50&quot;: 3.3953749807551503,
-          &quot;p95&quot;: 4.166091697697993,
-          &quot;p99&quot;: 6.569286104931924,
-          &quot;max&quot;: 20.009957981528714
-        },
-        &quot;scheduled_success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.856457992456818,
-          &quot;p50&quot;: 3.799666485283404,
-          &quot;p95&quot;: 4.85502739407806,
-          &quot;p99&quot;: 8.936160482221897,
-          &quot;max&quot;: 20.74345798231647
-        },
-        &quot;scheduled_all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.856457992456818,
-          &quot;p50&quot;: 3.799666485283404,
-          &quot;p95&quot;: 4.85502739407806,
-          &quot;p99&quot;: 8.936160482221897,
-          &quot;max&quot;: 20.74345798231647
-        },
-        &quot;header_send_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.1247079775201776,
-          &quot;p50&quot;: 0.5728749826084956,
-          &quot;p95&quot;: 0.9494913459060057,
-          &quot;p99&quot;: 1.6460294081014786,
-          &quot;max&quot;: 9.822541977046129
-        },
-        &quot;server_arrival_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.2362499735317769,
-          &quot;p50&quot;: 0.8462499873711504,
-          &quot;p95&quot;: 1.3797333455877496,
-          &quot;p99&quot;: 2.504272552113922,
-          &quot;max&quot;: 10.317874997854304
-        },
-        &quot;queue_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 1.091583981178701,
-          &quot;p50&quot;: 2.294311998412013,
-          &quot;p95&quot;: 2.361195870616939,
-          &quot;p99&quot;: 2.5920924285310303,
-          &quot;max&quot;: 17.987625004025176
-        },
-        &quot;batch_sizes&quot;: {
-          &quot;1&quot;: 478,
-          &quot;2&quot;: 1
-        },
-        &quot;peak_http_rss_bytes&quot;: 42434560,
-        &quot;peak_worker_rss_bytes&quot;: 66076672,
-        &quot;peak_paired_rss_bytes&quot;: 108511232,
-        &quot;memory_observation_s&quot;: 4.898265208990779,
-        &quot;rss_sample_count&quot;: 910,
-        &quot;max_rss_gap_ms&quot;: 18.639791989699006,
-        &quot;max_paired_read_ms&quot;: 0.4183340060990304,
-        &quot;arrival_fidelity_passed&quot;: true
-      },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42434560,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66076672
-    },
-    {
-      &quot;rate&quot;: 100.0,
-      &quot;mode&quot;: &quot;dynamic&quot;,
-      &quot;trial&quot;: 3,
-      &quot;summary&quot;: {
-        &quot;counts&quot;: {
-          &quot;success&quot;: 480
-        },
-        &quot;observation_s&quot;: 4.793680625007255,
-        &quot;success_per_second&quot;: 100.1318272009983,
-        &quot;rejection_rate&quot;: 0.0,
-        &quot;timeout_rate&quot;: 0.0,
-        &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.04173641463034374,
-        &quot;mean_batch_rows&quot;: 1.0062893081761006,
-        &quot;success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.4778750084806234,
-          &quot;p50&quot;: 3.6181044852128252,
-          &quot;p95&quot;: 4.192414246790577,
-          &quot;p99&quot;: 4.648290747718419,
-          &quot;max&quot;: 33.23491700575687
-        },
-        &quot;all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.4778750084806234,
-          &quot;p50&quot;: 3.6181044852128252,
-          &quot;p95&quot;: 4.192414246790577,
-          &quot;p99&quot;: 4.648290747718419,
-          &quot;max&quot;: 33.23491700575687
-        },
-        &quot;scheduled_success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.565416008001198,
-          &quot;p50&quot;: 4.010603997157913,
-          &quot;p95&quot;: 4.803987490828198,
-          &quot;p99&quot;: 5.375713757553902,
-          &quot;max&quot;: 33.67787500959807
-        },
-        &quot;scheduled_all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 2.565416008001198,
-          &quot;p50&quot;: 4.010603997157913,
-          &quot;p95&quot;: 4.803987490828198,
-          &quot;p99&quot;: 5.375713757553902,
-          &quot;max&quot;: 33.67787500959807
-        },
-        &quot;header_send_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.1151250011752758,
-          &quot;p50&quot;: 0.5873535032153154,
-          &quot;p95&quot;: 0.9321041455842224,
-          &quot;p99&quot;: 1.1579641909689504,
-          &quot;max&quot;: 21.51695800246678
-        },
-        &quot;server_arrival_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.22854099632241276,
-          &quot;p50&quot;: 0.8951454947235815,
-          &quot;p95&quot;: 1.3744583002408548,
-          &quot;p99&quot;: 1.863964323408455,
-          &quot;max&quot;: 30.965125017100803
-        },
-        &quot;queue_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 1.17570799193345,
-          &quot;p50&quot;: 2.3031875025480986,
-          &quot;p95&quot;: 2.353089617099613,
-          &quot;p99&quot;: 2.4369524294161233,
-          &quot;max&quot;: 4.8607499920763075
-        },
-        &quot;batch_sizes&quot;: {
-          &quot;1&quot;: 476,
-          &quot;4&quot;: 1
-        },
-        &quot;peak_http_rss_bytes&quot;: 42467328,
-        &quot;peak_worker_rss_bytes&quot;: 65978368,
-        &quot;peak_paired_rss_bytes&quot;: 108445696,
-        &quot;memory_observation_s&quot;: 4.897894624999026,
-        &quot;rss_sample_count&quot;: 911,
-        &quot;max_rss_gap_ms&quot;: 33.211917005246505,
-        &quot;max_paired_read_ms&quot;: 0.11295799049548805,
-        &quot;arrival_fidelity_passed&quot;: true
-      },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42467328,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65978368
-    },
-    {
-      &quot;rate&quot;: 100.0,
-      &quot;mode&quot;: &quot;single&quot;,
-      &quot;trial&quot;: 3,
-      &quot;summary&quot;: {
-        &quot;counts&quot;: {
-          &quot;success&quot;: 480
-        },
-        &quot;observation_s&quot;: 4.791432499972871,
-        &quot;success_per_second&quot;: 100.17880873887252,
-        &quot;rejection_rate&quot;: 0.0,
-        &quot;timeout_rate&quot;: 0.0,
-        &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.037655849320145075,
-        &quot;mean_batch_rows&quot;: 1.0,
-        &quot;success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5513750074896961,
-          &quot;p50&quot;: 1.233041999512352,
-          &quot;p95&quot;: 2.0330812403699374,
-          &quot;p99&quot;: 2.5450675855972795,
-          &quot;max&quot;: 3.2051249872893095
-        },
-        &quot;all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5513750074896961,
-          &quot;p50&quot;: 1.233041999512352,
-          &quot;p95&quot;: 2.0330812403699374,
-          &quot;p99&quot;: 2.5450675855972795,
-          &quot;max&quot;: 3.2051249872893095
-        },
-        &quot;scheduled_success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6530419911723317,
-          &quot;p50&quot;: 1.6322914714692605,
-          &quot;p95&quot;: 2.4947437216176813,
-          &quot;p99&quot;: 2.8910674046491875,
-          &quot;max&quot;: 7.895374991931048
-        },
-        &quot;scheduled_all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6530419911723317,
-          &quot;p50&quot;: 1.6322914714692605,
-          &quot;p95&quot;: 2.4947437216176813,
-          &quot;p99&quot;: 2.8910674046491875,
-          &quot;max&quot;: 7.895374991931048
-        },
-        &quot;header_send_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.131416975054921,
-          &quot;p50&quot;: 0.5673959822161123,
-          &quot;p95&quot;: 0.9424121781484439,
-          &quot;p99&quot;: 1.022945052245566,
-          &quot;max&quot;: 5.8737499942072
-        },
-        &quot;server_arrival_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.2795419993344428,
-          &quot;p50&quot;: 0.8757084875832266,
-          &quot;p95&quot;: 1.355908633093494,
-          &quot;p99&quot;: 1.5285774247022113,
-          &quot;max&quot;: 6.130291994195458
-        },
-        &quot;queue_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.025125016691163182,
-          &quot;p50&quot;: 0.05343799421098083,
-          &quot;p95&quot;: 0.08004169794730838,
-          &quot;p99&quot;: 0.11558495811186671,
-          &quot;max&quot;: 0.5817909841425717
+          &quot;min&quot;: 0.026291003450751305,
+          &quot;p50&quot;: 0.05416700150817633,
+          &quot;p95&quot;: 0.09325206046923995,
+          &quot;p99&quot;: 0.2035417594015595,
+          &quot;max&quot;: 0.704374979250133
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
         &quot;peak_http_rss_bytes&quot;: 42418176,
-        &quot;peak_worker_rss_bytes&quot;: 66076672,
-        &quot;peak_paired_rss_bytes&quot;: 108494848,
-        &quot;memory_observation_s&quot;: 4.896164666977711,
-        &quot;rss_sample_count&quot;: 897,
-        &quot;max_rss_gap_ms&quot;: 9.504458023002371,
-        &quot;max_paired_read_ms&quot;: 0.13149998267181218,
+        &quot;peak_worker_rss_bytes&quot;: 66060288,
+        &quot;peak_paired_rss_bytes&quot;: 108462080,
+        &quot;memory_observation_s&quot;: 4.898065915971529,
+        &quot;rss_sample_count&quot;: 893,
+        &quot;max_rss_gap_ms&quot;: 15.892208990408108,
+        &quot;max_paired_read_ms&quot;: 0.17962499987334013,
         &quot;arrival_fidelity_passed&quot;: true
       },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
       &quot;http_lifetime_high_water_rss_bytes&quot;: 42418176,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66060288
+    },
+    {
+      &quot;rate&quot;: 100.0,
+      &quot;mode&quot;: &quot;dynamic&quot;,
+      &quot;trial&quot;: 0,
+      &quot;summary&quot;: {
+        &quot;counts&quot;: {
+          &quot;success&quot;: 480
+        },
+        &quot;observation_s&quot;: 4.7944570829859,
+        &quot;success_per_second&quot;: 100.11561094234777,
+        &quot;rejection_rate&quot;: 0.0,
+        &quot;timeout_rate&quot;: 0.0,
+        &quot;success_rate&quot;: 1.0,
+        &quot;backend_busy_fraction&quot;: 0.040284227969436384,
+        &quot;mean_batch_rows&quot;: 1.0,
+        &quot;success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.833457983797416,
+          &quot;p50&quot;: 3.584687496186234,
+          &quot;p95&quot;: 4.254479199880734,
+          &quot;p99&quot;: 4.584204464918001,
+          &quot;max&quot;: 9.029625012772158
+        },
+        &quot;all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.833457983797416,
+          &quot;p50&quot;: 3.584687496186234,
+          &quot;p95&quot;: 4.254479199880734,
+          &quot;p99&quot;: 4.584204464918001,
+          &quot;max&quot;: 9.029625012772158
+        },
+        &quot;scheduled_success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.9132910014595392,
+          &quot;p50&quot;: 3.9675829804037277,
+          &quot;p95&quot;: 4.859805577085336,
+          &quot;p99&quot;: 5.374214309919863,
+          &quot;max&quot;: 9.377457988448246
+        },
+        &quot;scheduled_all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.9132910014595392,
+          &quot;p50&quot;: 3.9675829804037277,
+          &quot;p95&quot;: 4.859805577085336,
+          &quot;p99&quot;: 5.374214309919863,
+          &quot;max&quot;: 9.377457988448246
+        },
+        &quot;header_send_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.13524999958458572,
+          &quot;p50&quot;: 0.5771454982459456,
+          &quot;p95&quot;: 0.9795541495548843,
+          &quot;p99&quot;: 1.1925279876798862,
+          &quot;max&quot;: 5.783165980828731
+        },
+        &quot;server_arrival_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.25979099445971876,
+          &quot;p50&quot;: 0.8792079956038146,
+          &quot;p95&quot;: 1.4112850762903468,
+          &quot;p99&quot;: 1.7281959848013433,
+          &quot;max&quot;: 6.1638749914707525
+        },
+        &quot;queue_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.058042009593919,
+          &quot;p50&quot;: 2.294417005032301,
+          &quot;p95&quot;: 2.3477896058466285,
+          &quot;p99&quot;: 2.386177641164977,
+          &quot;max&quot;: 4.822957998840138
+        },
+        &quot;batch_sizes&quot;: {
+          &quot;1&quot;: 480
+        },
+        &quot;peak_http_rss_bytes&quot;: 43106304,
+        &quot;peak_worker_rss_bytes&quot;: 65880064,
+        &quot;peak_paired_rss_bytes&quot;: 108953600,
+        &quot;memory_observation_s&quot;: 4.898923999979161,
+        &quot;rss_sample_count&quot;: 915,
+        &quot;max_rss_gap_ms&quot;: 9.528458002023399,
+        &quot;max_paired_read_ms&quot;: 0.18487501074559987,
+        &quot;arrival_fidelity_passed&quot;: true
+      },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42631168,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65880064
+    },
+    {
+      &quot;rate&quot;: 100.0,
+      &quot;mode&quot;: &quot;dynamic&quot;,
+      &quot;trial&quot;: 1,
+      &quot;summary&quot;: {
+        &quot;counts&quot;: {
+          &quot;success&quot;: 480
+        },
+        &quot;observation_s&quot;: 4.795149916986702,
+        &quot;success_per_second&quot;: 100.10114559705666,
+        &quot;rejection_rate&quot;: 0.0,
+        &quot;timeout_rate&quot;: 0.0,
+        &quot;success_rate&quot;: 1.0,
+        &quot;backend_busy_fraction&quot;: 0.040530588088335824,
+        &quot;mean_batch_rows&quot;: 1.0,
+        &quot;success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.6695000124163926,
+          &quot;p50&quot;: 3.5700205044122413,
+          &quot;p95&quot;: 4.336701740976423,
+          &quot;p99&quot;: 4.70639881415991,
+          &quot;max&quot;: 5.268917011562735
+        },
+        &quot;all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.6695000124163926,
+          &quot;p50&quot;: 3.5700205044122413,
+          &quot;p95&quot;: 4.336701740976423,
+          &quot;p99&quot;: 4.70639881415991,
+          &quot;max&quot;: 5.268917011562735
+        },
+        &quot;scheduled_success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.8359589946922448,
+          &quot;p50&quot;: 3.980770989437721,
+          &quot;p95&quot;: 4.895742300839532,
+          &quot;p99&quot;: 5.167035175918058,
+          &quot;max&quot;: 5.825458983890641
+        },
+        &quot;scheduled_all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.8359589946922448,
+          &quot;p50&quot;: 3.980770989437721,
+          &quot;p95&quot;: 4.895742300839532,
+          &quot;p99&quot;: 5.167035175918058,
+          &quot;max&quot;: 5.825458983890641
+        },
+        &quot;header_send_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.1029169966932919,
+          &quot;p50&quot;: 0.6103129836265708,
+          &quot;p95&quot;: 0.9665416989010798,
+          &quot;p99&quot;: 1.1152507326681294,
+          &quot;max&quot;: 1.5948339877649431
+        },
+        &quot;server_arrival_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.2340840024408486,
+          &quot;p50&quot;: 0.9121874871198532,
+          &quot;p95&quot;: 1.4368169884548498,
+          &quot;p99&quot;: 1.5876788826892372,
+          &quot;max&quot;: 2.2475419845431333
+        },
+        &quot;queue_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.0728340023197234,
+          &quot;p50&quot;: 2.294750011060387,
+          &quot;p95&quot;: 2.3483898796257563,
+          &quot;p99&quot;: 2.3885611724108458,
+          &quot;max&quot;: 2.681792015209794
+        },
+        &quot;batch_sizes&quot;: {
+          &quot;1&quot;: 480
+        },
+        &quot;peak_http_rss_bytes&quot;: 43073536,
+        &quot;peak_worker_rss_bytes&quot;: 65912832,
+        &quot;peak_paired_rss_bytes&quot;: 108969984,
+        &quot;memory_observation_s&quot;: 4.901890542008914,
+        &quot;rss_sample_count&quot;: 918,
+        &quot;max_rss_gap_ms&quot;: 6.007791991578415,
+        &quot;max_paired_read_ms&quot;: 0.14683298650197685,
+        &quot;arrival_fidelity_passed&quot;: true
+      },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42565632,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65912832
+    },
+    {
+      &quot;rate&quot;: 100.0,
+      &quot;mode&quot;: &quot;single&quot;,
+      &quot;trial&quot;: 1,
+      &quot;summary&quot;: {
+        &quot;counts&quot;: {
+          &quot;success&quot;: 480
+        },
+        &quot;observation_s&quot;: 4.791462916997261,
+        &quot;success_per_second&quot;: 100.1781727866964,
+        &quot;rejection_rate&quot;: 0.0,
+        &quot;timeout_rate&quot;: 0.0,
+        &quot;success_rate&quot;: 1.0,
+        &quot;backend_busy_fraction&quot;: 0.040729845687177975,
+        &quot;mean_batch_rows&quot;: 1.0,
+        &quot;success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.5688749952241778,
+          &quot;p50&quot;: 1.314708511927165,
+          &quot;p95&quot;: 2.12696008675266,
+          &quot;p99&quot;: 2.379043893597554,
+          &quot;max&quot;: 3.15145798958838
+        },
+        &quot;all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.5688749952241778,
+          &quot;p50&quot;: 1.314708511927165,
+          &quot;p95&quot;: 2.12696008675266,
+          &quot;p99&quot;: 2.379043893597554,
+          &quot;max&quot;: 3.15145798958838
+        },
+        &quot;scheduled_success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.7601249928120557,
+          &quot;p50&quot;: 1.735791991231972,
+          &quot;p95&quot;: 2.67444168793749,
+          &quot;p99&quot;: 2.989606992725724,
+          &quot;max&quot;: 3.5294169757982274
+        },
+        &quot;scheduled_all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.7601249928120557,
+          &quot;p50&quot;: 1.735791991231972,
+          &quot;p95&quot;: 2.67444168793749,
+          &quot;p99&quot;: 2.989606992725724,
+          &quot;max&quot;: 3.5294169757982274
+        },
+        &quot;header_send_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.1875839848071159,
+          &quot;p50&quot;: 0.5869169713696998,
+          &quot;p95&quot;: 0.9613708258839667,
+          &quot;p99&quot;: 1.135301349964014,
+          &quot;max&quot;: 1.2505839869847435
+        },
+        &quot;server_arrival_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.3624999977178689,
+          &quot;p50&quot;: 0.915479481336634,
+          &quot;p95&quot;: 1.4603565949946604,
+          &quot;p99&quot;: 1.672697483899545,
+          &quot;max&quot;: 1.9999589887449432
+        },
+        &quot;queue_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.026708992663770914,
+          &quot;p50&quot;: 0.055957993026822805,
+          &quot;p95&quot;: 0.0875431258464231,
+          &quot;p99&quot;: 0.11752936756238336,
+          &quot;max&quot;: 0.3064170014113188
+        },
+        &quot;batch_sizes&quot;: {
+          &quot;1&quot;: 480
+        },
+        &quot;peak_http_rss_bytes&quot;: 43155456,
+        &quot;peak_worker_rss_bytes&quot;: 65929216,
+        &quot;peak_paired_rss_bytes&quot;: 109084672,
+        &quot;memory_observation_s&quot;: 4.899586916988483,
+        &quot;rss_sample_count&quot;: 900,
+        &quot;max_rss_gap_ms&quot;: 6.294416991295293,
+        &quot;max_paired_read_ms&quot;: 0.3077079891227186,
+        &quot;arrival_fidelity_passed&quot;: true
+      },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42680320,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65929216
+    },
+    {
+      &quot;rate&quot;: 100.0,
+      &quot;mode&quot;: &quot;single&quot;,
+      &quot;trial&quot;: 2,
+      &quot;summary&quot;: {
+        &quot;counts&quot;: {
+          &quot;success&quot;: 480
+        },
+        &quot;observation_s&quot;: 4.791458457999397,
+        &quot;success_per_second&quot;: 100.17826601389693,
+        &quot;rejection_rate&quot;: 0.0,
+        &quot;timeout_rate&quot;: 0.0,
+        &quot;success_rate&quot;: 1.0,
+        &quot;backend_busy_fraction&quot;: 0.029925231993745235,
+        &quot;mean_batch_rows&quot;: 1.0,
+        &quot;success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.41725000482983887,
+          &quot;p50&quot;: 0.9180624911095947,
+          &quot;p95&quot;: 1.8046961500658651,
+          &quot;p99&quot;: 2.182398748409467,
+          &quot;max&quot;: 2.657000004546717
+        },
+        &quot;all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.41725000482983887,
+          &quot;p50&quot;: 0.9180624911095947,
+          &quot;p95&quot;: 1.8046961500658651,
+          &quot;p99&quot;: 2.182398748409467,
+          &quot;max&quot;: 2.657000004546717
+        },
+        &quot;scheduled_success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.5356669891627419,
+          &quot;p50&quot;: 1.3371670106424594,
+          &quot;p95&quot;: 2.2535267354105377,
+          &quot;p99&quot;: 2.5668831397431173,
+          &quot;max&quot;: 3.2352920062841406
+        },
+        &quot;scheduled_all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.5356669891627419,
+          &quot;p50&quot;: 1.3371670106424594,
+          &quot;p95&quot;: 2.2535267354105377,
+          &quot;p99&quot;: 2.5668831397431173,
+          &quot;max&quot;: 3.2352920062841406
+        },
+        &quot;header_send_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.12866700650193685,
+          &quot;p50&quot;: 0.5317709955852123,
+          &quot;p95&quot;: 0.8236708454788078,
+          &quot;p99&quot;: 0.9719406400339724,
+          &quot;max&quot;: 1.0986250103450779
+        },
+        &quot;server_arrival_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.2562919887714177,
+          &quot;p50&quot;: 0.7814170012714339,
+          &quot;p95&quot;: 1.2390624942494988,
+          &quot;p99&quot;: 1.418386993976139,
+          &quot;max&quot;: 1.643374996492586
+        },
+        &quot;queue_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.021624990040436387,
+          &quot;p50&quot;: 0.041541497921571136,
+          &quot;p95&quot;: 0.07563334511360152,
+          &quot;p99&quot;: 0.11468642391264436,
+          &quot;max&quot;: 0.15233299927785993
+        },
+        &quot;batch_sizes&quot;: {
+          &quot;1&quot;: 480
+        },
+        &quot;peak_http_rss_bytes&quot;: 43073536,
+        &quot;peak_worker_rss_bytes&quot;: 66076672,
+        &quot;peak_paired_rss_bytes&quot;: 109150208,
+        &quot;memory_observation_s&quot;: 4.898004749993561,
+        &quot;rss_sample_count&quot;: 899,
+        &quot;max_rss_gap_ms&quot;: 6.210166990058497,
+        &quot;max_paired_read_ms&quot;: 0.23233299725688994,
+        &quot;arrival_fidelity_passed&quot;: true
+      },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42762240,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66076672
+    },
+    {
+      &quot;rate&quot;: 100.0,
+      &quot;mode&quot;: &quot;dynamic&quot;,
+      &quot;trial&quot;: 2,
+      &quot;summary&quot;: {
+        &quot;counts&quot;: {
+          &quot;success&quot;: 480
+        },
+        &quot;observation_s&quot;: 4.7937455420033075,
+        &quot;success_per_second&quot;: 100.1304712138325,
+        &quot;rejection_rate&quot;: 0.0,
+        &quot;timeout_rate&quot;: 0.0,
+        &quot;success_rate&quot;: 1.0,
+        &quot;backend_busy_fraction&quot;: 0.03812519138808265,
+        &quot;mean_batch_rows&quot;: 1.0,
+        &quot;success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.6300830068066716,
+          &quot;p50&quot;: 3.4859375009546056,
+          &quot;p95&quot;: 4.217748196970204,
+          &quot;p99&quot;: 4.662909967009909,
+          &quot;max&quot;: 9.607374988263473
+        },
+        &quot;all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.6300830068066716,
+          &quot;p50&quot;: 3.4859375009546056,
+          &quot;p95&quot;: 4.217748196970204,
+          &quot;p99&quot;: 4.662909967009909,
+          &quot;max&quot;: 9.607374988263473
+        },
+        &quot;scheduled_success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.729874994838788,
+          &quot;p50&quot;: 3.8592090096790654,
+          &quot;p95&quot;: 4.76849615841639,
+          &quot;p99&quot;: 5.110245088860441,
+          &quot;max&quot;: 10.226291997823989
+        },
+        &quot;scheduled_all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.729874994838788,
+          &quot;p50&quot;: 3.8592090096790654,
+          &quot;p95&quot;: 4.76849615841639,
+          &quot;p99&quot;: 5.110245088860441,
+          &quot;max&quot;: 10.226291997823989
+        },
+        &quot;header_send_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.10049999691563727,
+          &quot;p50&quot;: 0.5827499984296658,
+          &quot;p95&quot;: 0.9173569155391343,
+          &quot;p99&quot;: 1.0587452538777506,
+          &quot;max&quot;: 1.1794590135105754
+        },
+        &quot;server_arrival_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.19316700054350378,
+          &quot;p50&quot;: 0.8625420089811708,
+          &quot;p95&quot;: 1.3433715129504304,
+          &quot;p99&quot;: 1.533268253016166,
+          &quot;max&quot;: 2.6562500011642065
+        },
+        &quot;queue_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.051165996817872,
+          &quot;p50&quot;: 2.2922500065760687,
+          &quot;p95&quot;: 2.34623509895755,
+          &quot;p99&quot;: 2.4010598426684733,
+          &quot;max&quot;: 5.889208987355232
+        },
+        &quot;batch_sizes&quot;: {
+          &quot;1&quot;: 480
+        },
+        &quot;peak_http_rss_bytes&quot;: 43171840,
+        &quot;peak_worker_rss_bytes&quot;: 65978368,
+        &quot;peak_paired_rss_bytes&quot;: 109133824,
+        &quot;memory_observation_s&quot;: 4.901014040980954,
+        &quot;rss_sample_count&quot;: 917,
+        &quot;max_rss_gap_ms&quot;: 6.416000018361956,
+        &quot;max_paired_read_ms&quot;: 0.21524998010136187,
+        &quot;arrival_fidelity_passed&quot;: true
+      },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42696704,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65978368
+    },
+    {
+      &quot;rate&quot;: 100.0,
+      &quot;mode&quot;: &quot;dynamic&quot;,
+      &quot;trial&quot;: 3,
+      &quot;summary&quot;: {
+        &quot;counts&quot;: {
+          &quot;success&quot;: 480
+        },
+        &quot;observation_s&quot;: 4.794128916983027,
+        &quot;success_per_second&quot;: 100.12246402044332,
+        &quot;rejection_rate&quot;: 0.0,
+        &quot;timeout_rate&quot;: 0.0,
+        &quot;success_rate&quot;: 1.0,
+        &quot;backend_busy_fraction&quot;: 0.04041365277325997,
+        &quot;mean_batch_rows&quot;: 1.0062893081761006,
+        &quot;success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.7420829865150154,
+          &quot;p50&quot;: 3.5392290010349825,
+          &quot;p95&quot;: 4.307291351142339,
+          &quot;p99&quot;: 4.697154996392783,
+          &quot;max&quot;: 32.37229198566638
+        },
+        &quot;all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.7420829865150154,
+          &quot;p50&quot;: 3.5392290010349825,
+          &quot;p95&quot;: 4.307291351142339,
+          &quot;p99&quot;: 4.697154996392783,
+          &quot;max&quot;: 32.37229198566638
+        },
+        &quot;scheduled_success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.9074580024462184,
+          &quot;p50&quot;: 3.9271459798327912,
+          &quot;p95&quot;: 4.812854144896694,
+          &quot;p99&quot;: 5.769909391412753,
+          &quot;max&quot;: 32.94904198730375
+        },
+        &quot;scheduled_all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 2.9074580024462184,
+          &quot;p50&quot;: 3.9271459798327912,
+          &quot;p95&quot;: 4.812854144896694,
+          &quot;p99&quot;: 5.769909391412753,
+          &quot;max&quot;: 32.94904198730375
+        },
+        &quot;header_send_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.11291699367577124,
+          &quot;p50&quot;: 0.5900209996614336,
+          &quot;p95&quot;: 0.9333271029754451,
+          &quot;p99&quot;: 1.175253818440164,
+          &quot;max&quot;: 20.69704198162059
+        },
+        &quot;server_arrival_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.26250000111760485,
+          &quot;p50&quot;: 0.8794999815291416,
+          &quot;p95&quot;: 1.3625315273533498,
+          &quot;p99&quot;: 1.7115569854737258,
+          &quot;max&quot;: 30.06587498122837
+        },
+        &quot;queue_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 1.274749985896051,
+          &quot;p50&quot;: 2.294875477673486,
+          &quot;p95&quot;: 2.3537684479379095,
+          &quot;p99&quot;: 2.426071170193608,
+          &quot;max&quot;: 6.053042015992105
+        },
+        &quot;batch_sizes&quot;: {
+          &quot;1&quot;: 476,
+          &quot;4&quot;: 1
+        },
+        &quot;peak_http_rss_bytes&quot;: 43139072,
+        &quot;peak_worker_rss_bytes&quot;: 65945600,
+        &quot;peak_paired_rss_bytes&quot;: 109084672,
+        &quot;memory_observation_s&quot;: 4.898312042001635,
+        &quot;rss_sample_count&quot;: 911,
+        &quot;max_rss_gap_ms&quot;: 33.454874996095896,
+        &quot;max_paired_read_ms&quot;: 0.1727089984342456,
+        &quot;arrival_fidelity_passed&quot;: true
+      },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42745856,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65945600
+    },
+    {
+      &quot;rate&quot;: 100.0,
+      &quot;mode&quot;: &quot;single&quot;,
+      &quot;trial&quot;: 3,
+      &quot;summary&quot;: {
+        &quot;counts&quot;: {
+          &quot;success&quot;: 480
+        },
+        &quot;observation_s&quot;: 4.792503707983997,
+        &quot;success_per_second&quot;: 100.15641703111288,
+        &quot;rejection_rate&quot;: 0.0,
+        &quot;timeout_rate&quot;: 0.0,
+        &quot;success_rate&quot;: 1.0,
+        &quot;backend_busy_fraction&quot;: 0.040699679947177304,
+        &quot;mean_batch_rows&quot;: 1.0,
+        &quot;success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.4952909948769957,
+          &quot;p50&quot;: 1.345103999483399,
+          &quot;p95&quot;: 2.026622605626471,
+          &quot;p99&quot;: 2.364030002790967,
+          &quot;max&quot;: 2.887458016630262
+        },
+        &quot;all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.4952909948769957,
+          &quot;p50&quot;: 1.345103999483399,
+          &quot;p95&quot;: 2.026622605626471,
+          &quot;p99&quot;: 2.364030002790967,
+          &quot;max&quot;: 2.887458016630262
+        },
+        &quot;scheduled_success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.6351659819483768,
+          &quot;p50&quot;: 1.7148539947811903,
+          &quot;p95&quot;: 2.5804226090549935,
+          &quot;p99&quot;: 3.138713599462205,
+          &quot;max&quot;: 5.068124986719269
+        },
+        &quot;scheduled_all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.6351659819483768,
+          &quot;p50&quot;: 1.7148539947811903,
+          &quot;p95&quot;: 2.5804226090549935,
+          &quot;p99&quot;: 3.138713599462205,
+          &quot;max&quot;: 5.068124986719269
+        },
+        &quot;header_send_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.1519579929299686,
+          &quot;p50&quot;: 0.5801664956379682,
+          &quot;p95&quot;: 0.970672246650589,
+          &quot;p99&quot;: 1.1687091794448263,
+          &quot;max&quot;: 3.2523749850223993
+        },
+        &quot;server_arrival_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.3104159829672437,
+          &quot;p50&quot;: 0.9171035024337915,
+          &quot;p95&quot;: 1.4213312429492304,
+          &quot;p99&quot;: 1.7684848950245822,
+          &quot;max&quot;: 3.913374983239848
+        },
+        &quot;queue_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.02645901986397803,
+          &quot;p50&quot;: 0.0560000044060871,
+          &quot;p95&quot;: 0.09075419220607728,
+          &quot;p99&quot;: 0.12734548974549395,
+          &quot;max&quot;: 0.16562498058192432
+        },
+        &quot;batch_sizes&quot;: {
+          &quot;1&quot;: 480
+        },
+        &quot;peak_http_rss_bytes&quot;: 42893312,
+        &quot;peak_worker_rss_bytes&quot;: 66076672,
+        &quot;peak_paired_rss_bytes&quot;: 108969984,
+        &quot;memory_observation_s&quot;: 4.898574749997351,
+        &quot;rss_sample_count&quot;: 900,
+        &quot;max_rss_gap_ms&quot;: 10.313000006135553,
+        &quot;max_paired_read_ms&quot;: 0.11658298899419606,
+        &quot;arrival_fidelity_passed&quot;: true
+      },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42663936,
       &quot;worker_lifetime_high_water_rss_bytes&quot;: 66076672
     },
     {
@@ -739,83 +886,87 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.47988595798960887,
-        &quot;success_per_second&quot;: 1000.2376439828931,
+        &quot;observation_s&quot;: 0.4799148750025779,
+        &quot;success_per_second&quot;: 1000.1773752010117,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.13412996692793616,
+        &quot;backend_busy_fraction&quot;: 0.13583305865400475,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.39666699012741446,
-          &quot;p50&quot;: 0.4782499891007319,
-          &quot;p95&quot;: 0.5527330416953191,
-          &quot;p99&quot;: 0.6503544180304738,
-          &quot;max&quot;: 1.740999985486269
+          &quot;min&quot;: 0.3765829897020012,
+          &quot;p50&quot;: 0.48239600437227637,
+          &quot;p95&quot;: 0.5628399027045815,
+          &quot;p99&quot;: 0.6468486168887463,
+          &quot;max&quot;: 1.965500006917864
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.39666699012741446,
-          &quot;p50&quot;: 0.4782499891007319,
-          &quot;p95&quot;: 0.5527330416953191,
-          &quot;p99&quot;: 0.6503544180304738,
-          &quot;max&quot;: 1.740999985486269
+          &quot;min&quot;: 0.3765829897020012,
+          &quot;p50&quot;: 0.48239600437227637,
+          &quot;p95&quot;: 0.5628399027045815,
+          &quot;p99&quot;: 0.6468486168887463,
+          &quot;max&quot;: 1.965500006917864
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.44770799414254464,
-          &quot;p50&quot;: 0.5791244896827252,
-          &quot;p95&quot;: 0.6522930856793896,
-          &quot;p99&quot;: 0.7951079824427092,
-          &quot;max&quot;: 1.8372079730034074
+          &quot;min&quot;: 0.4442920100409531,
+          &quot;p50&quot;: 0.5786665091291054,
+          &quot;p95&quot;: 0.6659145934391014,
+          &quot;p99&quot;: 0.8128330695838533,
+          &quot;max&quot;: 2.0600830111652813
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.44770799414254464,
-          &quot;p50&quot;: 0.5791244896827252,
-          &quot;p95&quot;: 0.6522930856793896,
-          &quot;p99&quot;: 0.7951079824427092,
-          &quot;max&quot;: 1.8372079730034074
+          &quot;min&quot;: 0.4442920100409531,
+          &quot;p50&quot;: 0.5786665091291054,
+          &quot;p95&quot;: 0.6659145934391014,
+          &quot;p99&quot;: 0.8128330695838533,
+          &quot;max&quot;: 2.0600830111652813
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.0813749951776091,
-          &quot;p50&quot;: 0.14445798250378727,
-          &quot;p95&quot;: 0.17888954863883103,
-          &quot;p99&quot;: 0.2383460936043407,
-          &quot;max&quot;: 0.773540978319943
+          &quot;min&quot;: 0.09004199947230257,
+          &quot;p50&quot;: 0.14612500788643845,
+          &quot;p95&quot;: 0.18007324852514492,
+          &quot;p99&quot;: 0.23553799064830605,
+          &quot;max&quot;: 0.8451669893693179
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.17308299848809577,
-          &quot;p50&quot;: 0.2586039832094822,
-          &quot;p95&quot;: 0.2987520322087489,
-          &quot;p99&quot;: 0.39798048847820594,
-          &quot;max&quot;: 1.003290992230177
+          &quot;min&quot;: 0.18350001610815264,
+          &quot;p50&quot;: 0.257875001174402,
+          &quot;p95&quot;: 0.3021271021338311,
+          &quot;p99&quot;: 0.35289550709072004,
+          &quot;max&quot;: 1.0126669949386269
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.022416003048419952,
-          &quot;p50&quot;: 0.025999994250014424,
-          &quot;p95&quot;: 0.030835076177027073,
-          &quot;p99&quot;: 0.04044332046760237,
-          &quot;max&quot;: 0.07758400170132518
+          &quot;min&quot;: 0.02258399035781622,
+          &quot;p50&quot;: 0.027729503926821053,
+          &quot;p95&quot;: 0.03287916770204901,
+          &quot;p99&quot;: 0.04321255517425015,
+          &quot;max&quot;: 0.07712500519119203
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
-        &quot;peak_http_rss_bytes&quot;: 42680320,
-        &quot;peak_worker_rss_bytes&quot;: 66027520,
-        &quot;peak_paired_rss_bytes&quot;: 108707840,
-        &quot;memory_observation_s&quot;: 0.5837142920063343,
-        &quot;rss_sample_count&quot;: 113,
-        &quot;max_rss_gap_ms&quot;: 5.72795799234882,
-        &quot;max_paired_read_ms&quot;: 0.02820801455527544,
+        &quot;peak_http_rss_bytes&quot;: 42811392,
+        &quot;peak_worker_rss_bytes&quot;: 65863680,
+        &quot;peak_paired_rss_bytes&quot;: 108675072,
+        &quot;memory_observation_s&quot;: 0.5836170419934206,
+        &quot;rss_sample_count&quot;: 114,
+        &quot;max_rss_gap_ms&quot;: 5.711375008104369,
+        &quot;max_paired_read_ms&quot;: 0.024666980607435107,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42680320,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66027520
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42582016,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65863680
     },
     {
       &quot;rate&quot;: 1000.0,
@@ -825,85 +976,88 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.48223945798235945,
-        &quot;success_per_second&quot;: 995.3561286923117,
+        &quot;observation_s&quot;: 0.4817934159946162,
+        &quot;success_per_second&quot;: 996.2776245272803,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.07051147393169314,
+        &quot;backend_busy_fraction&quot;: 0.06559604771482262,
         &quot;mean_batch_rows&quot;: 2.962962962962963,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5554580129683018,
-          &quot;p50&quot;: 1.7057080112863332,
-          &quot;p95&quot;: 2.815825019206386,
-          &quot;p99&quot;: 3.3430508346646093,
-          &quot;max&quot;: 3.64287500269711
+          &quot;min&quot;: 0.5828750145155936,
+          &quot;p50&quot;: 1.665645992034115,
+          &quot;p95&quot;: 2.751464546599891,
+          &quot;p99&quot;: 3.368071907025296,
+          &quot;max&quot;: 3.6831250181421638
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5554580129683018,
-          &quot;p50&quot;: 1.7057080112863332,
-          &quot;p95&quot;: 2.815825019206386,
-          &quot;p99&quot;: 3.3430508346646093,
-          &quot;max&quot;: 3.64287500269711
+          &quot;min&quot;: 0.5828750145155936,
+          &quot;p50&quot;: 1.665645992034115,
+          &quot;p95&quot;: 2.751464546599891,
+          &quot;p99&quot;: 3.368071907025296,
+          &quot;max&quot;: 3.6831250181421638
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.69458297034726,
-          &quot;p50&quot;: 1.8703329719137325,
-          &quot;p95&quot;: 3.0082502889912544,
-          &quot;p99&quot;: 3.5215594115154842,
-          &quot;max&quot;: 3.7939579924568534
+          &quot;min&quot;: 0.7164160050451771,
+          &quot;p50&quot;: 1.8308955000247846,
+          &quot;p95&quot;: 2.831295783002854,
+          &quot;p99&quot;: 3.601188058168618,
+          &quot;max&quot;: 3.8511249877046794
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.69458297034726,
-          &quot;p50&quot;: 1.8703329719137325,
-          &quot;p95&quot;: 3.0082502889912544,
-          &quot;p99&quot;: 3.5215594115154842,
-          &quot;max&quot;: 3.7939579924568534
+          &quot;min&quot;: 0.7164160050451771,
+          &quot;p50&quot;: 1.8308955000247846,
+          &quot;p95&quot;: 2.831295783002854,
+          &quot;p99&quot;: 3.601188058168618,
+          &quot;max&quot;: 3.8511249877046794
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.09283298929221862,
-          &quot;p50&quot;: 0.2033544770674925,
-          &quot;p95&quot;: 0.3371086383937099,
-          &quot;p99&quot;: 0.47671629637013707,
-          &quot;max&quot;: 0.8228329897392306
+          &quot;min&quot;: 0.10129099641927042,
+          &quot;p50&quot;: 0.20495799975468743,
+          &quot;p95&quot;: 0.25850623091683417,
+          &quot;p99&quot;: 0.5610629175533676,
+          &quot;max&quot;: 0.8518329944927072
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.20120797050185435,
-          &quot;p50&quot;: 0.32572948979214467,
-          &quot;p95&quot;: 0.4927684187889328,
-          &quot;p99&quot;: 0.7536555907013783,
-          &quot;max&quot;: 1.0267499892506748
+          &quot;min&quot;: 0.21129098185337924,
+          &quot;p50&quot;: 0.3291249895701204,
+          &quot;p95&quot;: 0.4014704889734403,
+          &quot;p99&quot;: 0.8419336323533135,
+          &quot;max&quot;: 1.0060409868601905
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.009499985026195645,
-          &quot;p50&quot;: 1.0337290004827082,
-          &quot;p95&quot;: 2.121047253604047,
-          &quot;p99&quot;: 2.1714624838205046,
-          &quot;max&quot;: 2.3061670071911067
+          &quot;min&quot;: 0.009791983757168055,
+          &quot;p50&quot;: 1.0072500008391216,
+          &quot;p95&quot;: 2.1248853983706795,
+          &quot;p99&quot;: 2.162587991624605,
+          &quot;max&quot;: 2.2140410146676004
         },
         &quot;batch_sizes&quot;: {
-          &quot;3&quot;: 157,
-          &quot;2&quot;: 4,
-          &quot;1&quot;: 1
+          &quot;3&quot;: 156,
+          &quot;2&quot;: 6
         },
-        &quot;peak_http_rss_bytes&quot;: 42516480,
-        &quot;peak_worker_rss_bytes&quot;: 66060288,
-        &quot;peak_paired_rss_bytes&quot;: 108576768,
-        &quot;memory_observation_s&quot;: 0.587357417010935,
-        &quot;rss_sample_count&quot;: 113,
-        &quot;max_rss_gap_ms&quot;: 5.701457994291559,
-        &quot;max_paired_read_ms&quot;: 0.040915998397395015,
+        &quot;peak_http_rss_bytes&quot;: 42827776,
+        &quot;peak_worker_rss_bytes&quot;: 66076672,
+        &quot;peak_paired_rss_bytes&quot;: 108904448,
+        &quot;memory_observation_s&quot;: 0.5870454169926234,
+        &quot;rss_sample_count&quot;: 114,
+        &quot;max_rss_gap_ms&quot;: 5.697792017599568,
+        &quot;max_paired_read_ms&quot;: 0.04470799467526376,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42516480,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66060288
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42631168,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66076672
     },
     {
       &quot;rate&quot;: 1000.0,
@@ -913,84 +1067,88 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.4823461670021061,
-        &quot;success_per_second&quot;: 995.1359269283965,
+        &quot;observation_s&quot;: 0.48242949999985285,
+        &quot;success_per_second&quot;: 994.9640310141615,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.06083511593207415,
+        &quot;backend_busy_fraction&quot;: 0.06104655547119058,
         &quot;mean_batch_rows&quot;: 2.962962962962963,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5850839952472597,
-          &quot;p50&quot;: 1.6191670001717284,
-          &quot;p95&quot;: 2.7118184152641334,
-          &quot;p99&quot;: 2.8047213025274687,
-          &quot;max&quot;: 3.1715840159449726
+          &quot;min&quot;: 0.5305420199874789,
+          &quot;p50&quot;: 1.6121874941745773,
+          &quot;p95&quot;: 2.70379373250762,
+          &quot;p99&quot;: 2.8234279886237346,
+          &quot;max&quot;: 4.159333999268711
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5850839952472597,
-          &quot;p50&quot;: 1.6191670001717284,
-          &quot;p95&quot;: 2.7118184152641334,
-          &quot;p99&quot;: 2.8047213025274687,
-          &quot;max&quot;: 3.1715840159449726
+          &quot;min&quot;: 0.5305420199874789,
+          &quot;p50&quot;: 1.6121874941745773,
+          &quot;p95&quot;: 2.70379373250762,
+          &quot;p99&quot;: 2.8234279886237346,
+          &quot;max&quot;: 4.159333999268711
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.718500010203571,
-          &quot;p50&quot;: 1.785583505057732,
-          &quot;p95&quot;: 2.7854767448850932,
-          &quot;p99&quot;: 2.9681538254208792,
-          &quot;max&quot;: 3.7287920131348073
+          &quot;min&quot;: 0.671667010290547,
+          &quot;p50&quot;: 1.7706044968217594,
+          &quot;p95&quot;: 2.767802413762571,
+          &quot;p99&quot;: 2.9602389283338457,
+          &quot;max&quot;: 4.650958988349885
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.718500010203571,
-          &quot;p50&quot;: 1.785583505057732,
-          &quot;p95&quot;: 2.7854767448850932,
-          &quot;p99&quot;: 2.9681538254208792,
-          &quot;max&quot;: 3.7287920131348073
+          &quot;min&quot;: 0.671667010290547,
+          &quot;p50&quot;: 1.7706044968217594,
+          &quot;p95&quot;: 2.767802413762571,
+          &quot;p99&quot;: 2.9602389283338457,
+          &quot;max&quot;: 4.650958988349885
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.08937499532475635,
-          &quot;p50&quot;: 0.1983125108527134,
-          &quot;p95&quot;: 0.24468750593953503,
-          &quot;p99&quot;: 0.36741561586038585,
-          &quot;max&quot;: 0.7302919984795153
+          &quot;min&quot;: 0.09212499158456344,
+          &quot;p50&quot;: 0.19700050877871633,
+          &quot;p95&quot;: 0.2450333468150517,
+          &quot;p99&quot;: 0.4488363263360243,
+          &quot;max&quot;: 0.9721249961294233
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.19404199626296692,
-          &quot;p50&quot;: 0.3141875035362288,
-          &quot;p95&quot;: 0.3771625149762276,
-          &quot;p99&quot;: 0.5677720172097884,
-          &quot;max&quot;: 1.048292004270479
+          &quot;min&quot;: 0.18749999627470926,
+          &quot;p50&quot;: 0.3073130004340799,
+          &quot;p95&quot;: 0.37137564391597205,
+          &quot;p99&quot;: 0.6025851213280108,
+          &quot;max&quot;: 1.2845419987570494
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.009583978680893779,
-          &quot;p50&quot;: 1.0133750038221478,
-          &quot;p95&quot;: 2.1299621832440607,
-          &quot;p99&quot;: 2.158646289317403,
-          &quot;max&quot;: 2.312334021553397
+          &quot;min&quot;: 0.009167008101940155,
+          &quot;p50&quot;: 1.0094379831571132,
+          &quot;p95&quot;: 2.1232559403870255,
+          &quot;p99&quot;: 2.1517747500911355,
+          &quot;max&quot;: 2.2857919975649565
         },
         &quot;batch_sizes&quot;: {
           &quot;3&quot;: 157,
           &quot;2&quot;: 4,
           &quot;1&quot;: 1
         },
-        &quot;peak_http_rss_bytes&quot;: 42385408,
+        &quot;peak_http_rss_bytes&quot;: 42762240,
         &quot;peak_worker_rss_bytes&quot;: 65880064,
-        &quot;peak_paired_rss_bytes&quot;: 108265472,
-        &quot;memory_observation_s&quot;: 0.5858905830245931,
-        &quot;rss_sample_count&quot;: 113,
-        &quot;max_rss_gap_ms&quot;: 5.710708996048197,
-        &quot;max_paired_read_ms&quot;: 0.029332994017750025,
+        &quot;peak_paired_rss_bytes&quot;: 108642304,
+        &quot;memory_observation_s&quot;: 0.5860265420051292,
+        &quot;rss_sample_count&quot;: 114,
+        &quot;max_rss_gap_ms&quot;: 5.711874982807785,
+        &quot;max_paired_read_ms&quot;: 0.021458981791511178,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42385408,
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42565632,
       &quot;worker_lifetime_high_water_rss_bytes&quot;: 65880064
     },
     {
@@ -1001,83 +1159,87 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.47982333300751634,
-        &quot;success_per_second&quot;: 1000.3681917496099,
+        &quot;observation_s&quot;: 0.47970699999132194,
+        &quot;success_per_second&quot;: 1000.6107895208604,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.1331055560244834,
+        &quot;backend_busy_fraction&quot;: 0.12073925741421788,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.39254099829122424,
-          &quot;p50&quot;: 0.47579150123056024,
-          &quot;p95&quot;: 0.554845527221914,
-          &quot;p99&quot;: 0.6333099800394847,
-          &quot;max&quot;: 1.2169170076958835
+          &quot;min&quot;: 0.3557500021997839,
+          &quot;p50&quot;: 0.4440835036803037,
+          &quot;p95&quot;: 0.5310020482284017,
+          &quot;p99&quot;: 0.6263800183660349,
+          &quot;max&quot;: 1.647209021029994
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.39254099829122424,
-          &quot;p50&quot;: 0.47579150123056024,
-          &quot;p95&quot;: 0.554845527221914,
-          &quot;p99&quot;: 0.6333099800394847,
-          &quot;max&quot;: 1.2169170076958835
+          &quot;min&quot;: 0.3557500021997839,
+          &quot;p50&quot;: 0.4440835036803037,
+          &quot;p95&quot;: 0.5310020482284017,
+          &quot;p99&quot;: 0.6263800183660349,
+          &quot;max&quot;: 1.647209021029994
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.49358299095183733,
-          &quot;p50&quot;: 0.5774794949684331,
-          &quot;p95&quot;: 0.6600416539469939,
-          &quot;p99&quot;: 0.7507962381211161,
-          &quot;max&quot;: 1.6557920025661588
+          &quot;min&quot;: 0.41479199146854384,
+          &quot;p50&quot;: 0.54404198715928,
+          &quot;p95&quot;: 0.6397940894123058,
+          &quot;p99&quot;: 0.7357127430173598,
+          &quot;max&quot;: 2.1465840109158307
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.49358299095183733,
-          &quot;p50&quot;: 0.5774794949684331,
-          &quot;p95&quot;: 0.6600416539469939,
-          &quot;p99&quot;: 0.7507962381211161,
-          &quot;max&quot;: 1.6557920025661588
+          &quot;min&quot;: 0.41479199146854384,
+          &quot;p50&quot;: 0.54404198715928,
+          &quot;p95&quot;: 0.6397940894123058,
+          &quot;p99&quot;: 0.7357127430173598,
+          &quot;max&quot;: 2.1465840109158307
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.0832080100662963,
-          &quot;p50&quot;: 0.14381250401493406,
-          &quot;p95&quot;: 0.181033338769343,
-          &quot;p99&quot;: 0.21961632017745908,
-          &quot;max&quot;: 0.6498330039903522
+          &quot;min&quot;: 0.07629200420344873,
+          &quot;p50&quot;: 0.14537550299427784,
+          &quot;p95&quot;: 0.1779104487504762,
+          &quot;p99&quot;: 0.2793183245836012,
+          &quot;max&quot;: 1.0527500018943101
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.18587500252760514,
-          &quot;p50&quot;: 0.2574584907852201,
-          &quot;p95&quot;: 0.3034851050120794,
-          &quot;p99&quot;: 0.3452232559211442,
-          &quot;max&quot;: 0.9512079996056855
+          &quot;min&quot;: 0.16129201115111513,
+          &quot;p50&quot;: 0.24889598495792498,
+          &quot;p95&quot;: 0.2900152585585686,
+          &quot;p99&quot;: 0.37371525989381577,
+          &quot;max&quot;: 1.1842090063728392
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.0219999928958714,
-          &quot;p50&quot;: 0.026104491553269327,
-          &quot;p95&quot;: 0.03202498337486757,
-          &quot;p99&quot;: 0.040977548924274736,
-          &quot;max&quot;: 0.0671250163577497
+          &quot;min&quot;: 0.02158299321308732,
+          &quot;p50&quot;: 0.025562490918673575,
+          &quot;p95&quot;: 0.030168153170961883,
+          &quot;p99&quot;: 0.03953876002924514,
+          &quot;max&quot;: 0.0771670020185411
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
-        &quot;peak_http_rss_bytes&quot;: 42647552,
-        &quot;peak_worker_rss_bytes&quot;: 66093056,
-        &quot;peak_paired_rss_bytes&quot;: 108740608,
-        &quot;memory_observation_s&quot;: 0.583923208003398,
-        &quot;rss_sample_count&quot;: 113,
-        &quot;max_rss_gap_ms&quot;: 5.733541998779401,
-        &quot;max_paired_read_ms&quot;: 0.02245799987576902,
+        &quot;peak_http_rss_bytes&quot;: 42680320,
+        &quot;peak_worker_rss_bytes&quot;: 65880064,
+        &quot;peak_paired_rss_bytes&quot;: 108560384,
+        &quot;memory_observation_s&quot;: 0.5839126670034602,
+        &quot;rss_sample_count&quot;: 114,
+        &quot;max_rss_gap_ms&quot;: 5.700000008800998,
+        &quot;max_paired_read_ms&quot;: 0.02187499194405973,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42647552,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66093056
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42450944,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65880064
     },
     {
       &quot;rate&quot;: 1000.0,
@@ -1087,83 +1249,87 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.4797632919799071,
-        &quot;success_per_second&quot;: 1000.4933850172573,
+        &quot;observation_s&quot;: 0.4799596249940805,
+        &quot;success_per_second&quot;: 1000.084121671526,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.13073687875381282,
+        &quot;backend_busy_fraction&quot;: 0.14198955368598482,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.3850839857477695,
-          &quot;p50&quot;: 0.4684370069298893,
-          &quot;p95&quot;: 0.5609892468783073,
-          &quot;p99&quot;: 0.649284174432978,
-          &quot;max&quot;: 1.633915991988033
+          &quot;min&quot;: 0.42716600000858307,
+          &quot;p50&quot;: 0.4961875092703849,
+          &quot;p95&quot;: 0.5923372023971751,
+          &quot;p99&quot;: 0.7256474235327907,
+          &quot;max&quot;: 1.946583011886105
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.3850839857477695,
-          &quot;p50&quot;: 0.4684370069298893,
-          &quot;p95&quot;: 0.5609892468783073,
-          &quot;p99&quot;: 0.649284174432978,
-          &quot;max&quot;: 1.633915991988033
+          &quot;min&quot;: 0.42716600000858307,
+          &quot;p50&quot;: 0.4961875092703849,
+          &quot;p95&quot;: 0.5923372023971751,
+          &quot;p99&quot;: 0.7256474235327907,
+          &quot;max&quot;: 1.946583011886105
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.4409999875351761,
-          &quot;p50&quot;: 0.5681459911866249,
-          &quot;p95&quot;: 0.6652465067221974,
-          &quot;p99&quot;: 0.7593419891921854,
-          &quot;max&quot;: 1.8380419933237135
+          &quot;min&quot;: 0.5007500103674789,
+          &quot;p50&quot;: 0.5950205025728877,
+          &quot;p95&quot;: 0.6904410125338684,
+          &quot;p99&quot;: 0.9396111378469696,
+          &quot;max&quot;: 2.4426660093013197
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.4409999875351761,
-          &quot;p50&quot;: 0.5681459911866249,
-          &quot;p95&quot;: 0.6652465067221974,
-          &quot;p99&quot;: 0.7593419891921854,
-          &quot;max&quot;: 1.8380419933237135
+          &quot;min&quot;: 0.5007500103674789,
+          &quot;p50&quot;: 0.5950205025728877,
+          &quot;p95&quot;: 0.6904410125338684,
+          &quot;p99&quot;: 0.9396111378469696,
+          &quot;max&quot;: 2.4426660093013197
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.0917089984286551,
-          &quot;p50&quot;: 0.14341699110810915,
-          &quot;p95&quot;: 0.17847979160725277,
-          &quot;p99&quot;: 0.239175164834598,
-          &quot;max&quot;: 0.8725420047994703
+          &quot;min&quot;: 0.0895409919321466,
+          &quot;p50&quot;: 0.14700000302400595,
+          &quot;p95&quot;: 0.17433895139254968,
+          &quot;p99&quot;: 0.2753037631884197,
+          &quot;max&quot;: 1.3489579907618463
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.17858399054966612,
-          &quot;p50&quot;: 0.2539169862866425,
-          &quot;p95&quot;: 0.3001297858893081,
-          &quot;p99&quot;: 0.3503207448916426,
-          &quot;max&quot;: 1.193042000522837
+          &quot;min&quot;: 0.19854099093936928,
+          &quot;p50&quot;: 0.26241600618231997,
+          &quot;p95&quot;: 0.30288126318483155,
+          &quot;p99&quot;: 0.4478585042362253,
+          &quot;max&quot;: 1.4986659991554916
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.021665997337549925,
-          &quot;p50&quot;: 0.026249996153637767,
-          &quot;p95&quot;: 0.030844371940474947,
-          &quot;p99&quot;: 0.03841621626634151,
-          &quot;max&quot;: 0.06604200461879373
+          &quot;min&quot;: 0.022833992261439562,
+          &quot;p50&quot;: 0.028332986403256655,
+          &quot;p95&quot;: 0.033752122544683516,
+          &quot;p99&quot;: 0.0440038743545301,
+          &quot;max&quot;: 0.09191699791699648
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
-        &quot;peak_http_rss_bytes&quot;: 42647552,
-        &quot;peak_worker_rss_bytes&quot;: 65830912,
-        &quot;peak_paired_rss_bytes&quot;: 108478464,
-        &quot;memory_observation_s&quot;: 0.5828250419872347,
-        &quot;rss_sample_count&quot;: 113,
-        &quot;max_rss_gap_ms&quot;: 5.728457996156067,
-        &quot;max_paired_read_ms&quot;: 0.04862502100877464,
+        &quot;peak_http_rss_bytes&quot;: 42893312,
+        &quot;peak_worker_rss_bytes&quot;: 65896448,
+        &quot;peak_paired_rss_bytes&quot;: 108789760,
+        &quot;memory_observation_s&quot;: 0.5839380419929512,
+        &quot;rss_sample_count&quot;: 114,
+        &quot;max_rss_gap_ms&quot;: 5.703415983589366,
+        &quot;max_paired_read_ms&quot;: 0.02562499139457941,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42647552,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65830912
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42663936,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65896448
     },
     {
       &quot;rate&quot;: 1000.0,
@@ -1173,172 +1339,179 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.48069795899209566,
-        &quot;success_per_second&quot;: 998.5480300487252,
+        &quot;observation_s&quot;: 0.4807479169976432,
+        &quot;success_per_second&quot;: 998.4442636749961,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.05033283448629386,
-        &quot;mean_batch_rows&quot;: 2.981366459627329,
+        &quot;backend_busy_fraction&quot;: 0.06919694616946404,
+        &quot;mean_batch_rows&quot;: 2.9447852760736195,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.4030840063933283,
-          &quot;p50&quot;: 1.5020624996395782,
-          &quot;p95&quot;: 2.5915854508639313,
-          &quot;p99&quot;: 2.713241199962795,
-          &quot;max&quot;: 3.155499987769872
+          &quot;min&quot;: 0.3904579789377749,
+          &quot;p50&quot;: 1.6938334883889183,
+          &quot;p95&quot;: 2.9175023984862447,
+          &quot;p99&quot;: 3.499035666172858,
+          &quot;max&quot;: 3.655040985904634
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.4030840063933283,
-          &quot;p50&quot;: 1.5020624996395782,
-          &quot;p95&quot;: 2.5915854508639313,
-          &quot;p99&quot;: 2.713241199962795,
-          &quot;max&quot;: 3.155499987769872
+          &quot;min&quot;: 0.3904579789377749,
+          &quot;p50&quot;: 1.6938334883889183,
+          &quot;p95&quot;: 2.9175023984862447,
+          &quot;p99&quot;: 3.499035666172858,
+          &quot;max&quot;: 3.655040985904634
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5620840012561523,
-          &quot;p50&quot;: 1.6720835124142548,
-          &quot;p95&quot;: 2.6718360550003344,
-          &quot;p99&quot;: 2.785761351562095,
-          &quot;max&quot;: 3.7162500084377825
+          &quot;min&quot;: 0.5104590035043544,
+          &quot;p50&quot;: 1.860041993553746,
+          &quot;p95&quot;: 3.14116285173221,
+          &quot;p99&quot;: 3.7084258206514837,
+          &quot;max&quot;: 4.375374992378056
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5620840012561523,
-          &quot;p50&quot;: 1.6720835124142548,
-          &quot;p95&quot;: 2.6718360550003344,
-          &quot;p99&quot;: 2.785761351562095,
-          &quot;max&quot;: 3.7162500084377825
+          &quot;min&quot;: 0.5104590035043544,
+          &quot;p50&quot;: 1.860041993553746,
+          &quot;p95&quot;: 3.14116285173221,
+          &quot;p99&quot;: 3.7084258206514837,
+          &quot;max&quot;: 4.375374992378056
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.07933400734327911,
-          &quot;p50&quot;: 0.188104511238657,
-          &quot;p95&quot;: 0.23162534616421446,
-          &quot;p99&quot;: 0.3688437614310567,
-          &quot;max&quot;: 0.7193339988589287
+          &quot;min&quot;: 0.07454201020301587,
+          &quot;p50&quot;: 0.20493799960241177,
+          &quot;p95&quot;: 0.3364461438381372,
+          &quot;p99&quot;: 0.5929325628140918,
+          &quot;max&quot;: 0.8380420040339231
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.16516700340434703,
-          &quot;p50&quot;: 0.28266700287349344,
-          &quot;p95&quot;: 0.34554411175197475,
-          &quot;p99&quot;: 0.48664874864510793,
-          &quot;max&quot;: 0.9613340080250055
+          &quot;min&quot;: 0.1440000187140078,
+          &quot;p50&quot;: 0.31822950998321164,
+          &quot;p95&quot;: 0.587956254230811,
+          &quot;p99&quot;: 0.8610838730353626,
+          &quot;max&quot;: 1.0963749955408275
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.006457994459196925,
-          &quot;p50&quot;: 1.0051870049210265,
-          &quot;p95&quot;: 2.112962197861634,
-          &quot;p99&quot;: 2.1503981135901995,
-          &quot;max&quot;: 2.18416700954549
+          &quot;min&quot;: 0.006291025783866644,
+          &quot;p50&quot;: 1.0224999859929085,
+          &quot;p95&quot;: 2.119678868621122,
+          &quot;p99&quot;: 2.153811860480346,
+          &quot;max&quot;: 2.2167089919093996
+        },
+        &quot;batch_sizes&quot;: {
+          &quot;3&quot;: 154,
+          &quot;2&quot;: 9
+        },
+        &quot;peak_http_rss_bytes&quot;: 42893312,
+        &quot;peak_worker_rss_bytes&quot;: 65978368,
+        &quot;peak_paired_rss_bytes&quot;: 108871680,
+        &quot;memory_observation_s&quot;: 0.5866482090204954,
+        &quot;rss_sample_count&quot;: 114,
+        &quot;max_rss_gap_ms&quot;: 5.703083006665111,
+        &quot;max_paired_read_ms&quot;: 0.044167012674733996,
+        &quot;arrival_fidelity_passed&quot;: true
+      },
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42631168,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65978368
+    },
+    {
+      &quot;rate&quot;: 1000.0,
+      &quot;mode&quot;: &quot;dynamic&quot;,
+      &quot;trial&quot;: 3,
+      &quot;summary&quot;: {
+        &quot;counts&quot;: {
+          &quot;success&quot;: 480
+        },
+        &quot;observation_s&quot;: 0.48091166699305177,
+        &quot;success_per_second&quot;: 998.104294290151,
+        &quot;rejection_rate&quot;: 0.0,
+        &quot;timeout_rate&quot;: 0.0,
+        &quot;success_rate&quot;: 1.0,
+        &quot;backend_busy_fraction&quot;: 0.061844321494858356,
+        &quot;mean_batch_rows&quot;: 2.981366459627329,
+        &quot;success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.5728749965783209,
+          &quot;p50&quot;: 1.621375500690192,
+          &quot;p95&quot;: 2.696177408506628,
+          &quot;p99&quot;: 3.211923832423053,
+          &quot;max&quot;: 4.341749998275191
+        },
+        &quot;all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.5728749965783209,
+          &quot;p50&quot;: 1.621375500690192,
+          &quot;p95&quot;: 2.696177408506628,
+          &quot;p99&quot;: 3.211923832423053,
+          &quot;max&quot;: 4.341749998275191
+        },
+        &quot;scheduled_success_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.6782919983379654,
+          &quot;p50&quot;: 1.782729497528626,
+          &quot;p95&quot;: 2.785010752046946,
+          &quot;p99&quot;: 3.2820558290812207,
+          &quot;max&quot;: 4.813042003661394
+        },
+        &quot;scheduled_all_terminal_latency_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.6782919983379654,
+          &quot;p50&quot;: 1.782729497528626,
+          &quot;p95&quot;: 2.785010752046946,
+          &quot;p99&quot;: 3.2820558290812207,
+          &quot;max&quot;: 4.813042003661394
+        },
+        &quot;header_send_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.09274999867193469,
+          &quot;p50&quot;: 0.2005835039308318,
+          &quot;p95&quot;: 0.255525000835774,
+          &quot;p99&quot;: 0.5451214188523588,
+          &quot;max&quot;: 1.1762500079348683
+        },
+        &quot;server_arrival_lag_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.19199999771080978,
+          &quot;p50&quot;: 0.3153544997330747,
+          &quot;p95&quot;: 0.38582709163893775,
+          &quot;p99&quot;: 0.8112751343497109,
+          &quot;max&quot;: 1.3047089895699173
+        },
+        &quot;queue_ms&quot;: {
+          &quot;count&quot;: 480,
+          &quot;min&quot;: 0.010083022061735392,
+          &quot;p50&quot;: 1.0124374966835603,
+          &quot;p95&quot;: 2.1247940938337706,
+          &quot;p99&quot;: 2.1684298699256033,
+          &quot;max&quot;: 2.2063749784138054
         },
         &quot;batch_sizes&quot;: {
           &quot;3&quot;: 158,
           &quot;2&quot;: 3
         },
-        &quot;peak_http_rss_bytes&quot;: 42450944,
-        &quot;peak_worker_rss_bytes&quot;: 66142208,
-        &quot;peak_paired_rss_bytes&quot;: 108593152,
-        &quot;memory_observation_s&quot;: 0.5847114579810295,
-        &quot;rss_sample_count&quot;: 113,
-        &quot;max_rss_gap_ms&quot;: 5.705417017452419,
-        &quot;max_paired_read_ms&quot;: 0.028916983865201473,
+        &quot;peak_http_rss_bytes&quot;: 42795008,
+        &quot;peak_worker_rss_bytes&quot;: 66109440,
+        &quot;peak_paired_rss_bytes&quot;: 108904448,
+        &quot;memory_observation_s&quot;: 0.5862738330033608,
+        &quot;rss_sample_count&quot;: 114,
+        &quot;max_rss_gap_ms&quot;: 5.72720801574178,
+        &quot;max_paired_read_ms&quot;: 0.03283401019871235,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42450944,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66142208
-    },
-    {
-      &quot;rate&quot;: 1000.0,
-      &quot;mode&quot;: &quot;dynamic&quot;,
-      &quot;trial&quot;: 3,
-      &quot;summary&quot;: {
-        &quot;counts&quot;: {
-          &quot;success&quot;: 480
-        },
-        &quot;observation_s&quot;: 0.48413808399345726,
-        &quot;success_per_second&quot;: 991.4526782125382,
-        &quot;rejection_rate&quot;: 0.0,
-        &quot;timeout_rate&quot;: 0.0,
-        &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.05541507727577282,
-        &quot;mean_batch_rows&quot;: 2.981366459627329,
-        &quot;success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.51908302702941,
-          &quot;p50&quot;: 1.557374998810701,
-          &quot;p95&quot;: 2.6546378096099943,
-          &quot;p99&quot;: 2.8511558147147285,
-          &quot;max&quot;: 4.715457995189354
-        },
-        &quot;all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.51908302702941,
-          &quot;p50&quot;: 1.557374998810701,
-          &quot;p95&quot;: 2.6546378096099943,
-          &quot;p99&quot;: 2.8511558147147285,
-          &quot;max&quot;: 4.715457995189354
-        },
-        &quot;scheduled_success_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6452499660663316,
-          &quot;p50&quot;: 1.7218334814533622,
-          &quot;p95&quot;: 2.732821128866629,
-          &quot;p99&quot;: 3.060601978129705,
-          &quot;max&quot;: 5.138083993457276
-        },
-        &quot;scheduled_all_terminal_latency_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6452499660663316,
-          &quot;p50&quot;: 1.7218334814533622,
-          &quot;p95&quot;: 2.732821128866629,
-          &quot;p99&quot;: 3.060601978129705,
-          &quot;max&quot;: 5.138083993457276
-        },
-        &quot;header_send_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.08699999237432587,
-          &quot;p50&quot;: 0.1939584772335315,
-          &quot;p95&quot;: 0.23547354137989085,
-          &quot;p99&quot;: 0.38838580666808653,
-          &quot;max&quot;: 2.2753339938353934
-        },
-        &quot;server_arrival_lag_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.1893749861046623,
-          &quot;p50&quot;: 0.2976879844209107,
-          &quot;p95&quot;: 0.35410448287149365,
-          &quot;p99&quot;: 0.49886773436330434,
-          &quot;max&quot;: 2.4059999771416374
-        },
-        &quot;queue_ms&quot;: {
-          &quot;count&quot;: 480,
-          &quot;min&quot;: 0.008332979632541537,
-          &quot;p50&quot;: 1.0068744886666536,
-          &quot;p95&quot;: 2.120861067669466,
-          &quot;p99&quot;: 2.156776818737853,
-          &quot;max&quot;: 2.296916994964704
-        },
-        &quot;batch_sizes&quot;: {
-          &quot;3&quot;: 159,
-          &quot;2&quot;: 1,
-          &quot;1&quot;: 1
-        },
-        &quot;peak_http_rss_bytes&quot;: 42483712,
-        &quot;peak_worker_rss_bytes&quot;: 66060288,
-        &quot;peak_paired_rss_bytes&quot;: 108544000,
-        &quot;memory_observation_s&quot;: 0.587205209012609,
-        &quot;rss_sample_count&quot;: 113,
-        &quot;max_rss_gap_ms&quot;: 5.896749993553385,
-        &quot;max_paired_read_ms&quot;: 0.028875016141682863,
-        &quot;arrival_fidelity_passed&quot;: true
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42483712,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66060288
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42532864,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66109440
     },
     {
       &quot;rate&quot;: 1000.0,
@@ -1348,83 +1521,87 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.4797252500138711,
-        &quot;success_per_second&quot;: 1000.5727236290376,
+        &quot;observation_s&quot;: 0.4797146249911748,
+        &quot;success_per_second&quot;: 1000.5948849460874,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.13504910294491487,
+        &quot;backend_busy_fraction&quot;: 0.15464108469661159,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.39933400694280863,
-          &quot;p50&quot;: 0.4788544902112335,
-          &quot;p95&quot;: 0.5783558823168277,
-          &quot;p99&quot;: 0.8111302542965841,
-          &quot;max&quot;: 1.2652919976972044
+          &quot;min&quot;: 0.30429198523052037,
+          &quot;p50&quot;: 0.4997500072931871,
+          &quot;p95&quot;: 0.7520580489654063,
+          &quot;p99&quot;: 3.931902504991734,
+          &quot;max&quot;: 6.808667007135227
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.39933400694280863,
-          &quot;p50&quot;: 0.4788544902112335,
-          &quot;p95&quot;: 0.5783558823168277,
-          &quot;p99&quot;: 0.8111302542965841,
-          &quot;max&quot;: 1.2652919976972044
+          &quot;min&quot;: 0.30429198523052037,
+          &quot;p50&quot;: 0.4997500072931871,
+          &quot;p95&quot;: 0.7520580489654063,
+          &quot;p99&quot;: 3.931902504991734,
+          &quot;max&quot;: 6.808667007135227
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.49958400451578266,
-          &quot;p50&quot;: 0.5778754989150814,
-          &quot;p95&quot;: 0.6841249929391833,
-          &quot;p99&quot;: 0.9190664915321571,
-          &quot;max&quot;: 1.5439589915331453
+          &quot;min&quot;: 0.3572910109069169,
+          &quot;p50&quot;: 0.5925204936647749,
+          &quot;p95&quot;: 0.9120659883599554,
+          &quot;p99&quot;: 5.94318168770289,
+          &quot;max&quot;: 7.371833012439321
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.49958400451578266,
-          &quot;p50&quot;: 0.5778754989150814,
-          &quot;p95&quot;: 0.6841249929391833,
-          &quot;p99&quot;: 0.9190664915321571,
-          &quot;max&quot;: 1.5439589915331453
+          &quot;min&quot;: 0.3572910109069169,
+          &quot;p50&quot;: 0.5925204936647749,
+          &quot;p95&quot;: 0.9120659883599554,
+          &quot;p99&quot;: 5.94318168770289,
+          &quot;max&quot;: 7.371833012439321
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.09200000599958458,
-          &quot;p50&quot;: 0.14354199427178693,
-          &quot;p95&quot;: 0.17651874900328904,
-          &quot;p99&quot;: 0.261571241307556,
-          &quot;max&quot;: 0.7567499889992177
+          &quot;min&quot;: 0.07733300025574569,
+          &quot;p50&quot;: 0.14725000143517297,
+          &quot;p95&quot;: 0.20594760093370473,
+          &quot;p99&quot;: 1.7087180009949747,
+          &quot;max&quot;: 4.645957985892901
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.20162499207071471,
-          &quot;p50&quot;: 0.2568750027567013,
-          &quot;p95&quot;: 0.3019878488499813,
-          &quot;p99&quot;: 0.38884707026418364,
-          &quot;max&quot;: 0.9014590070582926
+          &quot;min&quot;: 0.15258299116976265,
+          &quot;p50&quot;: 0.262666493770658,
+          &quot;p95&quot;: 0.3947413621354127,
+          &quot;p99&quot;: 3.191503067289016,
+          &quot;max&quot;: 5.170374988345438
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.022458989406004548,
-          &quot;p50&quot;: 0.026666995836421847,
-          &quot;p95&quot;: 0.0325690605677664,
-          &quot;p99&quot;: 0.041758944571483866,
-          &quot;max&quot;: 0.06533402483910322
+          &quot;min&quot;: 0.018708000425249338,
+          &quot;p50&quot;: 0.028479000320658088,
+          &quot;p95&quot;: 0.041749997762963176,
+          &quot;p99&quot;: 0.9747381415218097,
+          &quot;max&quot;: 1.33200001437217
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
-        &quot;peak_http_rss_bytes&quot;: 42549248,
-        &quot;peak_worker_rss_bytes&quot;: 66011136,
-        &quot;peak_paired_rss_bytes&quot;: 108560384,
-        &quot;memory_observation_s&quot;: 0.5840290000196546,
+        &quot;peak_http_rss_bytes&quot;: 42942464,
+        &quot;peak_worker_rss_bytes&quot;: 66174976,
+        &quot;peak_paired_rss_bytes&quot;: 109117440,
+        &quot;memory_observation_s&quot;: 0.5831067080143839,
         &quot;rss_sample_count&quot;: 113,
-        &quot;max_rss_gap_ms&quot;: 5.7211250241380185,
-        &quot;max_paired_read_ms&quot;: 0.03337502130307257,
+        &quot;max_rss_gap_ms&quot;: 7.4222910043317825,
+        &quot;max_paired_read_ms&quot;: 0.11745799565687776,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42549248,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66011136
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42713088,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66174976
     },
     {
       &quot;rate&quot;: 3000.0,
@@ -1434,83 +1611,87 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.16015799998422153,
-        &quot;success_per_second&quot;: 2997.0404228779626,
+        &quot;observation_s&quot;: 0.1601772909925785,
+        &quot;success_per_second&quot;: 2996.6794732609123,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.2717355776508137,
+        &quot;backend_busy_fraction&quot;: 0.2657030022290421,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.28091599233448505,
-          &quot;p50&quot;: 0.34295850491616875,
-          &quot;p95&quot;: 0.46955799625720784,
-          &quot;p99&quot;: 1.1624749022303094,
-          &quot;max&quot;: 1.8726249982137233
+          &quot;min&quot;: 0.2857500221580267,
+          &quot;p50&quot;: 0.32635450770612806,
+          &quot;p95&quot;: 0.5190961601329025,
+          &quot;p99&quot;: 2.4527943422435716,
+          &quot;max&quot;: 3.2140419934876263
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.28091599233448505,
-          &quot;p50&quot;: 0.34295850491616875,
-          &quot;p95&quot;: 0.46955799625720784,
-          &quot;p99&quot;: 1.1624749022303094,
-          &quot;max&quot;: 1.8726249982137233
+          &quot;min&quot;: 0.2857500221580267,
+          &quot;p50&quot;: 0.32635450770612806,
+          &quot;p95&quot;: 0.5190961601329025,
+          &quot;p99&quot;: 2.4527943422435716,
+          &quot;max&quot;: 3.2140419934876263
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.34529198054225607,
-          &quot;p50&quot;: 0.4092916541655195,
-          &quot;p95&quot;: 0.5327107531833462,
-          &quot;p99&quot;: 1.4950169308925945,
-          &quot;max&quot;: 2.248916331290578
+          &quot;min&quot;: 0.3448329730890709,
+          &quot;p50&quot;: 0.40595832160518486,
+          &quot;p95&quot;: 0.5812621393823051,
+          &quot;p99&quot;: 2.995282157814751,
+          &quot;max&quot;: 3.4523749782238156
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.34529198054225607,
-          &quot;p50&quot;: 0.4092916541655195,
-          &quot;p95&quot;: 0.5327107531833462,
-          &quot;p99&quot;: 1.4950169308925945,
-          &quot;max&quot;: 2.248916331290578
+          &quot;min&quot;: 0.3448329730890709,
+          &quot;p50&quot;: 0.40595832160518486,
+          &quot;p95&quot;: 0.5812621393823051,
+          &quot;p99&quot;: 2.995282157814751,
+          &quot;max&quot;: 3.4523749782238156
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.06070832985763386,
-          &quot;p50&quot;: 0.10754166454231967,
-          &quot;p95&quot;: 0.1456350905471495,
-          &quot;p99&quot;: 0.5536731335031787,
-          &quot;max&quot;: 1.2455416691179078
+          &quot;min&quot;: 0.05945764520826069,
+          &quot;p50&quot;: 0.11291614167081854,
+          &quot;p95&quot;: 0.15174724041717394,
+          &quot;p99&quot;: 1.6542095745416936,
+          &quot;max&quot;: 2.3389579912181944
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.1328333260801895,
-          &quot;p50&quot;: 0.1844166655015772,
-          &quot;p95&quot;: 0.22786631136744828,
-          &quot;p99&quot;: 0.7362388039054336,
-          &quot;max&quot;: 1.3610416463731478
+          &quot;min&quot;: 0.1309996626029375,
+          &quot;p50&quot;: 0.1876038136736785,
+          &quot;p95&quot;: 0.24376452697907003,
+          &quot;p99&quot;: 1.8546227274664335,
+          &quot;max&quot;: 2.4534163061374175
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.014917022781446576,
-          &quot;p50&quot;: 0.02083400613628328,
-          &quot;p95&quot;: 0.028225654386915253,
-          &quot;p99&quot;: 0.30537616868968964,
-          &quot;max&quot;: 0.5315000016707927
+          &quot;min&quot;: 0.014417018974199891,
+          &quot;p50&quot;: 0.02066648448817432,
+          &quot;p95&quot;: 0.03129787655780088,
+          &quot;p99&quot;: 0.5019920863560399,
+          &quot;max&quot;: 0.6966669752728194
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
-        &quot;peak_http_rss_bytes&quot;: 42647552,
-        &quot;peak_worker_rss_bytes&quot;: 65978368,
-        &quot;peak_paired_rss_bytes&quot;: 108625920,
-        &quot;memory_observation_s&quot;: 0.26440408299095,
-        &quot;rss_sample_count&quot;: 50,
-        &quot;max_rss_gap_ms&quot;: 5.720125016523525,
-        &quot;max_paired_read_ms&quot;: 0.01683298614807427,
+        &quot;peak_http_rss_bytes&quot;: 42811392,
+        &quot;peak_worker_rss_bytes&quot;: 65896448,
+        &quot;peak_paired_rss_bytes&quot;: 108707840,
+        &quot;memory_observation_s&quot;: 0.2636080419761129,
+        &quot;rss_sample_count&quot;: 51,
+        &quot;max_rss_gap_ms&quot;: 5.716290994314477,
+        &quot;max_paired_read_ms&quot;: 0.023833010345697403,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42647552,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65978368
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42582016,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65896448
     },
     {
       &quot;rate&quot;: 3000.0,
@@ -1520,85 +1701,89 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.16068395899492316,
-        &quot;success_per_second&quot;: 2987.230355801513,
+        &quot;observation_s&quot;: 0.16072924999753013,
+        &quot;success_per_second&quot;: 2986.3886007517362,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.06005447008470372,
+        &quot;backend_busy_fraction&quot;: 0.0674122852096462,
         &quot;mean_batch_rows&quot;: 7.0588235294117645,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5981659924145788,
-          &quot;p50&quot;: 1.6613750049145892,
-          &quot;p95&quot;: 2.587177095119841,
-          &quot;p99&quot;: 2.8427056086366043,
-          &quot;max&quot;: 3.1822499877307564
+          &quot;min&quot;: 0.6165830127429217,
+          &quot;p50&quot;: 1.6667294985381886,
+          &quot;p95&quot;: 2.603597604320384,
+          &quot;p99&quot;: 3.1363951478851955,
+          &quot;max&quot;: 3.953958017518744
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.5981659924145788,
-          &quot;p50&quot;: 1.6613750049145892,
-          &quot;p95&quot;: 2.587177095119841,
-          &quot;p99&quot;: 2.8427056086366043,
-          &quot;max&quot;: 3.1822499877307564
+          &quot;min&quot;: 0.6165830127429217,
+          &quot;p50&quot;: 1.6667294985381886,
+          &quot;p95&quot;: 2.603597604320384,
+          &quot;p99&quot;: 3.1363951478851955,
+          &quot;max&quot;: 3.953958017518744
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6668749803211416,
-          &quot;p50&quot;: 1.7302295021945635,
-          &quot;p95&quot;: 2.6678104372423483,
-          &quot;p99&quot;: 3.0049064232013194,
-          &quot;max&quot;: 3.6834999918937683
+          &quot;min&quot;: 0.6805003295497214,
+          &quot;p50&quot;: 1.7323753236172088,
+          &quot;p95&quot;: 2.6580104019997393,
+          &quot;p99&quot;: 3.2185067988644986,
+          &quot;max&quot;: 4.036416998133063
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6668749803211416,
-          &quot;p50&quot;: 1.7302295021945635,
-          &quot;p95&quot;: 2.6678104372423483,
-          &quot;p99&quot;: 3.0049064232013194,
-          &quot;max&quot;: 3.6834999918937683
+          &quot;min&quot;: 0.6805003295497214,
+          &quot;p50&quot;: 1.7323753236172088,
+          &quot;p95&quot;: 2.6580104019997393,
+          &quot;p99&quot;: 3.2185067988644986,
+          &quot;max&quot;: 4.036416998133063
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.062041996745393346,
-          &quot;p50&quot;: 0.0996459843590862,
-          &quot;p95&quot;: 0.2231336557345085,
-          &quot;p99&quot;: 0.556001573494479,
-          &quot;max&quot;: 1.0300006507119785
+          &quot;min&quot;: 0.05608331838933417,
+          &quot;p50&quot;: 0.09231247892603489,
+          &quot;p95&quot;: 0.23846043165152223,
+          &quot;p99&quot;: 0.3604858085676085,
+          &quot;max&quot;: 0.6617916479396324
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.13262498471885986,
-          &quot;p50&quot;: 0.17670866664654117,
-          &quot;p95&quot;: 0.34954650526633263,
-          &quot;p99&quot;: 0.6647047251214571,
-          &quot;max&quot;: 1.1473756713482242
+          &quot;min&quot;: 0.11875032641304323,
+          &quot;p50&quot;: 0.16808348835911646,
+          &quot;p95&quot;: 0.35909823195155033,
+          &quot;p99&quot;: 0.5862992820624894,
+          &quot;max&quot;: 1.104875667874391
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.010124989785254002,
-          &quot;p50&quot;: 1.1299165053060278,
-          &quot;p95&quot;: 2.040682703955099,
-          &quot;p99&quot;: 2.054106302384753,
-          &quot;max&quot;: 2.364083018619567
+          &quot;min&quot;: 0.020708015654236078,
+          &quot;p50&quot;: 1.1342915095156059,
+          &quot;p95&quot;: 2.036508294986561,
+          &quot;p99&quot;: 2.044731006026268,
+          &quot;max&quot;: 2.059749996988103
         },
         &quot;batch_sizes&quot;: {
           &quot;8&quot;: 5,
           &quot;7&quot;: 62,
           &quot;6&quot;: 1
         },
-        &quot;peak_http_rss_bytes&quot;: 42631168,
-        &quot;peak_worker_rss_bytes&quot;: 65945600,
-        &quot;peak_paired_rss_bytes&quot;: 108576768,
-        &quot;memory_observation_s&quot;: 0.264160291000735,
-        &quot;rss_sample_count&quot;: 50,
-        &quot;max_rss_gap_ms&quot;: 5.843166989507154,
-        &quot;max_paired_read_ms&quot;: 0.03966700751334429,
+        &quot;peak_http_rss_bytes&quot;: 42876928,
+        &quot;peak_worker_rss_bytes&quot;: 65830912,
+        &quot;peak_paired_rss_bytes&quot;: 108707840,
+        &quot;memory_observation_s&quot;: 0.2630982499977108,
+        &quot;rss_sample_count&quot;: 51,
+        &quot;max_rss_gap_ms&quot;: 5.674915999406949,
+        &quot;max_paired_read_ms&quot;: 0.02591699012555182,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42647552,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65945600
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42598400,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65830912
     },
     {
       &quot;rate&quot;: 3000.0,
@@ -1608,85 +1793,90 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.1623072499933187,
-        &quot;success_per_second&quot;: 2957.3540308258503,
+        &quot;observation_s&quot;: 0.16107133301557042,
+        &quot;success_per_second&quot;: 2980.046113814675,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.06425390096894293,
-        &quot;mean_batch_rows&quot;: 6.956521739130435,
+        &quot;backend_busy_fraction&quot;: 0.05818613939328465,
+        &quot;mean_batch_rows&quot;: 7.0588235294117645,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6121249753050506,
-          &quot;p50&quot;: 1.7061665130313486,
-          &quot;p95&quot;: 2.6164101174799725,
-          &quot;p99&quot;: 2.945266883180009,
-          &quot;max&quot;: 3.2347920059692115
+          &quot;min&quot;: 0.6312500045169145,
+          &quot;p50&quot;: 1.6730829956941307,
+          &quot;p95&quot;: 2.5915458492818284,
+          &quot;p99&quot;: 2.936573241895528,
+          &quot;max&quot;: 3.245375002734363
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6121249753050506,
-          &quot;p50&quot;: 1.7061665130313486,
-          &quot;p95&quot;: 2.6164101174799725,
-          &quot;p99&quot;: 2.945266883180009,
-          &quot;max&quot;: 3.2347920059692115
+          &quot;min&quot;: 0.6312500045169145,
+          &quot;p50&quot;: 1.6730829956941307,
+          &quot;p95&quot;: 2.5915458492818284,
+          &quot;p99&quot;: 2.936573241895528,
+          &quot;max&quot;: 3.245375002734363
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.68516631245924,
-          &quot;p50&quot;: 1.7888544856104958,
-          &quot;p95&quot;: 2.6993499674911927,
-          &quot;p99&quot;: 3.0661409152174945,
-          &quot;max&quot;: 3.7707499868702143
+          &quot;min&quot;: 0.69758333902184,
+          &quot;p50&quot;: 1.7421661746144927,
+          &quot;p95&quot;: 2.671218421244215,
+          &quot;p99&quot;: 3.1197435806412197,
+          &quot;max&quot;: 3.729707997990772
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.68516631245924,
-          &quot;p50&quot;: 1.7888544856104958,
-          &quot;p95&quot;: 2.6993499674911927,
-          &quot;p99&quot;: 3.0661409152174945,
-          &quot;max&quot;: 3.7707499868702143
+          &quot;min&quot;: 0.69758333902184,
+          &quot;p50&quot;: 1.7421661746144927,
+          &quot;p95&quot;: 2.671218421244215,
+          &quot;p99&quot;: 3.1197435806412197,
+          &quot;max&quot;: 3.729707997990772
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.062416316087665624,
-          &quot;p50&quot;: 0.1015621670909829,
-          &quot;p95&quot;: 0.24363957896906313,
-          &quot;p99&quot;: 0.6488351434360552,
-          &quot;max&quot;: 1.2070836638255666
+          &quot;min&quot;: 0.06466668463933622,
+          &quot;p50&quot;: 0.09879117823826875,
+          &quot;p95&quot;: 0.23956635078258856,
+          &quot;p99&quot;: 0.6293004289052124,
+          &quot;max&quot;: 1.15666666176791
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.13670865811096777,
-          &quot;p50&quot;: 0.18108366177572652,
-          &quot;p95&quot;: 0.3886065527796711,
-          &quot;p99&quot;: 0.7990813191987878,
-          &quot;max&quot;: 1.3368746695729594
+          &quot;min&quot;: 0.14000000851228933,
+          &quot;p50&quot;: 0.17868749331683212,
+          &quot;p95&quot;: 0.3489687341342986,
+          &quot;p99&quot;: 0.7618327750839883,
+          &quot;max&quot;: 1.281541681305195
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.010499992640689015,
-          &quot;p50&quot;: 1.1383750097593293,
-          &quot;p95&quot;: 2.042008357238956,
-          &quot;p99&quot;: 2.0634123851777986,
-          &quot;max&quot;: 2.4106659984681755
+          &quot;min&quot;: 0.011415977496653795,
+          &quot;p50&quot;: 1.1342079960741103,
+          &quot;p95&quot;: 2.0414493323187344,
+          &quot;p99&quot;: 2.0572806199197653,
+          &quot;max&quot;: 2.477667003404349
         },
         &quot;batch_sizes&quot;: {
-          &quot;8&quot;: 3,
-          &quot;7&quot;: 65,
-          &quot;1&quot;: 1
+          &quot;7&quot;: 62,
+          &quot;9&quot;: 1,
+          &quot;8&quot;: 4,
+          &quot;5&quot;: 1
         },
-        &quot;peak_http_rss_bytes&quot;: 42860544,
-        &quot;peak_worker_rss_bytes&quot;: 66011136,
-        &quot;peak_paired_rss_bytes&quot;: 108871680,
-        &quot;memory_observation_s&quot;: 0.2639303329924587,
-        &quot;rss_sample_count&quot;: 50,
-        &quot;max_rss_gap_ms&quot;: 5.7286669907625765,
-        &quot;max_paired_read_ms&quot;: 0.023625005269423127,
+        &quot;peak_http_rss_bytes&quot;: 42663936,
+        &quot;peak_worker_rss_bytes&quot;: 65912832,
+        &quot;peak_paired_rss_bytes&quot;: 108576768,
+        &quot;memory_observation_s&quot;: 0.26465387499774806,
+        &quot;rss_sample_count&quot;: 51,
+        &quot;max_rss_gap_ms&quot;: 5.709249991923571,
+        &quot;max_paired_read_ms&quot;: 0.021249987185001373,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42860544,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66011136
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42483712,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65912832
     },
     {
       &quot;rate&quot;: 3000.0,
@@ -1696,82 +1886,86 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.16016516700619832,
-        &quot;success_per_second&quot;: 2996.9063122284524,
+        &quot;observation_s&quot;: 0.16021437497693114,
+        &quot;success_per_second&quot;: 2995.9858475190754,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.27136630240810905,
+        &quot;backend_busy_fraction&quot;: 0.2811093208611481,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.28050001128576696,
-          &quot;p50&quot;: 0.3386249882169068,
-          &quot;p95&quot;: 0.47445029922528187,
-          &quot;p99&quot;: 1.1975661772885309,
-          &quot;max&quot;: 1.46883400157094
+          &quot;min&quot;: 0.28987499536015093,
+          &quot;p50&quot;: 0.3649169811978936,
+          &quot;p95&quot;: 0.47924346145009594,
+          &quot;p99&quot;: 1.2964160038973167,
+          &quot;max&quot;: 1.7004580004140735
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.28050001128576696,
-          &quot;p50&quot;: 0.3386249882169068,
-          &quot;p95&quot;: 0.47445029922528187,
-          &quot;p99&quot;: 1.1975661772885309,
-          &quot;max&quot;: 1.46883400157094
+          &quot;min&quot;: 0.28987499536015093,
+          &quot;p50&quot;: 0.3649169811978936,
+          &quot;p95&quot;: 0.47924346145009594,
+          &quot;p99&quot;: 1.2964160038973167,
+          &quot;max&quot;: 1.7004580004140735
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.33308300119824774,
-          &quot;p50&quot;: 0.40829133017299296,
-          &quot;p95&quot;: 0.5466523718748552,
-          &quot;p99&quot;: 1.3788701821591978,
-          &quot;max&quot;: 1.7174586792631696
+          &quot;min&quot;: 0.3510416428713775,
+          &quot;p50&quot;: 0.46437464623401425,
+          &quot;p95&quot;: 0.5595121400081545,
+          &quot;p99&quot;: 1.7505941539583723,
+          &quot;max&quot;: 2.0319576397693404
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.33308300119824774,
-          &quot;p50&quot;: 0.40829133017299296,
-          &quot;p95&quot;: 0.5466523718748552,
-          &quot;p99&quot;: 1.3788701821591978,
-          &quot;max&quot;: 1.7174586792631696
+          &quot;min&quot;: 0.3510416428713775,
+          &quot;p50&quot;: 0.46437464623401425,
+          &quot;p95&quot;: 0.5595121400081545,
+          &quot;p99&quot;: 1.7505941539583723,
+          &quot;max&quot;: 2.0319576397693404
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.05262498673982985,
-          &quot;p50&quot;: 0.109604177104,
-          &quot;p95&quot;: 0.1469416570384057,
-          &quot;p99&quot;: 0.3687397456673531,
-          &quot;max&quot;: 0.9362086676216375
+          &quot;min&quot;: 0.06408264945882702,
+          &quot;p50&quot;: 0.1086869743885388,
+          &quot;p95&quot;: 0.1523332739947383,
+          &quot;p99&quot;: 0.6649935613595876,
+          &quot;max&quot;: 1.090374655245493
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.12466700794175334,
-          &quot;p50&quot;: 0.18435416223170145,
-          &quot;p95&quot;: 0.22978574491572287,
-          &quot;p99&quot;: 0.5060293537285108,
-          &quot;max&quot;: 1.1955836635703843
+          &quot;min&quot;: 0.13641664028789247,
+          &quot;p50&quot;: 0.18883280871281016,
+          &quot;p95&quot;: 0.25397254459482765,
+          &quot;p99&quot;: 0.8189330531237615,
+          &quot;max&quot;: 1.2639166344112407
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.01795799471437931,
-          &quot;p50&quot;: 0.020541483536362648,
-          &quot;p95&quot;: 0.027962210879195478,
-          &quot;p99&quot;: 0.2548118162667372,
-          &quot;max&quot;: 0.43650000588968396
+          &quot;min&quot;: 0.011083000572398305,
+          &quot;p50&quot;: 0.021167012164369226,
+          &quot;p95&quot;: 0.028504162037279453,
+          &quot;p99&quot;: 0.24778743652859678,
+          &quot;max&quot;: 0.4194999928586185
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
-        &quot;peak_http_rss_bytes&quot;: 42647552,
+        &quot;peak_http_rss_bytes&quot;: 42942464,
         &quot;peak_worker_rss_bytes&quot;: 66027520,
-        &quot;peak_paired_rss_bytes&quot;: 108675072,
-        &quot;memory_observation_s&quot;: 0.26416966601391323,
-        &quot;rss_sample_count&quot;: 50,
-        &quot;max_rss_gap_ms&quot;: 5.736958992201835,
-        &quot;max_paired_read_ms&quot;: 0.021625019144266844,
+        &quot;peak_paired_rss_bytes&quot;: 108969984,
+        &quot;memory_observation_s&quot;: 0.2641749170143157,
+        &quot;rss_sample_count&quot;: 51,
+        &quot;max_rss_gap_ms&quot;: 5.704959010472521,
+        &quot;max_paired_read_ms&quot;: 0.0200409849639982,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42663936,
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42647552,
       &quot;worker_lifetime_high_water_rss_bytes&quot;: 66027520
     },
     {
@@ -1782,83 +1976,87 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.160216333984863,
-        &quot;success_per_second&quot;: 2995.94921479947,
+        &quot;observation_s&quot;: 0.16016008300357498,
+        &quot;success_per_second&quot;: 2997.0014437947425,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.2911847111835899,
+        &quot;backend_busy_fraction&quot;: 0.27406463270758125,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.28516698512248695,
-          &quot;p50&quot;: 0.36770848964806646,
-          &quot;p95&quot;: 0.49699164228513737,
-          &quot;p99&quot;: 1.5039925658493272,
-          &quot;max&quot;: 1.9014590070582926
+          &quot;min&quot;: 0.28258300153538585,
+          &quot;p50&quot;: 0.3426455077715218,
+          &quot;p95&quot;: 0.4545860690996051,
+          &quot;p99&quot;: 1.201101813639977,
+          &quot;max&quot;: 1.531124988105148
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.28516698512248695,
-          &quot;p50&quot;: 0.36770848964806646,
-          &quot;p95&quot;: 0.49699164228513737,
-          &quot;p99&quot;: 1.5039925658493272,
-          &quot;max&quot;: 1.9014590070582926
+          &quot;min&quot;: 0.28258300153538585,
+          &quot;p50&quot;: 0.3426455077715218,
+          &quot;p95&quot;: 0.4545860690996051,
+          &quot;p99&quot;: 1.201101813639977,
+          &quot;max&quot;: 1.531124988105148
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.35954164868841343,
-          &quot;p50&quot;: 0.4656043267653627,
-          &quot;p95&quot;: 0.6113500104014112,
-          &quot;p99&quot;: 1.9862545518972896,
-          &quot;max&quot;: 2.2403756595837576
+          &quot;min&quot;: 0.3464580073486989,
+          &quot;p50&quot;: 0.4090420025167907,
+          &quot;p95&quot;: 0.5201333299589656,
+          &quot;p99&quot;: 1.3996978409176926,
+          &quot;max&quot;: 1.9335836660272132
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.35954164868841343,
-          &quot;p50&quot;: 0.4656043267653627,
-          &quot;p95&quot;: 0.6113500104014112,
-          &quot;p99&quot;: 1.9862545518972896,
-          &quot;max&quot;: 2.2403756595837576
+          &quot;min&quot;: 0.3464580073486989,
+          &quot;p50&quot;: 0.4090420025167907,
+          &quot;p95&quot;: 0.5201333299589656,
+          &quot;p99&quot;: 1.3996978409176926,
+          &quot;max&quot;: 1.9335836660272132
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.06737564007441854,
-          &quot;p50&quot;: 0.1095836609990037,
-          &quot;p95&quot;: 0.15467739224356264,
-          &quot;p99&quot;: 0.6699906612210903,
-          &quot;max&quot;: 1.2827506544223677
+          &quot;min&quot;: 0.06733300653286034,
+          &quot;p50&quot;: 0.1109788254446617,
+          &quot;p95&quot;: 0.14816040736623268,
+          &quot;p99&quot;: 0.47650575924664235,
+          &quot;max&quot;: 1.1150416649567585
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.14537564261504765,
-          &quot;p50&quot;: 0.1897709949407675,
-          &quot;p95&quot;: 0.24523189839674606,
-          &quot;p99&quot;: 0.9061019835225281,
-          &quot;max&quot;: 1.4478336634735267
+          &quot;min&quot;: 0.13837499101646,
+          &quot;p50&quot;: 0.18589566675169916,
+          &quot;p95&quot;: 0.23082082305723925,
+          &quot;p99&quot;: 0.7701431129104419,
+          &quot;max&quot;: 1.261583671361829
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.018082995666190982,
-          &quot;p50&quot;: 0.02129198401235044,
-          &quot;p95&quot;: 0.030969372892286618,
-          &quot;p99&quot;: 0.44558990339282817,
-          &quot;max&quot;: 0.7243329891934991
+          &quot;min&quot;: 0.016040983609855175,
+          &quot;p50&quot;: 0.020832987502217293,
+          &quot;p95&quot;: 0.02644614432938394,
+          &quot;p99&quot;: 0.1683280017459758,
+          &quot;max&quot;: 0.3498750156722963
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
-        &quot;peak_http_rss_bytes&quot;: 42844160,
-        &quot;peak_worker_rss_bytes&quot;: 66453504,
-        &quot;peak_paired_rss_bytes&quot;: 109281280,
-        &quot;memory_observation_s&quot;: 0.26474566699471325,
-        &quot;rss_sample_count&quot;: 50,
-        &quot;max_rss_gap_ms&quot;: 5.734667007345706,
-        &quot;max_paired_read_ms&quot;: 0.03129200194962323,
+        &quot;peak_http_rss_bytes&quot;: 42991616,
+        &quot;peak_worker_rss_bytes&quot;: 65847296,
+        &quot;peak_paired_rss_bytes&quot;: 108838912,
+        &quot;memory_observation_s&quot;: 0.26436820800881833,
+        &quot;rss_sample_count&quot;: 51,
+        &quot;max_rss_gap_ms&quot;: 5.7330419949721545,
+        &quot;max_paired_read_ms&quot;: 0.019832979887723923,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42844160,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66453504
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42762240,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 65847296
     },
     {
       &quot;rate&quot;: 3000.0,
@@ -1868,68 +2066,68 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.16082241700496525,
-        &quot;success_per_second&quot;: 2984.6585379025887,
+        &quot;observation_s&quot;: 0.16076437500305474,
+        &quot;success_per_second&quot;: 2985.736112188284,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.06208062851208435,
+        &quot;backend_busy_fraction&quot;: 0.054522303292002035,
         &quot;mean_batch_rows&quot;: 7.0588235294117645,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6226669938769192,
-          &quot;p50&quot;: 1.6864375065779313,
-          &quot;p95&quot;: 2.607764607819263,
-          &quot;p99&quot;: 2.9604100034339353,
-          &quot;max&quot;: 3.3092499943450093
+          &quot;min&quot;: 0.5884999991394579,
+          &quot;p50&quot;: 1.6331045044353232,
+          &quot;p95&quot;: 2.5510205130558457,
+          &quot;p99&quot;: 2.933744379261043,
+          &quot;max&quot;: 3.204999986337498
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6226669938769192,
-          &quot;p50&quot;: 1.6864375065779313,
-          &quot;p95&quot;: 2.607764607819263,
-          &quot;p99&quot;: 2.9604100034339353,
-          &quot;max&quot;: 3.3092499943450093
+          &quot;min&quot;: 0.5884999991394579,
+          &quot;p50&quot;: 1.6331045044353232,
+          &quot;p95&quot;: 2.5510205130558457,
+          &quot;p99&quot;: 2.933744379261043,
+          &quot;max&quot;: 3.204999986337498
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6892499884124936,
-          &quot;p50&quot;: 1.7560003287702202,
-          &quot;p95&quot;: 2.6913478908478226,
-          &quot;p99&quot;: 3.162534429668446,
-          &quot;max&quot;: 3.797874989686534
+          &quot;min&quot;: 0.6521249888464808,
+          &quot;p50&quot;: 1.70170832025663,
+          &quot;p95&quot;: 2.637335079438833,
+          &quot;p99&quot;: 3.036782344954553,
+          &quot;max&quot;: 3.7389159842859954
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6892499884124936,
-          &quot;p50&quot;: 1.7560003287702202,
-          &quot;p95&quot;: 2.6913478908478226,
-          &quot;p99&quot;: 3.162534429668446,
-          &quot;max&quot;: 3.797874989686534
+          &quot;min&quot;: 0.6521249888464808,
+          &quot;p50&quot;: 1.70170832025663,
+          &quot;p95&quot;: 2.637335079438833,
+          &quot;p99&quot;: 3.036782344954553,
+          &quot;max&quot;: 3.7389159842859954
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.06420865437636869,
-          &quot;p50&quot;: 0.10166633392993951,
-          &quot;p95&quot;: 0.25292498463531093,
-          &quot;p99&quot;: 0.6625030631246043,
-          &quot;max&quot;: 1.2144996690719079
+          &quot;min&quot;: 0.0591246473292395,
+          &quot;p50&quot;: 0.09589514827045356,
+          &quot;p95&quot;: 0.24396038084523713,
+          &quot;p99&quot;: 0.6701679209433491,
+          &quot;max&quot;: 1.0727916633865486
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.13504164425345855,
-          &quot;p50&quot;: 0.18141649384051384,
-          &quot;p95&quot;: 0.3715794859454032,
-          &quot;p99&quot;: 0.8797144897840901,
-          &quot;max&quot;: 1.3784166622596483
+          &quot;min&quot;: 0.13624930808631142,
+          &quot;p50&quot;: 0.17366614231529437,
+          &quot;p95&quot;: 0.36544165640758935,
+          &quot;p99&quot;: 0.8180076422782926,
+          &quot;max&quot;: 1.1992916661935549
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.008709001122042537,
-          &quot;p50&quot;: 1.1334165028529242,
-          &quot;p95&quot;: 2.041808652575128,
-          &quot;p99&quot;: 2.055470589257311,
-          &quot;max&quot;: 2.423917001578957
+          &quot;min&quot;: 0.00866700429469347,
+          &quot;p50&quot;: 1.1267504887655377,
+          &quot;p95&quot;: 2.03880030894652,
+          &quot;p99&quot;: 2.054900689399801,
+          &quot;max&quot;: 2.4509159848093987
         },
         &quot;batch_sizes&quot;: {
           &quot;7&quot;: 63,
@@ -1937,17 +2135,21 @@
           &quot;8&quot;: 3,
           &quot;6&quot;: 1
         },
-        &quot;peak_http_rss_bytes&quot;: 42729472,
-        &quot;peak_worker_rss_bytes&quot;: 66125824,
-        &quot;peak_paired_rss_bytes&quot;: 108855296,
-        &quot;memory_observation_s&quot;: 0.26538550000987016,
-        &quot;rss_sample_count&quot;: 50,
-        &quot;max_rss_gap_ms&quot;: 5.75654100975953,
-        &quot;max_paired_read_ms&quot;: 0.03950000973418355,
+        &quot;peak_http_rss_bytes&quot;: 42893312,
+        &quot;peak_worker_rss_bytes&quot;: 66027520,
+        &quot;peak_paired_rss_bytes&quot;: 108920832,
+        &quot;memory_observation_s&quot;: 0.2636954999761656,
+        &quot;rss_sample_count&quot;: 51,
+        &quot;max_rss_gap_ms&quot;: 5.716916988603771,
+        &quot;max_paired_read_ms&quot;: 0.029583025025203824,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42745856,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66125824
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42713088,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66027520
     },
     {
       &quot;rate&quot;: 3000.0,
@@ -1957,85 +2159,90 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.16283283397206105,
-        &quot;success_per_second&quot;: 2947.808425924459,
+        &quot;observation_s&quot;: 0.16076429199893028,
+        &quot;success_per_second&quot;: 2985.7376537520777,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.0692325419502667,
-        &quot;mean_batch_rows&quot;: 6.956521739130435,
+        &quot;backend_busy_fraction&quot;: 0.05629908842494856,
+        &quot;mean_batch_rows&quot;: 7.0588235294117645,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6239170033950359,
-          &quot;p50&quot;: 1.6949170094449073,
-          &quot;p95&quot;: 2.6098538437508974,
-          &quot;p99&quot;: 2.8544613247504453,
-          &quot;max&quot;: 3.1321250135079026
+          &quot;min&quot;: 0.6210000137798488,
+          &quot;p50&quot;: 1.6742915177019313,
+          &quot;p95&quot;: 2.5881854046019726,
+          &quot;p99&quot;: 2.8481631982140225,
+          &quot;max&quot;: 3.206875000614673
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6239170033950359,
-          &quot;p50&quot;: 1.6949170094449073,
-          &quot;p95&quot;: 2.6098538437508974,
-          &quot;p99&quot;: 2.8544613247504453,
-          &quot;max&quot;: 3.1321250135079026
+          &quot;min&quot;: 0.6210000137798488,
+          &quot;p50&quot;: 1.6742915177019313,
+          &quot;p95&quot;: 2.5881854046019726,
+          &quot;p99&quot;: 2.8481631982140225,
+          &quot;max&quot;: 3.206875000614673
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6940836388772964,
-          &quot;p50&quot;: 1.7740213202390147,
-          &quot;p95&quot;: 2.6940315675999376,
-          &quot;p99&quot;: 3.09749966516237,
-          &quot;max&quot;: 3.550749970600009
+          &quot;min&quot;: 0.6903753465351825,
+          &quot;p50&quot;: 1.7411670128349224,
+          &quot;p95&quot;: 2.660735770854322,
+          &quot;p99&quot;: 3.1008226127759535,
+          &quot;max&quot;: 3.772166994167492
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.6940836388772964,
-          &quot;p50&quot;: 1.7740213202390147,
-          &quot;p95&quot;: 2.6940315675999376,
-          &quot;p99&quot;: 3.09749966516237,
-          &quot;max&quot;: 3.550749970600009
+          &quot;min&quot;: 0.6903753465351825,
+          &quot;p50&quot;: 1.7411670128349224,
+          &quot;p95&quot;: 2.660735770854322,
+          &quot;p99&quot;: 3.1008226127759535,
+          &quot;max&quot;: 3.772166994167492
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.06437563632304133,
-          &quot;p50&quot;: 0.1001458076837769,
-          &quot;p95&quot;: 0.24854789330080362,
-          &quot;p99&quot;: 0.5393390682091205,
-          &quot;max&quot;: 0.9765836549146723
+          &quot;min&quot;: 0.06675066395352147,
+          &quot;p50&quot;: 0.09964600612875213,
+          &quot;p95&quot;: 0.25094649880193415,
+          &quot;p99&quot;: 0.6477916474019484,
+          &quot;max&quot;: 1.3388336775048326
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.13779230353732838,
-          &quot;p50&quot;: 0.17787547514308208,
-          &quot;p95&quot;: 0.35301040974057685,
-          &quot;p99&quot;: 0.6540816474441975,
-          &quot;max&quot;: 1.0764586587126057
+          &quot;min&quot;: 0.1413336567736012,
+          &quot;p50&quot;: 0.1798126758464297,
+          &quot;p95&quot;: 0.36717741134343695,
+          &quot;p99&quot;: 0.8577692996213817,
+          &quot;max&quot;: 1.4685836759551119
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.011374999303370714,
-          &quot;p50&quot;: 1.129312498960644,
-          &quot;p95&quot;: 2.0405431030667387,
-          &quot;p99&quot;: 2.049184754723683,
-          &quot;max&quot;: 2.2756250109523535
+          &quot;min&quot;: 0.01637497916817665,
+          &quot;p50&quot;: 1.1348539992468432,
+          &quot;p95&quot;: 2.038814533443656,
+          &quot;p99&quot;: 2.0592130825389177,
+          &quot;max&quot;: 2.3845410032663494
         },
         &quot;batch_sizes&quot;: {
           &quot;8&quot;: 3,
-          &quot;7&quot;: 65,
-          &quot;1&quot;: 1
+          &quot;9&quot;: 1,
+          &quot;7&quot;: 63,
+          &quot;6&quot;: 1
         },
-        &quot;peak_http_rss_bytes&quot;: 42598400,
-        &quot;peak_worker_rss_bytes&quot;: 66043904,
-        &quot;peak_paired_rss_bytes&quot;: 108642304,
-        &quot;memory_observation_s&quot;: 0.26455783398705535,
-        &quot;rss_sample_count&quot;: 50,
-        &quot;max_rss_gap_ms&quot;: 5.724916991312057,
-        &quot;max_paired_read_ms&quot;: 0.0237500062212348,
+        &quot;peak_http_rss_bytes&quot;: 42729472,
+        &quot;peak_worker_rss_bytes&quot;: 66076672,
+        &quot;peak_paired_rss_bytes&quot;: 108806144,
+        &quot;memory_observation_s&quot;: 0.26381554201361723,
+        &quot;rss_sample_count&quot;: 51,
+        &quot;max_rss_gap_ms&quot;: 5.699625005945563,
+        &quot;max_paired_read_ms&quot;: 0.020915991626679897,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42598400,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66043904
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42549248,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66076672
     },
     {
       &quot;rate&quot;: 3000.0,
@@ -2045,83 +2252,87 @@
         &quot;counts&quot;: {
           &quot;success&quot;: 480
         },
-        &quot;observation_s&quot;: 0.16016554197994992,
-        &quot;success_per_second&quot;: 2996.899295980206,
+        &quot;observation_s&quot;: 0.16018737500417046,
+        &quot;success_per_second&quot;: 2996.49082824101,
         &quot;rejection_rate&quot;: 0.0,
         &quot;timeout_rate&quot;: 0.0,
         &quot;success_rate&quot;: 1.0,
-        &quot;backend_busy_fraction&quot;: 0.281942497887753,
+        &quot;backend_busy_fraction&quot;: 0.26910591588615884,
         &quot;mean_batch_rows&quot;: 1.0,
         &quot;success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.2868750016205013,
-          &quot;p50&quot;: 0.35910400038119406,
-          &quot;p95&quot;: 0.516408351541031,
-          &quot;p99&quot;: 1.5126913881977075,
-          &quot;max&quot;: 2.001916989684105
+          &quot;min&quot;: 0.2885409921873361,
+          &quot;p50&quot;: 0.3458124992903322,
+          &quot;p95&quot;: 0.46028961223782966,
+          &quot;p99&quot;: 1.3419319994864038,
+          &quot;max&quot;: 1.7619999998714775
         },
         &quot;all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.2868750016205013,
-          &quot;p50&quot;: 0.35910400038119406,
-          &quot;p95&quot;: 0.516408351541031,
-          &quot;p99&quot;: 1.5126913881977075,
-          &quot;max&quot;: 2.001916989684105
+          &quot;min&quot;: 0.2885409921873361,
+          &quot;p50&quot;: 0.3458124992903322,
+          &quot;p95&quot;: 0.46028961223782966,
+          &quot;p99&quot;: 1.3419319994864038,
+          &quot;max&quot;: 1.7619999998714775
         },
         &quot;scheduled_success_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.34520831968015697,
-          &quot;p50&quot;: 0.4573749783448877,
-          &quot;p95&quot;: 0.6198746963869765,
-          &quot;p99&quot;: 1.7111286610760712,
-          &quot;max&quot;: 2.3427916422175863
+          &quot;min&quot;: 0.34733300306835635,
+          &quot;p50&quot;: 0.41472933984671584,
+          &quot;p95&quot;: 0.5309773917309931,
+          &quot;p99&quot;: 1.696288176712111,
+          &quot;max&quot;: 2.151374672461922
         },
         &quot;scheduled_all_terminal_latency_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.34520831968015697,
-          &quot;p50&quot;: 0.4573749783448877,
-          &quot;p95&quot;: 0.6198746963869765,
-          &quot;p99&quot;: 1.7111286610760712,
-          &quot;max&quot;: 2.3427916422175863
+          &quot;min&quot;: 0.34733300306835635,
+          &quot;p50&quot;: 0.41472933984671584,
+          &quot;p95&quot;: 0.5309773917309931,
+          &quot;p99&quot;: 1.696288176712111,
+          &quot;max&quot;: 2.151374672461922
         },
         &quot;header_send_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.056583637294049804,
-          &quot;p50&quot;: 0.11104182359606904,
-          &quot;p95&quot;: 0.16226007887937743,
-          &quot;p99&quot;: 0.616112977107986,
-          &quot;max&quot;: 1.5278336614525567
+          &quot;min&quot;: 0.05641667909610237,
+          &quot;p50&quot;: 0.10937467745195106,
+          &quot;p95&quot;: 0.14603367126934985,
+          &quot;p99&quot;: 0.6960955074592475,
+          &quot;max&quot;: 1.214583662726606
         },
         &quot;server_arrival_lag_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.13270866397457892,
-          &quot;p50&quot;: 0.18850030734514356,
-          &quot;p95&quot;: 0.2656731854464544,
-          &quot;p99&quot;: 0.8594680521800168,
-          &quot;max&quot;: 1.652624658231313
+          &quot;min&quot;: 0.1298336816641238,
+          &quot;p50&quot;: 0.18683316969933614,
+          &quot;p95&quot;: 0.2302288330004849,
+          &quot;p99&quot;: 0.9724007584317587,
+          &quot;max&quot;: 1.3571246782472979
         },
         &quot;queue_ms&quot;: {
           &quot;count&quot;: 480,
-          &quot;min&quot;: 0.017916987417265773,
-          &quot;p50&quot;: 0.02083301660604775,
-          &quot;p95&quot;: 0.030031245842110338,
-          &quot;p99&quot;: 0.40297303901752446,
-          &quot;max&quot;: 0.7284999883268028
+          &quot;min&quot;: 0.0180420174729079,
+          &quot;p50&quot;: 0.02079200930893421,
+          &quot;p95&quot;: 0.027550352388061576,
+          &quot;p99&quot;: 0.2064861357212054,
+          &quot;max&quot;: 0.3820830024778843
         },
         &quot;batch_sizes&quot;: {
           &quot;1&quot;: 480
         },
-        &quot;peak_http_rss_bytes&quot;: 42713088,
-        &quot;peak_worker_rss_bytes&quot;: 66191360,
-        &quot;peak_paired_rss_bytes&quot;: 108904448,
-        &quot;memory_observation_s&quot;: 0.2643940410052892,
-        &quot;rss_sample_count&quot;: 50,
-        &quot;max_rss_gap_ms&quot;: 5.717958993045613,
-        &quot;max_paired_read_ms&quot;: 0.02804200630635023,
+        &quot;peak_http_rss_bytes&quot;: 42876928,
+        &quot;peak_worker_rss_bytes&quot;: 66011136,
+        &quot;peak_paired_rss_bytes&quot;: 108888064,
+        &quot;memory_observation_s&quot;: 0.2647295409988146,
+        &quot;rss_sample_count&quot;: 51,
+        &quot;max_rss_gap_ms&quot;: 5.722792004235089,
+        &quot;max_paired_read_ms&quot;: 0.024582986952736974,
         &quot;arrival_fidelity_passed&quot;: true
       },
-      &quot;http_lifetime_high_water_rss_bytes&quot;: 42713088,
-      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66191360
+      &quot;workload&quot;: {
+        &quot;loaded_model_sha256&quot;: &quot;305cd78a3e29dd5704a1560934aacae2c0adaedf63e6f515ebb729df16e3ef2c&quot;,
+        &quot;fixture_sha256&quot;: &quot;d908ca1bf6d23fb4ece8ce6e6e2863c846db7127782d178fa0cec978ff0e0334&quot;
+      },
+      &quot;http_lifetime_high_water_rss_bytes&quot;: 42549248,
+      &quot;worker_lifetime_high_water_rss_bytes&quot;: 66011136
     }
   ]
 }</pre></details></section></html>

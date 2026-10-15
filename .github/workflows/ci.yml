@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           persist-credentials: false
+          fetch-depth: 0  # Review verifies immutable pre-review evidence from Git history.
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '3.12'
@@ -35,6 +36,7 @@ jobs:
         run: |
           python tools/check_project.py
           python tools/check_project.py --directory results/heavy-macos-arm64
+          python tools/audit_heavy_review.py --verify
       - name: Actual HTTP/ORT timing smoke, not a performance gate
         run: |
           python tools/benchmark.py --output results/local/ci --count 40 --rates 200 --repeats 2

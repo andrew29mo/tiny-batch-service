@@ -1,8 +1,10 @@
 """A single spawned CPU worker. Only the dispatcher can submit IPC work."""
 
 import asyncio
+import hashlib
 import multiprocessing
 import os
+from pathlib import Path
 import platform
 import resource
 import sys
@@ -20,7 +22,10 @@ def worker(connection, model):
         options.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
         options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         options.log_severity_level = 3
-        session = ort.InferenceSession(model, sess_options=options, providers=["CPUExecutionProvider"])
+        model_bytes = Path(model).read_bytes()
+        loaded_model_sha256 = hashlib.sha256(model_bytes).hexdigest()
+        session = ort.InferenceSession(model_bytes, sess_options=options, providers=["CPUExecutionProvider"])
+        del model_bytes  # Do not deliberately retain the serialized model beside the native session.
         session.disable_fallback()
         if session.get_providers()[0] != "CPUExecutionProvider":
             raise ValueError("CPU registration failed")
@@ -35,6 +40,7 @@ def worker(connection, model):
             value = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
             return int(value if sys.platform == "darwin" else value * 1024)
         connection.send({"ready": True, "pid": os.getpid(), "python": platform.python_version(),
+                         "loaded_model_sha256": loaded_model_sha256,
                          "numpy": np.__version__, "onnxruntime": ort.__version__,
                          "provider": "CPUExecutionProvider", "intra_threads": 1, "inter_threads": 1,
                          "optimization": sys.flags.optimize, "high_water_rss_bytes": highwater()})

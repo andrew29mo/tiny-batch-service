@@ -6,23 +6,23 @@ Counts include all trials; rejection percentage is total rejected / total offere
 
 | Offered req/s | Mode | Success/offered | Rejected | Rejected % | Timeout | Success/s | Dispatch p50 ms | p95 ms | p99 ms | Scheduled p95 ms | Worst header lag p99 ms | Worst admission lag p99 ms | HTTP+worker RSS MiB | Max RSS gap ms | Backend+IPC busy | Mean batch rows | Arrival check |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
-| 500.0 | single | 24000/24000 | 0 | 0.00% | 0 | 500.0 | 0.813 | 1.167 | 1.843 | 1.323 | 0.626 | 1.006 | 139.91 | 41.190 | 21.1% | 1.00 | 4/4 pass |
-| 500.0 | dynamic | 24000/24000 | 0 | 0.00% | 0 | 499.9 | 2.746 | 3.585 | 3.902 | 3.701 | 3.178 | 4.253 | 136.94 | 37.519 | 16.7% | 1.96 | 4/4 pass |
-| 3500.0 | single | 24000/24000 | 0 | 0.00% | 0 | 3496.7 | 0.494 | 1.609 | 6.565 | 1.782 | 5.026 | 5.199 | 145.53 | 19.129 | 76.4% | 1.00 | 4/4 pass |
-| 3500.0 | dynamic | 24000/24000 | 0 | 0.00% | 0 | 3493.6 | 1.927 | 2.720 | 3.326 | 2.819 | 17.693 | 18.004 | 137.25 | 20.670 | 16.0% | 8.05 | 4/4 pass |
-| 6000.0 | single | 14881/24000 | 9119 | 38.00% | 0 | 3874.7 | 15.232 | 24.223 | 37.757 | 34.645 | 71.413 | 71.643 | 142.73 | 42.990 | 96.1% | 1.00 | 2/4 pass |
-| 6000.0 | dynamic | 24000/24000 | 0 | 0.00% | 0 | 5975.4 | 1.854 | 2.734 | 3.077 | 3.359 | 11.613 | 11.755 | 139.73 | 19.397 | 18.4% | 13.04 | 4/4 pass |
-| 10000.0 | single | 8449/24000 | 15551 | 64.80% | 0 | 3061.7 | 18.441 | 41.183 | 52.548 | 96.274 | 554.300 | 554.553 | 141.53 | 32.705 | 95.5% | 1.00 | 1/4 pass |
-| 10000.0 | dynamic | 24000/24000 | 0 | 0.00% | 0 | 9881.8 | 2.157 | 2.636 | 3.450 | 18.708 | 719.249 | 719.404 | 137.81 | 32.519 | 25.9% | 15.92 | 3/4 pass |
+| 500.0 | single | 24000/24000 | 0 | 0.00% | 0 | 499.9 | 0.816 | 1.355 | 1.993 | 1.524 | 0.630 | 1.005 | 173.44 | 27.164 | 21.2% | 1.00 | 4/4 pass |
+| 500.0 | dynamic | 24000/24000 | 0 | 0.00% | 0 | 499.8 | 2.890 | 3.800 | 4.559 | 4.001 | 0.718 | 1.173 | 164.81 | 38.552 | 17.6% | 1.97 | 4/4 pass |
+| 3500.0 | single | 23999/24000 | 1 | 0.00% | 0 | 3496.8 | 0.482 | 1.973 | 7.244 | 2.427 | 7.980 | 8.103 | 174.36 | 21.683 | 75.7% | 1.00 | 4/4 pass |
+| 3500.0 | dynamic | 24000/24000 | 0 | 0.00% | 0 | 3493.4 | 1.918 | 2.699 | 2.928 | 2.776 | 4.820 | 4.891 | 168.58 | 19.752 | 15.7% | 8.04 | 4/4 pass |
+| 6000.0 | single | 16638/24000 | 7362 | 30.68% | 0 | 4115.1 | 15.534 | 16.739 | 19.660 | 17.047 | 14.984 | 15.093 | 171.45 | 22.910 | 96.0% | 1.00 | 4/4 pass |
+| 6000.0 | dynamic | 24000/24000 | 0 | 0.00% | 0 | 5975.6 | 1.854 | 2.758 | 3.180 | 3.385 | 17.604 | 17.833 | 168.72 | 22.108 | 18.8% | 13.04 | 4/4 pass |
+| 10000.0 | single | 8872/24000 | 15128 | 63.03% | 0 | 3584.6 | 17.361 | 22.696 | 30.560 | 36.836 | 24.848 | 24.981 | 170.30 | 25.076 | 96.0% | 1.00 | 4/4 pass |
+| 10000.0 | dynamic | 24000/24000 | 0 | 0.00% | 0 | 9801.3 | 2.163 | 2.847 | 3.872 | 19.067 | 160.886 | 161.062 | 168.61 | 23.373 | 26.7% | 15.85 | 3/4 pass |
 
-Paired throughput ratio is dynamic / single: median [min, max]. Deltas are medians of paired differences, not differences of pooled rates. Positive deltas mean dynamic has more rejections or worse successful-request p95. Every trial, including arrival warnings, is included; passing pairs count both modes passing the coarse arrival check. Survivor bias applies under overload; do not compare latency without outcome rates.
+All-pair descriptive throughput ratio is dynamic / single: median [min, max]. Deltas are medians of paired differences, not differences of pooled rates. Every prespecified pair is included. Any arrival-warning pair makes the case inconclusive for a matched-arrival benefit claim. Passing is a post-run outcome that may depend on mode/performance: selecting only passing pairs can introduce selection bias; no pass-only effect estimate is endorsed. All pairs passing the coarse check still does not establish causality or statistical significance. Successful-only latency has survivor bias; consider all rejection/timeout counts.
 
-| Offered req/s | Throughput ratio | Rejection delta pp | Scheduled success p95 delta ms | Passing arrival pairs |
-|---:|---:|---:|---:|---:|
-| 500.0 | 1.000 [1.000, 1.000] | +0.00 | +2.346 | 4/4 |
-| 3500.0 | 0.999 [0.998, 1.000] | +0.00 | +1.300 | 4/4 |
-| 6000.0 | 1.557 [1.400, 2.407] | -34.56 | -31.330 | 2/4 |
-| 10000.0 | 2.858 [2.654, 3.428] | -64.43 | -42.910 | 1/4 |
+| Offered req/s | All-pair descriptive ratio | Rejection delta pp | Scheduled success p95 delta ms | Passing arrival pairs | Assessment |
+|---:|---:|---:|---:|---:|---|
+| 500.0 | 1.000 [1.000, 1.000] | +0.00 | +2.503 | 4/4 | descriptive_only_all_pairs_pass_coarse_check |
+| 3500.0 | 0.999 [0.999, 1.000] | +0.00 | +0.384 | 4/4 | descriptive_only_all_pairs_pass_coarse_check |
+| 6000.0 | 1.452 [1.449, 1.472] | -30.48 | -13.661 | 4/4 | descriptive_only_all_pairs_pass_coarse_check |
+| 10000.0 | 2.719 [2.325, 2.763] | -62.96 | -9.898 | 3/4 | inconclusive_arrival_fidelity |
 
 Fixed policy: batch 1 / 0 ms versus batch 16 / 2 ms; equal capacity 64 counts waiting and physically running requests. Request deadline 250 ms. Four alternating fresh-process trial pairs are recommended; inspect the recorded repeat count.
 

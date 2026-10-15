@@ -38,6 +38,10 @@ class EvidenceTests(unittest.TestCase):
             lambda r: r["cases"][0]["runs"][0]["client"][0].update(dispatch_s=float("nan")),
             lambda r: r["cases"][0]["runs"][0]["audit"].update(peak_occupancy=63),
             lambda r: r["cases"][0]["runs"][0]["audit"]["counts"].update(cancelled=1),
+            lambda r: r["cases"][0]["runs"][0]["workload"].update(loaded_model_sha256="0" * 64),
+            lambda r: r["cases"][0]["runs"][0]["workload"].update(fixture_sha256="0" * 64),
+            lambda r: r["cases"][0]["comparison"].update(verdict="confirmed_batching_benefit"),
+            lambda r: r["cases"][0]["runs"][0].update(rss_samples=r["cases"][0]["runs"][0]["rss_samples"][:1]),
         ]
         for i, mutation in enumerate(mutations):
             with self.subTest(fault=i):

@@ -3,6 +3,7 @@
 import asyncio
 from collections import Counter
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -126,8 +127,11 @@ def validate_response(body, reference):
 
 
 async def trial(model, fixture, trace, settings):
-    with np.load(fixture, allow_pickle=False) as archive:
+    fixture_bytes = Path(fixture).read_bytes()
+    fixture_sha256 = hashlib.sha256(fixture_bytes).hexdigest()
+    with np.load(io.BytesIO(fixture_bytes), allow_pickle=False) as archive:
         inputs, reference = archive["inputs"], archive["reference"]
+    del fixture_bytes
     client_records, memory_samples = [], []
     server = ManagedServer(model, **settings)
     async with server:
@@ -151,14 +155,15 @@ async def trial(model, fixture, trace, settings):
             t0 = loop.time() + .1
             memory_window_start = loop.time() - t0
             monitoring = True
+            http = psutil.Process(server.process.pid)
+            def sample_memory():
+                sample = {"at_s": loop.time() - t0, "http_rss_bytes": http.memory_info().rss,
+                          "worker_rss_bytes": server.worker.memory_info().rss}
+                sample["finished_s"] = loop.time() - t0
+                memory_samples.append(sample)
             async def monitor():
-                http = psutil.Process(server.process.pid)
                 while monitoring:
-                    stamp = loop.time()
-                    sample = {"at_s": stamp - t0, "http_rss_bytes": http.memory_info().rss,
-                              "worker_rss_bytes": server.worker.memory_info().rss}
-                    sample["finished_s"] = loop.time() - t0
-                    memory_samples.append(sample)
+                    sample_memory()
                     await asyncio.sleep(.005)
             monitoring_task = asyncio.create_task(monitor())
             tasks = set()
@@ -212,6 +217,7 @@ async def trial(model, fixture, trace, settings):
             finally:
                 monitoring = False
                 await monitoring_task
+                sample_memory()  # Bracket the entire active/drain interval, even for short trials.
             memory_window_end = loop.time() - t0
             if any(isinstance(value, BaseException) for value in outcomes):
                 raise ValueError("A request failed output or protocol validation")
@@ -222,6 +228,8 @@ async def trial(model, fixture, trace, settings):
             batches = [{**b, "started_s": b["started_s"] - t0, "finished_s": b["finished_s"] - t0}
                        for b in audit["batches"] if any(i in trace_ids for i in b["ids"])]
             result = {"settings": settings, "environment": server.metadata, "trace_sha256": fingerprint(trace),
+                      "workload": {"loaded_model_sha256": server.metadata["worker"]["loaded_model_sha256"],
+                                   "fixture_sha256": fixture_sha256},
                       "client": sorted(client_records, key=lambda r: r["id"]), "server_records": records,
                       "batches": batches, "audit": {k: v for k, v in audit.items() if k not in ("records", "batches")},
                       "rss_samples": memory_samples,
@@ -230,7 +238,7 @@ async def trial(model, fixture, trace, settings):
     return result
 
 
-def summarize(run, trace):
+def summarize(run, trace, *, require_memory_bracketing=True):
     def finite(*values):
         return all(type(v) in (int, float) and np.isfinite(v) for v in values)
 
@@ -343,6 +351,8 @@ def summarize(run, trace):
     samples = run["rss_samples"]
     if not samples or any(type(s[k]) is not int or s[k] <= 0 for s in samples for k in ("http_rss_bytes", "worker_rss_bytes")):
         raise ValueError("Invalid memory samples")
+    if require_memory_bracketing and (len(samples) < 2 or samples[0]["finished_s"] > 0 or samples[-1]["at_s"] < duration):
+        raise ValueError("RSS samples do not bracket active traffic and physical compute drain")
     window = run["memory_window"]
     if not finite(window["start_s"], window["end_s"]) or not window["start_s"] <= 0 <= duration <= window["end_s"]:
         raise ValueError("Memory observation window does not cover the trial")

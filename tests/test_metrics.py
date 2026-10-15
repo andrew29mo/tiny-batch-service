@@ -71,6 +71,7 @@ class MetricTests(unittest.TestCase):
                   lambda r: r["client"][0].update(finished_s=float("nan")),
                   lambda r: r["audit"].update(peak_occupancy=1)]
         faults.append(lambda r: (r["settings"].update(capacity=3), r["audit"].update(capacity=3)))
+        faults.append(lambda r: r.update(rss_samples=r["rss_samples"][:1]))
         for i, fault in enumerate(faults):
             with self.subTest(fault=i):
                 changed = copy.deepcopy(baseline)

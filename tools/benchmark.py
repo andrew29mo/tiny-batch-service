@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from make_model import prepare, digest
 from tiny_batch_service.experiment import fingerprint, host_metadata, make_trace, source_hash, summarize, trial
-from tiny_batch_service.report import LIMITS, overview, write_report
+from tiny_batch_service.report import LIMITS, comparison, overview, write_report
 
 
 async def run(args):
@@ -27,7 +27,7 @@ async def run(args):
                            "data": archive[name].tolist()} for name in archive.files}
     (args.output / "fixture.json").write_text(json.dumps(retained, separators=(",", ":"), allow_nan=False) + "\n")
     audit_limit = 16384 if args.profile == "heavy" else 4096
-    report = {"schema_version": 3, "generated_utc": datetime.now(timezone.utc).isoformat(),
+    report = {"schema_version": 4, "generated_utc": datetime.now(timezone.utc).isoformat(),
               "source_sha256": source_hash(), "host": host_metadata(), "model": manifest,
               "policy": {"capacity": 64, "batch_size": 16, "wait_ms": 2., "request_timeout_ms": 250,
                          "generator_max_inflight": 512, "arrival_p99_budget_ms": 25, "rss_interval_ms": 5, "audit_limit": audit_limit},
@@ -59,7 +59,7 @@ async def run(args):
                     payload = gzip.compress(json.dumps(result, separators=(",", ":"), allow_nan=False).encode(), mtime=0)
                     (args.output / "raw").mkdir(exist_ok=True)
                     (args.output / filename).write_bytes(payload)
-                    stub = {k: result[k] for k in ("mode", "trial", "settings", "environment", "trace_sha256", "summary")}
+                    stub = {k: result[k] for k in ("mode", "trial", "settings", "environment", "trace_sha256", "summary", "workload")}
                     stub.update(evidence_file=filename, evidence_sha256=hashlib.sha256(payload).hexdigest())
                     case["runs"].append(stub)
                 else:
@@ -67,6 +67,7 @@ async def run(args):
                 report["execution_order"].append({"rate": rate, "trial": repeat, "mode": mode})
                 # Preserve partial evidence even if a later trial fails; never fabricate missing runs.
                 (args.output / "partial.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
+        case["comparison"] = comparison(case, args.repeats)
     write_report(report, args.output)
     (args.output / "README.md").write_text(overview(report, os.path.relpath(ROOT / "docs/METHODOLOGY.md", args.output)))
     (args.output / "partial.json").unlink()

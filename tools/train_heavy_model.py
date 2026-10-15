@@ -24,7 +24,7 @@ def training_data():
     p = state["provenance"]
     x, y = load_digits(return_X_y=True)
     train, test = np.asarray(p["train_ids"]), np.asarray(p["test_ids"])
-    if (len(set(train)) != 1347 or len(set(test)) != 450 or set(train) & set(test)
+    if (len(train) != 1347 or len(test) != 450 or len(set(train)) != 1347 or len(set(test)) != 450 or set(train) & set(test)
             or set(train) | set(test) != set(range(len(x)))
             or hashlib.sha256(x.astype(np.uint8).tobytes()).hexdigest() != p["raw_pixels_uint8_sha256"]
             or hashlib.sha256(y.astype("<i8").tobytes()).hexdigest() != p["labels_int64_sha256"]):
