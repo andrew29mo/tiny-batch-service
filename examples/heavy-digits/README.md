@@ -18,4 +18,4 @@ Optional retraining into a new ignored directory:
 python tools/train_heavy_model.py --output examples/generated/retrained-heavy
 ```
 
-The new model is trained locally from the attributed public dataset; it is not a downloaded third-party pretrained model. See [data attribution and license status](../../THIRD_PARTY_NOTICES.md). No license has yet been selected for original project contributions.
+The new model is trained locally from the attributed public dataset; it is not a downloaded third-party pretrained model. Original project contributions, including these newly trained weights, are available under the [MIT License](../../LICENSE). Dataset attribution and applicable CC BY 4.0 terms remain in effect; see [third-party materials and data attribution](../../THIRD_PARTY_NOTICES.md).

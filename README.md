@@ -107,4 +107,8 @@ Optional retraining writes a new local artifact, leaving frozen evidence intact:
 
 [Architecture and methodology](docs/METHODOLOGY.md) · [Related work and practical lessons](docs/RELATED_WORK.md) · [Third-party attribution](THIRD_PARTY_NOTICES.md)
 
-No project license has been selected for the newly written service code. The reused frozen model retains its original MIT notice; dataset-derived values retain applicable CC BY 4.0 terms. No license from a sibling project is implicitly assigned to the new code.
+## License
+
+Original project contributions, including service code, tools, tests, documentation and newly trained heavy-model weights, are available under the [MIT License](LICENSE), Copyright (c) 2026 Andrew Yuan.
+
+The reused tiny model retains its [upstream MIT notice](LICENSES/inference-doctor-MIT.txt). The Digits dataset and applicable dataset-derived fixture/report values retain their CC BY 4.0 attribution and terms; the project MIT license does not replace those terms. See [third-party materials and data attribution](THIRD_PARTY_NOTICES.md) for sources, modifications and scope. Installed dependencies retain their own licenses.
