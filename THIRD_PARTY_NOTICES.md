@@ -1,0 +1,7 @@
+# Third-party materials
+
+The retained `examples/digits/model.json` is reused from [inference-doctor at e84c825](https://github.com/andrew29mo/inference-doctor/blob/e84c825/examples/digits/model.json), Copyright (c) 2026 Andrew Yuan, under the MIT License. Its [complete MIT notice](LICENSES/inference-doctor-MIT.txt) is retained. This does not assign that license to the newly written service code.
+
+The example uses scikit-learn's bundled 1,797-row Digits subset of Optical Recognition of Handwritten Digits, E. Alpaydin and C. Kaynak (1998), [UCI source](https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits), [DOI 10.24432/C50P49](https://doi.org/10.24432/C50P49), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Changes are fixed train/test selection, division by 16, generated reference probabilities, sampled request traces and measurement records. Dataset-derived retained values carry the applicable data attribution/CC BY 4.0 terms, not a replacement service-code license. The split is not the original UCI evaluation protocol or verified writer-independent validation.
+
+NumPy, SciPy, scikit-learn, ONNX, ONNX Runtime, aiohttp, psutil and other installed dependencies retain their upstream licenses. Their source is not vendored. Generated binary models/NPZ files and local environments are ignored. Retained model parameters, fixture values and measurements are intentional reproducibility evidence.

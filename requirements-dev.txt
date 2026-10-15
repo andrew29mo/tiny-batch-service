@@ -1,0 +1,7 @@
+-r requirements-lock.txt
+-e .
+onnx==1.23.2
+scipy==1.13.1
+scikit-learn==1.6.1
+joblib==1.4.2
+threadpoolctl==3.6.0
